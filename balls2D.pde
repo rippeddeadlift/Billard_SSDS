@@ -1,4 +1,3 @@
-import SimpleOpenNI.*;
 
 /**
  * Basic version of balls-project 
