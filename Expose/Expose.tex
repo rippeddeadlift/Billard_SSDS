@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{geometry}
+\usepackage{outlines}
 \geometry{a4paper, margin=2cm}
 \usepackage{enumitem}
 
@@ -39,11 +40,37 @@
 	\item Geschätzer Zeitaufwand: 1-2 Wochen pro Thema.
 \end{itemize}
 
-	\section*{Erwartete Ergebnisse}
-	\begin{itemize}
-		\item Ein funktionierender 3D-Billard-Demonstrator.
-		\item Unterstützung von Kollisionserkennung für verschiedene Objekte.
-		\item Ein dokumentierter Bericht über die Umsetzung und die Herausforderungen.
-	\end{itemize}
+\section*{Erwartete Ergebnisse}
+\begin{itemize}
+	\item Ein funktionierender 3D-Billard-Demonstrator.
+	\item Unterstützung von Kollisionserkennung für verschiedene Objekte.
+	\item Ein dokumentierter Bericht über die Umsetzung und die Herausforderungen.
+\end{itemize}
 	
+\section*{3D Scene }
+\begin{itemize}
+	\item Besteht aus einer Box, die als Tischoberfläche dient mit den Maßen x=300, y=30, z=200
+	\item Beine mit je Maßen x=50, y=100, z=40. Mit 2 Schleifen implementiert:
+	\begin{outline}
+	\1 Äußere Schleife beginnt bei den Koordinaten x = -90, Kondition ist das x <= 90 ist und das Inkrement ist 180. Das sorgt dafür das die innere Schleife auf die linken (vom Startpunkt) Beine angewandt wird bevor die x Koordinate um 180 erhöht wird und dann die rechten Beine gezeichnet wird
+	\1 Innere Schleife beginnt bei den Koordinaten x = -90, z = -40. z wird nach dem Schleifenkörper um 80 erhöht um auf die Position des hinteren Beins zu wechseln.
+	\1 Zusammenfassend kann man sagen die Beine haben folgende Koordinaten:
+	\2 Bein links hinten x = width/2 - 90, y = height/2+55, z = -40
+	\2 Bein links vorne x = width/2 - 90, y = height/2+55, z = 40
+	\2 Bein rechts hinten x = width/2 + 90, y = height/2+55, z = -40
+	\2 Bein rechts vorne x = width/2 + 90, y = height/2+55, z = 40
+	\end{outline}
+	\item TODOs
+	\begin{outline}
+		\1 Bounding Box für Bälle auf Tischoberfläche begrenzen
+		\1 Kameraposition verbessern für Startszene
+		\1 Bälle in der Pyramide aufstellen für Startszene
+		\1 Taschen implementieren
+	\end{outline}
+	\item Herausforderungen
+	\begin{outline}
+		\1 Allgemeines Verständnis der translate() Funktion
+		\2 Erstes Learning war, dass die translate Funktion akkumuliert. translate(50,0,0) und danach translate(70,0,0) summiert sich auf. pushMatrix(), popMatrix() hilft
+	\end{outline}
+\end{itemize}
 \end{document}
