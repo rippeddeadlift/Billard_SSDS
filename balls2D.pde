@@ -6,6 +6,7 @@
 import ddf.minim.*;    // AudioPlayer, Minim
 
 CBalls theBalls;
+Table table;
 int totalball = 5;               // number of balls 
 PFont helpFont;      
 boolean showHelp=false;          // toggle help text
@@ -27,6 +28,7 @@ void setup()
   size(700, 700, P3D);           // although the game physics is 2D, we do the drawing in 3D to allow 
                                  // for 3D-balls (spheres) with directional light and shininess
   theBalls = new CBalls(this,totalball);
+  table = new Table();
   helpFont = createFont("Arial", 22, true);
   rightwall_x = width;
   floor_y     = height;
@@ -36,21 +38,13 @@ void setup()
 void draw() 
 {
   background(80);  // gray background
-
-  if (showHelp) {
-    textFont(helpFont);
-    fill(255,255,255);
-    text("h: toggle help",100,35);
-    text("r: toggle random floor",100,35+1*25);
-    text("<SPACE>: freeze",100,35+2*25);
-    text("<ESC>: exit",100,35+3*25);
-  }
   
   lightSpecular(255,255,255);
   directionalLight(204, 204, 204, 0, +1, -1);
   
-  translate(0,0,-2);    // optional, just to show the box border
   
+  translate(0,0,-2);    // optional, just to show the box border
+  table.draw();
   boxDraw();
   theBalls.draw();
   if (!forceFreeze)  
