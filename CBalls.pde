@@ -27,7 +27,8 @@ public class CBalls {
     for (int bn = 0; bn < ball.length; bn++) {
       ball[bn].game_physics();
     }
-    detectCollisions();  // Check for collisions after updating physics
+    detectCollisions();  
+    detectCueCollisions();
   }
 
   void detectCollisions() {
@@ -78,6 +79,49 @@ public class CBalls {
       }
     }
   }
+void detectCueCollisions() {
+  for (int i = 0; i < ball.length; i++) {
+    Ball b = ball[i];
+
+    // Position of the cue tip
+    float cueTipX = billiardCue.x + billiardCue.length;
+    float cueTipY = billiardCue.y + billiardCue.thickness / 2;
+    float fBallx = (float)b.sx; 
+    float fBallxy = (float)b.sy; 
+    // Calculate distance between cue tip and the ball
+    float distance = dist(cueTipX, cueTipY, fBallx, fBallxy);
+
+    // Debugging: Print distance and ball radius
+    println("Cue-Ball Distance: " + distance + " Ball Radius: " + b.Radius());
+
+    // Check if distance is less than the ball's radius (i.e., if the cue tip is colliding with the ball)
+    if (distance < b.Radius()) {
+      // Calculate the direction of the force
+      float dx = (float)(cueTipX - b.sx);  
+      float dy = (float)(cueTipY - b.sy); 
+      float normalizedDist = sqrt(dx * dx + dy * dy); // Calculate the magnitude
+      float nx = dx / normalizedDist;
+      float ny = dy / normalizedDist;
+
+      // Calculate the cue's momentum (mass * velocity)
+      float cueSpeed = sqrt(billiardCue.vx * billiardCue.vx + billiardCue.vy * billiardCue.vy);
+      float cueMomentum = billiardCue.mass * cueSpeed;
+
+      // Apply momentum transfer from cue to ball
+      float impulse = (float)(cueMomentum / b.MASS); 
+
+      // Apply a velocity to the ball based on the cue's momentum and mass
+      b.vx += nx * impulse;
+      b.vy += ny * impulse;
+
+      // Debugging: Print the new ball velocity and cue momentum
+      println("Cue Momentum: " + cueMomentum);
+      println("Ball Velocity after Impulse: (" + b.vx + ", " + b.vy + ")");
+    }
+  }
+}
+
+
 
 
 
