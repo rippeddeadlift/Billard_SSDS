@@ -7,7 +7,8 @@ import ddf.minim.*;    // AudioPlayer, Minim
 
 CBalls theBalls;
 Table table;
-int totalball = 5;               // number of balls 
+int totalball = 1;               // number of balls 
+BilliardCue billiardCue;
 PFont helpFont;      
 boolean showHelp=false;          // toggle help text
 boolean forceFreeze = false;     // toggle game physics 
@@ -29,6 +30,7 @@ void setup()
                                  // for 3D-balls (spheres) with directional light and shininess
   theBalls = new CBalls(this,totalball);
   table = new Table();
+ billiardCue = new BilliardCue(150, 150, 450, 10); // Example position and color
   helpFont = createFont("Arial", 22, true);
   rightwall_x = width;
   floor_y     = height;
@@ -38,13 +40,14 @@ void setup()
 void draw() 
 {
   background(80);  // gray background
-  
+   billiardCue.drag(); // Allow dragging
   lightSpecular(255,255,255);
   directionalLight(204, 204, 204, 0, +1, -1);
   
   
   translate(0,0,-2);    // optional, just to show the box border
   table.draw();
+  billiardCue.display(); // Display the cue
   boxDraw();
   theBalls.draw();
   if (!forceFreeze)  
@@ -106,6 +109,7 @@ void keyPressed()
     
 void mousePressed(){
   theBalls.Mouse();
+  billiardCue.checkMousePressed(); // Check if the cue is clicked
 }
 
 void mouseReleased(){
