@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{geometry}
+\usepackage{amsmath}
 \usepackage{outlines}
 \geometry{a4paper, margin=2cm}
 \usepackage{enumitem}
@@ -47,7 +48,7 @@
 	\item Ein dokumentierter Bericht über die Umsetzung und die Herausforderungen.
 \end{itemize}
 	
-\section*{3D Scene }
+\section{3D Scene }
 \begin{itemize}
 	\item Besteht aus einer Box, die als Tischoberfläche dient mit den Maßen x=300, y=30, z=200
 	\item Beine mit je Maßen x=50, y=100, z=40. Mit 2 Schleifen implementiert:
@@ -66,11 +67,74 @@
 		\1 Kameraposition verbessern für Startszene
 		\1 Bälle in der Pyramide aufstellen für Startszene
 		\1 Taschen implementieren
+		\1 Kollision zwischen der BilliardCue und Bällen verbessern
+		\1 Quellen + Formeln richtig Zitieren
 	\end{outline}
 	\item Herausforderungen
 	\begin{outline}
 		\1 Allgemeines Verständnis der translate() Funktion
 		\2 Erstes Learning war, dass die translate Funktion akkumuliert. translate(50,0,0) und danach translate(70,0,0) summiert sich auf. pushMatrix(), popMatrix() hilft
 	\end{outline}
+	\end{itemize}
+	\newpage
+	\section{Kollisionsdetektion und -antwort}
+
+Die Kollisionsdetektion zwischen den Bällen erfolgt, indem der Abstand zwischen den Mittelpunkten der beiden Bälle berechnet wird. Wenn dieser Abstand kleiner ist als die Summe der Radien der Bälle, wird eine Kollision erkannt. Die Berechnung des Abstands erfolgt mit der Formel:
+
+\[
+\text{Abstand} = \sqrt{(dx)^2 + (dy)^2}
+\]
+
+Dabei sind \(dx\) und \(dy\) die Differenzen der \(x\)- und \(y\)-Koordinaten der beiden Bälle.
+
+\subsection{Elastische Kollision}
+Bei einer Kollision wird die Position der Bälle angepasst, um eine Überlappung zu vermeiden. Dies erfolgt durch Berechnung des Überlappungsbetrags und Verschiebung der Bälle:
+
+\[
+b1.sx -= \texttt{Überlappung} \times \frac{(b1.sx - b2.sx)}{\text{Abstand}}
+\]
+\[
+b1.sy -= \texttt{Überlappung} \times \frac{(b1.sy - b2.sy)}{\text{Abstand}}
+\]
+\[
+b2.sx += \texttt{Überlappung} \times \frac{(b1.sx - b2.sx)}{\text{Abstand}}
+\]
+\[
+b2.sy += \texttt{Überlappung} \times \frac{(b1.sy - b2.sy)}{\text{Abstand}}
+\]
+
+\subsection{Normalvektor und Impulsberechnung}
+Der Normalvektor \((nx, ny)\) definiert die Richtung der Kollision. Er wird durch die Berechnung des Abstands zwischen den Bällen bestimmt:
+
+\[
+nx = \frac{dx}{\text{Abstand}}, \quad ny = \frac{dy}{\text{Abstand}}
+\]
+
+Die relative Geschwindigkeit \(dvx, dvy\) der Bälle in der Normalrichtung wird berechnet, und der Impuls wird mit folgender Formel berechnet:
+
+\[
+\text{Impuls} = \frac{2 \cdot \text{dotProdukt}}{b1.MASS + b2.MASS}
+\]
+
+Der Impuls wird dann verwendet, um die Geschwindigkeiten der Bälle zu aktualisieren:
+
+\[
+b1.vx -= \texttt{Impuls} \times b2.MASS \times nx
+\]
+\[
+b1.vy -= \texttt{Impuls} \times b2.MASS \times ny
+\]
+\[
+b2.vx += \texttt{Impuls} \times b1.MASS \times nx
+\]
+\[
+b2.vy += \texttt{Impuls} \times b1.MASS \times ny
+\]
+
+\subsection{Placeholder}
+\begin{itemize}
+ %Der Normalvektor und die Impulsberechnung sorgen für die korrekte Anwendung der Kollisionskräfte in der richtigen Richtung.
 \end{itemize}
+
+
 \end{document}
