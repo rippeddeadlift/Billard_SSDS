@@ -144,10 +144,10 @@ public class Ball
    */
   void confineToBox() 
   {
-    if (this.sx < leftwall_x  + this.radius)  this.sx = leftwall_x  + this.radius;
-    if (this.sy < ceiling_y   + this.radius)  this.sy = ceiling_y   + this.radius;
-    if (this.sx > rightwall_x - this.radius)  this.sx = rightwall_x - this.radius;
-    if (this.sy > floor_y     - this.radius)  this.sy = floor_y     - this.radius;
+    if (this.sx < leftwall_x+150  + this.radius)  this.sx = leftwall_x+150  + this.radius;
+    if (this.sy < ceiling_y-100   + this.radius)  this.sy = ceiling_y-100   + this.radius;
+    if (this.sx > rightwall_x-150 - this.radius)  this.sx = rightwall_x-150 - this.radius;
+    if (this.sy > floor_y-600    - this.radius)  this.sy =floor_y-600    - this.radius;
   }
 
   /* 

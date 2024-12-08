@@ -16,6 +16,8 @@ boolean frictionMode=false;      // may be used in class Ball
 boolean randomFloor = true;      // may be used in class Ball
 
 color c_red = color(255,0,0);
+color c_green = color(0,255,0);
+color c_blue = color(0,0,255);
 float leftwall_x  = 0;
 float ceiling_y   = 0;
 float rightwall_x;
@@ -29,7 +31,7 @@ void setup()
   size(700, 700, P3D);           // although the game physics is 2D, we do the drawing in 3D to allow 
                                  // for 3D-balls (spheres) with directional light and shininess
   theBalls = new CBalls(this,totalball);
-  table = new Table();
+  table = new Table(400,3,200);
  billiardCue = new BilliardCue(150, 150, 450, 10); // Example position and color
   helpFont = createFont("Arial", 22, true);
   rightwall_x = width;
@@ -60,10 +62,13 @@ void boxDraw() {
     stroke(c_red);
     noFill();
     beginShape(QUADS);
-           vertex(leftwall_x ,  floor_y);
-           vertex(leftwall_x ,ceiling_y);
-           vertex(rightwall_x,ceiling_y);
-           vertex(rightwall_x,  floor_y);
+           vertex(leftwall_x+150,mid_x,  floor_y-600); //links oben zu links unten
+           stroke(c_blue);
+           vertex(leftwall_x+150 ,mid_x,ceiling_y-100);
+           stroke(c_green);
+           vertex(rightwall_x-150,mid_x,ceiling_y-100);
+           stroke(color(255,0,255));
+           vertex(rightwall_x-150, mid_x, floor_y-600);
     endShape();
 
     // ---- activate this code snippet for exercise U5 ------
