@@ -28,7 +28,6 @@ public class CBalls {
       ball[bn].game_physics();
     }
     detectCollisions();  
-    detectCueCollisions();
   }
 
   void detectCollisions() {
@@ -44,6 +43,7 @@ public class CBalls {
 
         // Check if the distance is less than the sum of their radii
         if (distance < b1.Radius() + b2.Radius()) {
+          println("collision detected");
           // Simple elastic collision response
           float overlap = 0.5f * (distance - b1.Radius() - b2.Radius());
 

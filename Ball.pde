@@ -6,7 +6,7 @@
  */
 public class Ball 
 {
-  double DT = 0.06;	// time increment
+  double DT = 1.06;	// time increment
   double MASS = 1.0;
   double g_acc = +9.8;	// gravity constant
 
