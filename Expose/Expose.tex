@@ -87,54 +87,30 @@ Die Kollisionsdetektion zwischen den Bällen erfolgt, indem der Abstand zwischen
 
 Dabei sind \(dx\) und \(dy\) die Differenzen der \(x\)- und \(y\)-Koordinaten der beiden Bälle.
 
-\subsection{Elastische Kollision}
-Bei einer Kollision wird die Position der Bälle angepasst, um eine Überlappung zu vermeiden. Dies erfolgt durch Berechnung des Überlappungsbetrags und Verschiebung der Bälle:
+\subsection{Zentraler elastischer Stoß}
+
+
+Einen Stoß kann man als elastisch bezeichnen, falls sich die Energie der Objekte nach dem Stoß erhalten bleibt. Wir können den elastischen Stoß durch folgende Gleichung virtuell darstellen:
 
 \[
-b1.sx -= \texttt{Überlappung} \times \frac{(b1.sx - b2.sx)}{\text{Abstand}}
+m_1 v_1 + m_2 v_2 = m_1 v_1' + m_2 v_2'
 \]
-\[
-b1.sy -= \texttt{Überlappung} \times \frac{(b1.sy - b2.sy)}{\text{Abstand}}
-\]
-\[
-b2.sx += \texttt{Überlappung} \times \frac{(b1.sx - b2.sx)}{\text{Abstand}}
-\]
-\[
-b2.sy += \texttt{Überlappung} \times \frac{(b1.sy - b2.sy)}{\text{Abstand}}
-\]
+
+\begin{outline}
+	\1 $m_1, m_2$: die Massen der beiden Objekte
+	\1 $v_1, v_2$: die Geschwindigkeiten der beiden Objekte
+\end{outline}
+
+Die rechte Seite der Gleichung steht für den Impuls nach dem Stoß.
+
+
 
 \subsection{Normalvektor und Impulsberechnung}
-Der Normalvektor \((nx, ny)\) definiert die Richtung der Kollision. Er wird durch die Berechnung des Abstands zwischen den Bällen bestimmt:
+Der Normalvektor \((nx, ny)\) definiert die Richtung der Kollision. Er wird durch die Berechnung des Abstands zwischen den Bällen bestimmt.
 
-\[
-nx = \frac{dx}{\text{Abstand}}, \quad ny = \frac{dy}{\text{Abstand}}
-\]
-
-Die relative Geschwindigkeit \(dvx, dvy\) der Bälle in der Normalrichtung wird berechnet, und der Impuls wird mit folgender Formel berechnet:
-
-\[
-\text{Impuls} = \frac{2 \cdot \text{dotProdukt}}{b1.MASS + b2.MASS}
-\]
-
-Der Impuls wird dann verwendet, um die Geschwindigkeiten der Bälle zu aktualisieren:
-
-\[
-b1.vx -= \texttt{Impuls} \times b2.MASS \times nx
-\]
-\[
-b1.vy -= \texttt{Impuls} \times b2.MASS \times ny
-\]
-\[
-b2.vx += \texttt{Impuls} \times b1.MASS \times nx
-\]
-\[
-b2.vy += \texttt{Impuls} \times b1.MASS \times ny
-\]
 
 \subsection{Placeholder}
-\begin{itemize}
- %Der Normalvektor und die Impulsberechnung sorgen für die korrekte Anwendung der Kollisionskräfte in der richtigen Richtung.
-\end{itemize}
+	%Der Normalvektor und die Impulsberechnung sorgen für die korrekte Anwendung der Kollisionskräfte in der richtigen Richtung.
 
 
 \end{document}

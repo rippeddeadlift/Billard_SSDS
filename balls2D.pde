@@ -7,7 +7,7 @@ import ddf.minim.*;    // AudioPlayer, Minim
 
 CBalls theBalls;
 Table table;
-int totalball = 1;               // number of balls 
+int totalball = 2;               // number of balls 
 BilliardCue billiardCue;
 PFont helpFont;      
 boolean showHelp=false;          // toggle help text

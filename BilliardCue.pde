@@ -5,8 +5,8 @@ class BilliardCue {
   float thickness; 
   boolean isSelected = false;
   float mass ;      // Mass of the cue (add this variable)
-  float vx;        // Velocity of the cue along the x-axis
-  float vy;        // Velocity of the cue along the y-axis
+  float vx;        // Velocity x-axis
+  float vy;        // Velocity y-axis
 
   // Constructor
   BilliardCue(float startX, float startY, float cueLength, float cueThickness) {
@@ -14,12 +14,11 @@ class BilliardCue {
     y = startY;
     length = cueLength;
     thickness = cueThickness;
-    mass = 3.5f;  // Directly assign mass
-    vx = 5.0f;    // Directly assign velocity
+    mass = 30f;  
+    vx = 15.0f;  
     vy = 0;
   }
 
-  // Method to display the cue
   void display() {
     noStroke();
 

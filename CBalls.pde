@@ -37,12 +37,15 @@ public class CBalls {
         Ball b1 = ball[i];
         Ball b2 = ball[j];
 
-        // Calculate distance between balls
+        // Distanz zwischen den Bällen
+        // die Differenz der x & y -Koordinaten          
+        // Formel um Distanz zu berechnen: sqrt((b2.sx-b1.sx)^2 + (b2.sy-b1.sy)^2)
+
         float dx = (float)(b1.sx - b2.sx);
         float dy = (float)(b1.sy - b2.sy);
-        float distance = (float)Math.sqrt(dx * dx + dy * dy);
+        float distance = (float)Math.sqrt(dx * dx + dy * dy);  
 
-        // Check if the distance is less than the sum of their radii
+
         if (distance < b1.Radius() + b2.Radius()) {
           // Simple elastic collision response
           float overlap = 0.5f * (distance - b1.Radius() - b2.Radius());
@@ -53,22 +56,21 @@ public class CBalls {
           b2.sx += overlap * (b1.sx - b2.sx) / distance;
           b2.sy += overlap * (b1.sy - b2.sy) / distance;
 
-          // Calculate the normal vector
+          // Einheitsvektor, zeigt die Richtung des Vektors an
           float nx = dx / distance;
           float ny = dy / distance;
 
-          // Calculate relative velocity
+          // Relative Geschwindigkeit
           float dvx = (float)(b1.vx - b2.vx);
           float dvy = (float)(b1.vy - b2.vy);
 
-          // Calculate the relative velocity in the normal direction
-          float dotProduct = dvx * nx + dvy * ny;
+          // Skalarprodukt zweier Vektoren 
+          float skalarprodukt = dvx * nx + dvy * ny;
 
-          // Only resolve collision if balls are moving toward each other
-          if (dotProduct > 0) continue;
+          if (skalarprodukt > 0) continue;
 
           // Calculate the impulse scalar
-          float impulse = 2 * dotProduct / (float)(b1.MASS + b2.MASS);
+          float impulse = 2 * skalarprodukt / (float)(b1.MASS + b2.MASS);
 
           // Apply the impulse to each ball's velocity
           b1.vx -= impulse * b2.MASS * nx;
