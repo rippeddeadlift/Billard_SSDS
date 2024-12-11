@@ -12,34 +12,49 @@
 \date{\today}
 
 \begin{document}	
-	\maketitle		
+	\maketitle	
+	\section*{Projekt-Ziel}	
+
+	Das Ziel in diesem WASP-Projekt ist es, ein Pool-Billard in einer 3D-Umgebung zu implementieren. Die Objekte sollten eine nahezu realistische Reaktion auf Kollisionen mit dem Cue, den Banden, den Taschen und den Kugeln darstellen.
+	
 	\section*{Aufgabenverteilung}
 	
 \subsection*{Ivan Kurilin}
 \begin{itemize}
-	\item \textbf{Stock mit Ballkollision:} Interaktion zwischen dem Stock und dem Ball, wie sie in der Simulation behandelt wird.
-	\item \textbf{Kollision mit Banden:} Kollisionseffekte, die zwischen dem Ball und den Banden auftreten.
-	\item \textbf{Billiard Aufstellung:} Objekte auf dem Billiardtisch zu Beginn des Spiels, um die Simulation zu starten.
+\item \textbf{[AP] Cue mit Kugelkollision:} Interaktion zwischen dem Cue und der Kugel, wie sie in der Simulation behandelt wird.
+Dabei kann der User mit einem Maus-Klick den Cue verwenden. interagieren, den Cue ziehen und die Kraft auf die Kugel leiten. 
+\item \textbf{[AP] Kollision mit Banden:} Kollisionseffekte, die zwischen den Kugeln und den Banden auftreten.
+\item \textbf{[AP] Billard-Aufstellung:} Objekte auf dem Billardtisch zu Beginn des Spiels, um die Simulation zu starten.
+\item \textbf{[AP] Zentraler vollkommen unelastischer Stoß:}
+Hiermit möchten wir eine möglichst realistische Interaktion zwischen dem Cue und der Kugel darstellen.
+
 \end{itemize}
 	
 \subsection*{Dimitrij Pivovar}
 \begin{itemize}
-	\item \textbf{3D Scene:} Die Szene aus verschiedenen Blickwinkeln betrachtbar.
-	\item \textbf{2D Tisch-Erweiterung (Billiard Taschen, Banden):} Erweiterung des 2D-Tisches, die Billiardtaschen und Banden integriert, um eine realistische Interaktion der Bälle zu ermöglichen.
+\item \textbf{[AP] 3D-Kugeln:} Modellierung der 3D-Kugeln, einschließlich ihrer Bewegungen und Interaktionen auf dem Tisch.
+\item \textbf{[AP] 3D-Szene:} Die Szene ist aus verschiedenen Blickwinkeln betrachtbar.
+\item \textbf{[AP] 2D-Tisch-Erweiterung (Billardtaschen, Banden):} Erweiterung des 2D-Tisches, die Billardtaschen und Banden integriert, um eine realistische Interaktion der Kugeln zu ermöglichen.
 \end{itemize}
 
 \subsection*{Mögliche Erweiterung (wird im Team aufgeteilt)}
 \begin{itemize}
-	\item \textbf{3D Bälle:} Modellierung der 3D-Bälle, einschließlich ihrer Bewegungen und Interaktionen auf dem Tisch.
-	\item \textbf{Kugeldesign:} Das Design der Bälle, einschließlich Farbe, Zahlen, die im Billiard verwendet werden.
-	\item \textbf{Regelsystem \& Punktensystem:} Die Definition der Regeln, die das Spiel steuern, einschließlich der Bedingungen für das Gewinnen und Verlieren.
+	
+	\item \textbf{[AP] Kugeldesign:} Das Design der Kugeln, einschließlich Farben und Zahlen, die im Billard verwendet werden.
+	\item \textbf{[AP] Regelsystem \& Punktesystem:} Die Definition der Regeln, die das Spiel steuern, einschließlich der Bedingungen für Gewinnen und Verlieren.
+\end{itemize}
+	\section*{Unterschied zum WPF}
+\begin{itemize}
+\item 3D-Szene, unterschiedliche Kollisionen gleichzeitig (elastische/unelastische Kollisionen), Interaktion mit der Umgebung (man kann den Cue nutzen, Punkte erzielen).
 \end{itemize}
 
-	\section*{Zeitaufwand}
+\section*{Zeitaufwand}
 \begin{itemize}
-	\item Geschätze Deadline: 10.03.2025.
-	\item Geschätzer Zeitaufwand: 1-2 Wochen pro Thema.
+\item Geschätzte Deadline: 10.03.2025.
+\item Geschätzter Zeitaufwand: 9 Arbeitspakete mit jeweils 1–2 Wochen pro [AP]. Damit kommen wir auf ca. 756 Stunden, auf 2 Teilnehmer aufgeteilt.
 \end{itemize}
+
+	\newpage
 
 \section*{Erwartete Ergebnisse}
 \begin{itemize}
@@ -63,11 +78,11 @@
 	\end{outline}
 	\item TODOs
 	\begin{outline}
-		\1 Bounding Box für Bälle auf Tischoberfläche begrenzen
+		\1 Bounding Box für Kugeln auf Tischoberfläche begrenzen
 		\1 Kameraposition verbessern für Startszene
-		\1 Bälle in der Pyramide aufstellen für Startszene
+		\1 Kugeln in der Pyramide aufstellen für Startszene
 		\1 Taschen implementieren
-		\1 Kollision zwischen der BilliardCue und Bällen verbessern
+		\1 Kollision zwischen der BillardCue und Kugeln verbessern
 		\1 Quellen + Formeln richtig Zitieren
 	\end{outline}
 	\item Herausforderungen
@@ -79,13 +94,13 @@
 	\newpage
 	\section{Kollisionsdetektion und -antwort}
 
-Die Kollisionsdetektion zwischen den Bällen erfolgt, indem der Abstand zwischen den Mittelpunkten der beiden Bälle berechnet wird. Wenn dieser Abstand kleiner ist als die Summe der Radien der Bälle, wird eine Kollision erkannt. Die Berechnung des Abstands erfolgt mit der Formel:
+Die Kollisionsdetektion zwischen den Kugeln erfolgt, indem der Abstand zwischen den Mittelpunkten der beiden Kugeln berechnet wird. Wenn dieser Abstand kleiner ist als die Summe der Radien der Kugel, wird eine Kollision erkannt. Die Berechnung des Abstands erfolgt mit der Formel:
 
 \[
 \text{Abstand} = \sqrt{(dx)^2 + (dy)^2}
 \]
 
-Dabei sind \(dx\) und \(dy\) die Differenzen der \(x\)- und \(y\)-Koordinaten der beiden Bälle.
+Dabei sind \(dx\) und \(dy\) die Differenzen der \(x\)- und \(y\)-Koordinaten der beiden Kugeln.
 
 \subsection{Zentraler elastischer Stoß}
 
@@ -106,7 +121,7 @@ Die rechte Seite der Gleichung steht für den Impuls nach dem Stoß.
 
 
 \subsection{Normalvektor und Impulsberechnung}
-Der Normalvektor \((nx, ny)\) definiert die Richtung der Kollision. Er wird durch die Berechnung des Abstands zwischen den Bällen bestimmt.
+Der Normalvektor \((nx, ny)\) definiert die Richtung der Kollision. Er wird durch die Berechnung des Abstands zwischen der Kugel bestimmt.
 
 
 \subsection{Placeholder}
