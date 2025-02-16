@@ -2,40 +2,53 @@
 /**
  * Container class for a number (totalball) of Ball objects
  */
+ import java.util.*;
 public class CBalls {
 
+  PImage texture;
   boolean mousedown   = false;
+  ArrayList<Integer> billardNumbers = new ArrayList();
+  
+  ArrayList<Ball> ballContainer = new ArrayList();
 
-  Ball[] ball;
-
-  CBalls(PApplet pApp, int totalball) {
-    minim = new Minim(pApp);
-
-    ball = new Ball[totalball];
-    for (int bn=0; bn < ball.length; bn++)
-      ball[bn] = new Ball(minim, bn);
+  CBalls(int totalball) {
+    billardNumbers.addAll(List.of(1,2,3,4,5,6,7,9,10,11,12,13,14,15));
+    for (int bn=0; bn < totalball; bn++){
+        if(bn == 10){
+          texture = loadImage("billard_textures/8.jpg");
+          ballContainer.add(new Ball(bn, texture));
+        }else{
+          int random = (int)random(billardNumbers.size());
+          int randomFromArray = billardNumbers.get(random); //<>//
+          billardNumbers.remove(Integer.valueOf(randomFromArray));
+          texture = loadImage("billard_textures/" + randomFromArray +".jpg");
+          ballContainer.add(new Ball(bn, texture));
+        }
+    }
+    ballContainer.add(new Ball());
   }
 
   void draw()
   {
     // draw the balls
-    for (int bn=0; bn < ball.length; bn++)
-      ball[bn].draw();
+    for (int bn=0; bn < ballContainer.size(); bn++){
+      ballContainer.get(bn).draw();
+    }
   }
 
   void game_physics() {
-    for (int bn = 0; bn < ball.length; bn++) {
-      ball[bn].game_physics();
+    for (int bn = 0; bn < ballContainer.size(); bn++) {
+      ballContainer.get(bn).game_physics();
     }
     detectCollisions();  
     detectCueCollisions();
   }
 
   void detectCollisions() {
-    for (int i = 0; i < ball.length; i++) {
-      for (int j = i + 1; j < ball.length; j++) {
-        Ball b1 = ball[i];
-        Ball b2 = ball[j];
+    for (int i = 0; i < ballContainer.size(); i++) {
+      for (int j = i + 1; j < ballContainer.size(); j++) {
+        Ball b1 = ballContainer.get(i);
+        Ball b2 = ballContainer.get(j);
 
         // Distanz zwischen den Bällen
         // die Differenz der x & y -Koordinaten          
@@ -82,8 +95,8 @@ public class CBalls {
     }
   }
 void detectCueCollisions() {
-  for (int i = 0; i < ball.length; i++) {
-    Ball b = ball[i];
+  for (int i = 0; i < ballContainer.size(); i++) {
+    Ball b = ballContainer.get(i);
 
     // Position of the cue tip
     float cueTipX = billiardCue.x + billiardCue.length;
@@ -94,7 +107,7 @@ void detectCueCollisions() {
     float distance = dist(cueTipX, cueTipY, fBallx, fBallxy);
 
     // Debugging: Print distance and ball radius
-    println("Cue-Ball Distance: " + distance + " Ball Radius: " + b.Radius());
+    //println("Cue-Ball Distance: " + distance + " Ball Radius: " + b.Radius());
 
     // Check if distance is less than the ball's radius (i.e., if the cue tip is colliding with the ball)
     if (distance < b.Radius()) {
@@ -117,33 +130,18 @@ void detectCueCollisions() {
       b.vy += ny * impulse;
 
       // Debugging: Print the new ball velocity and cue momentum
-      println("Cue Momentum: " + cueMomentum);
-      println("Ball Velocity after Impulse: (" + b.vx + ", " + b.vy + ")");
+      //println("Cue Momentum: " + cueMomentum);
+      //println("Ball Velocity after Impulse: (" + b.vx + ", " + b.vy + ")");
     }
   }
 }
-
-
-
-
-
-  void stop()
-  {
-    // make sure to close all AudioPlayer objects
-    for (int bn=0; bn < ball.length; bn++) {
-      ball[bn].kick.close();
-      ball[bn].snare.close();
-    }
-
-    minim.stop();
-  }
 
   /* Clicked mouse */
   void Mouse ()
   {
     if (mouseButton == LEFT) System.out.printf("State: MOUSE_DOWN\n");
-    for (int bn=0; bn < ball.length; bn++) {
-      ball[bn].Mouse();
+    for (int bn=0; bn < ballContainer.size(); bn++) {
+      ballContainer.get(bn).Mouse();
     }
   }
 
@@ -151,8 +149,8 @@ void detectCueCollisions() {
   void MouseUp ()
   {
     System.out.printf("State: MOUSE_RELEASED\n");
-    for (int bn=0; bn < ball.length; bn++) {
-      ball[bn].MouseUp();
+    for (int bn=0; bn < ballContainer.size(); bn++) {
+      ballContainer.get(bn).MouseUp();
     }
   }
 }
