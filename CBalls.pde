@@ -11,6 +11,7 @@ public class CBalls {
   boolean mousedown   = false;
   ArrayList<Integer> billardNumbers = new ArrayList();
   ArrayList<Ball> ballContainer = new ArrayList();
+  float velocityThreshold = 0.15; 
 
   CBalls(int totalball) {
     billardNumbers.addAll(List.of(1,2,3,4,5,6,7,9,10,11,12,13,14,15));
@@ -40,6 +41,14 @@ void setCue(BillardCue c) {
       ballContainer.get(bn).draw();
     }
   }
+boolean areAllBallsStationary() {
+for (Ball ball : ballContainer) {
+        // Check if ball's velocity exceeds the threshold
+        if (abs( (float) ball.vx) > velocityThreshold || abs((float) ball.vy) > velocityThreshold) {
+            return false;
+        }
+        
+}return true;}
 
   void game_physics() {
     for (int bn = 0; bn < ballContainer.size(); bn++) {
@@ -67,9 +76,7 @@ void setCue(BillardCue c) {
                   }
               }
           }
-          if (isCueBallCollision(b1) && billardCue != null) {
-          applyCueImpulse(b1);
-      }
+
       }
   }
    void collisionanswer(float distance, Ball b1, Ball b2, float dx, float dy){
@@ -99,43 +106,25 @@ void setCue(BillardCue c) {
      };
  
   }
-boolean isCueBallCollision(Ball ball) {
-  float cueLeftX = billardCue.x - billardCue.thickness / 2; 
-  float cueRightX = billardCue.x + billardCue.thickness / 2; 
 
-  boolean isBallNearCue = (ball.sx + ball.Radius() > cueLeftX) && 
-                          (ball.sx - ball.Radius() < cueRightX);
-
-  // Check if ball is at the tip of the cue (impact zone)
-  boolean isBallAtCueTip = (ball.sy + ball.Radius() > billardCue.y - billardCue.length / 2) && 
-                           (ball.sy - ball.Radius() < billardCue.y + billardCue.length / 2);
-
-  return isBallNearCue && isBallAtCueTip;
-}
-void applyCueImpulse(Ball ball) {
-  float force = 5.0;  // Adjust as needed
-
-  // Only apply vertical velocity change
-  ball.vy += force / ball.MASS;
-}
 
 void keyPressed()
 {
   if (keyCode == UP) {
-      System.out.printf("State: key up \n");
+      System.out.printf("State: Strength \n" + billardCue.shootStrength);
       billardCue.shootStrength += 5; 
     } else if (keyCode == DOWN) {      
-        System.out.printf("State: key down \n");
-        billardCue.shootStrength = max(0, billardCue.shootStrength - 5);
-    } else if (keyCode == LEFT) {
-          System.out.printf("State: key l \n");
-        billardCue.angle += PI / 180;; 
-    } else if (keyCode == RIGHT) {
-          System.out.printf("State: key right \n");
-        billardCue.angle -= PI / 180;; 
+      System.out.printf("State: Strength \n" + billardCue.shootStrength);
+      billardCue.shootStrength = max(0, billardCue.shootStrength - 5);
+  } else if (keyCode == LEFT) {
+      System.out.printf("State: angle \n" + billardCue.angle);
+      billardCue.angle += PI / 180;; 
+  } else if (keyCode == RIGHT) {
+      System.out.printf("State: angle \n" + billardCue.angle);
+      billardCue.angle -= PI / 180;        
     } else if (key == ' ') { 
-    System.out.printf("State: space down\n");
-        hitBall();
+      billardCue.isCueVisible = false;
+      hitBall();
     }
 }
 void hitBall() {
@@ -148,19 +137,11 @@ void hitBall() {
     if (distance > 0) { 
         float normalizedDirX = dirX / distance;
         float normalizedDirY = dirY / distance;
-
-        // Calculate velocity based on the cue's angle
         float velocity = billardCue.shootStrength * (float) (billardCue.mass / ballContainer.get(15).MASS);
-
-        // Apply the angle to determine the shooting direction
         float angleDirX = cos(billardCue.angle);
         float angleDirY = sin(billardCue.angle);
-        
-        // Update the white ball's velocity
         whiteBall.vx += angleDirX * -velocity;
         whiteBall.vy += angleDirY * -velocity;
-
-        // Reset shoot strength
         billardCue.shootStrength = 0;
     }
 }

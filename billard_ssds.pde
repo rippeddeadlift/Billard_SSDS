@@ -35,10 +35,10 @@ void setupCue() {
     float ballY = (float) whiteBall.sy;
 
     float cueLength = 500;  
-    float cueOffset = 300;  
+    float cueOffset = 50;  
     float cueThickness = 10;
-    float cueStartX = ballX - cueThickness / 2; // Center the cue under the ball
-    float cueStartY = ballY + cueOffset; // Start the cue offset from the ball
+    float cueStartX = ballX - cueThickness / 2; 
+    float cueStartY = ballY + cueOffset; 
     billardCue = new BillardCue(cueStartX, cueStartY, cueThickness, cueLength, cueOffset);
 }
 
@@ -47,39 +47,27 @@ void updateCue() {
     float ballY = (float) whiteBall.sy; 
     float cueLength = billardCue.length; 
     float cueOffset = billardCue.cueOffset; 
-
-    // Update the cue's angle based on your input; it might be an adjustment variable
-    // Ensure angle is in radians
     float angle = billardCue.angle; 
-
-    // Calculate the tip position based on the angle and length of the cue
-    float cueTipX = ballX + cos(angle) * cueLength; 
-    float cueTipY = ballY + sin(angle) * cueLength; 
-
-    // Update cue's starting position
-    billardCue.x = ballX - billardCue.thickness / 2; // Keep cue centered under the ball
-    billardCue.y = ballY + cueOffset; // Adjust the Y position if needed
-
-    println("Cue Tip Position: (" + cueTipX + ", " + cueTipY + ")");
+    float cueStartX = ballX + cos(angle) * (cueOffset + billardCue.thickness / 2); 
+    float cueStartY = ballY + sin(angle) * (cueOffset + billardCue.thickness / 2); 
+    float cueTipX = cueStartX + cos(angle) * cueLength; 
+    float cueTipY = cueStartY + sin(angle) * cueLength; 
+    billardCue.x = cueStartX; 
+    billardCue.y = cueStartY; 
 }
-
-
-
-
-
 
 
 void draw() {
   camera(camX, camY, camZ, width / 2, height / 2, 0, 0, 1, 0);
   background(color(255, 255, 255));
-  billardCue.drag(); 
   lightSpecular(255, 255, 255);
   directionalLight(204, 204, 204, 0, +1, -1);
   translate(0, 0, -2);    
-  table.draw();
-  updateCue();
-  billardCue.display(); 
-
+  table.draw();  
+  if (theBalls.areAllBallsStationary()) {
+    updateCue();
+    billardCue.display(); 
+  }
   boxDraw();
   theBalls.draw();
   theBalls.game_physics();
