@@ -10,9 +10,9 @@ float ceiling_y   = 0;
 float rightwall_x;
 float floor_y;
 float mid_x;
-float camX = 295;
-float camY = 1425;
-float camZ = 635;
+float camX = 294;
+float camY = 481;
+float camZ = 900;
 float prevMouseX, prevMouseY;
 boolean dragging = false;
 
@@ -22,26 +22,28 @@ void setup()
   size(600, 960, P3D);      
   theBalls = new CBalls(totalball);
   table = new Table(leftwall_x, rightwall_x, floor_y, ceiling_y);
-  billiardCue = new BilliardCue(150, 150, 450, 10); // Example position and color
+  billiardCue = new BilliardCue(520, 866, 15, 500); 
+
   rightwall_x = width;
   floor_y     = height;
   mid_x = width/2.0;
 }
 
-void draw() 
-{
+void draw() {
   camera(camX, camY, camZ, width / 2, height / 2, 0, 0, 1, 0);
-  background(color(255,255,255));
+  background(color(255, 255, 255));
   billiardCue.drag(); 
-  lightSpecular(255,255,255);
+  lightSpecular(255, 255, 255);
   directionalLight(204, 204, 204, 0, +1, -1);
-  translate(0,0,-2);    
+  translate(0, 0, -2);    
   table.draw();
-  billiardCue.display(); // Display the cue
+  billiardCue.display(); 
+
   boxDraw();
   theBalls.draw();
   theBalls.game_physics();
 }
+
 
 // draw the sphere-confing box
 void boxDraw() {
@@ -65,13 +67,18 @@ void mousePressed() {
     prevMouseX = mouseX;
     prevMouseY = mouseY;
     dragging = true;
-  }
+  }  
+if (billiardCue.isMouseOverCue()) {
+        billiardCue.isDragging = true; // Start dragging
+        billiardCue.cueOffset = new PVector(mouseX - billiardCue.x, mouseY - billiardCue.y); // Calculate the offset from the mouse to the cue's top-left corner
+    }
 }
 
 void mouseReleased() {
   if (mouseButton == RIGHT) {
     dragging = false;
   }
+   billiardCue.isDragging = false; 
 }
 
 void mouseDragged() {
@@ -85,6 +92,10 @@ void mouseDragged() {
     prevMouseX = mouseX;
     prevMouseY = mouseY;
   }
+  if (billiardCue.isDragging) {
+        billiardCue.x = mouseX - billiardCue.cueOffset.x; 
+        billiardCue.y = mouseY - billiardCue.cueOffset.y; 
+    }
 }
 void mouseWheel(MouseEvent event) {
   float e = event.getCount();
