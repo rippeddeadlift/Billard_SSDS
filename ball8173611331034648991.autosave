@@ -34,9 +34,8 @@ public class Ball {
     our_sphere.setTexture(texture);
   }
 
-  Ball(int count) {
+  Ball() {
     radius = 0.4f * 60;
-        this.bn = count;
     this.vy = 0;
     this.sy = 800;
     this.vx = 0;

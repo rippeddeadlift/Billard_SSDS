@@ -18,17 +18,15 @@ public class CBalls {
         if(bn == 10){
           texture = loadImage("billard_textures/8.jpg");
           ballContainer.add(new Ball(bn, texture));
-        }else if(bn == 15){
-          ballContainer.add(new Ball(bn));
-        }
-        else{
+        }else{
           int random = (int)random(billardNumbers.size());
-          int randomFromArray = billardNumbers.get(random); //<>// //<>//
+          int randomFromArray = billardNumbers.get(random); //<>//
           billardNumbers.remove(Integer.valueOf(randomFromArray));
           texture = loadImage("billard_textures/" + randomFromArray +".jpg");
           ballContainer.add(new Ball(bn, texture));
         }
     }
+    ballContainer.add(new Ball());
   }
 void setCue(BillardCue c) {
     this.billardCue = c;
@@ -119,62 +117,18 @@ void applyCueImpulse(Ball ball) {
   ball.vy += force / ball.MASS;
 }
 
-void keyPressed()
-{
-  if (keyCode == UP) {
-      System.out.printf("State: key up \n");
-      billardCue.shootStrength += 5; 
-    } else if (keyCode == DOWN) {      
-        System.out.printf("State: key down \n");
-        billardCue.shootStrength = max(0, billardCue.shootStrength - 5);
-    } else if (keyCode == LEFT) {
-          System.out.printf("State: key l \n");
-        billardCue.angle += PI / 180;; 
-    } else if (keyCode == RIGHT) {
-          System.out.printf("State: key right \n");
-        billardCue.angle -= PI / 180;; 
-    } else if (key == ' ') { 
-    System.out.printf("State: space down\n");
-        hitBall();
+void releaseCue() {
+  for (Ball b : ballContainer) {
+    if (isCueBallCollision(b)) {
+      applyCueImpulse(b);
     }
+  }
 }
-void hitBall() {
-    float cueTipX = billardCue.x + billardCue.thickness / 2; 
-    float cueTipY = billardCue.y - billardCue.length;
-    float dirX = (float) whiteBall.sx - cueTipX;
-    float dirY = (float) whiteBall.sy - cueTipY;
-    float distance = dist(cueTipX, cueTipY, (float) whiteBall.sx, (float) whiteBall.sy);
-    
-    if (distance > 0) { 
-        float normalizedDirX = dirX / distance;
-        float normalizedDirY = dirY / distance;
-
-        // Calculate velocity based on the cue's angle
-        float velocity = billardCue.shootStrength * (float) (billardCue.mass / ballContainer.get(15).MASS);
-
-        // Apply the angle to determine the shooting direction
-        float angleDirX = cos(billardCue.angle);
-        float angleDirY = sin(billardCue.angle);
-        
-        // Update the white ball's velocity
-        whiteBall.vx += angleDirX * -velocity;
-        whiteBall.vy += angleDirY * -velocity;
-
-        // Reset shoot strength
-        billardCue.shootStrength = 0;
-    }
-}
-
-
-
-
 
   /* Clicked mouse */
   void Mouse ()
   {
-    if (mouseButton == LEFT) {
-      System.out.printf("State: MOUSE_DOWN\n");
-      }
+    if (mouseButton == LEFT) System.out.printf("State: MOUSE_DOWN\n");
     for (int bn=0; bn < ballContainer.size(); bn++) {
       ballContainer.get(bn).Mouse();
     }
