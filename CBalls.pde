@@ -11,8 +11,9 @@ public class CBalls {
   boolean mousedown   = false;
   ArrayList<Integer> billardNumbers = new ArrayList();
   ArrayList<Ball> ballContainer = new ArrayList();
-  float velocityThreshold = 0.15; 
-
+  float velocityThreshold = 0.2; 
+  boolean isStrengthIncreasing;
+float decayRate = 0.5; 
   CBalls(int totalball) {
     billardNumbers.addAll(List.of(1,2,3,4,5,6,7,9,10,11,12,13,14,15));
     for (int bn=0; bn < totalball; bn++){
@@ -26,29 +27,31 @@ public class CBalls {
           int random = (int)random(billardNumbers.size());
           int randomFromArray = billardNumbers.get(random); //<>// //<>//
           billardNumbers.remove(Integer.valueOf(randomFromArray));
-          texture = loadImage("billard_textures/" + randomFromArray +".jpg");
+          texture = loadImage("billard_textures/" + randomFromArray + ".jpg");
           ballContainer.add(new Ball(bn, texture));
         }
     }
   }
-void setCue(BillardCue c) {
-    this.billardCue = c;
-}
-  void draw()
-  {
-    // draw the balls
-    for (int bn=0; bn < ballContainer.size(); bn++){
-      ballContainer.get(bn).draw();
-    }
+  void setCue(BillardCue c) {
+      this.billardCue = c;
   }
-boolean areAllBallsStationary() {
-for (Ball ball : ballContainer) {
-        // Check if ball's velocity exceeds the threshold
-        if (abs( (float) ball.vx) > velocityThreshold || abs((float) ball.vy) > velocityThreshold) {
-            return false;
-        }
-        
-}return true;}
+  void draw()
+    {
+      // draw the balls
+      for (int bn=0; bn < ballContainer.size(); bn++){
+        ballContainer.get(bn).draw();
+      }
+    }
+  boolean areAllBallsStationary() {
+    for (Ball ball : ballContainer) {
+            // Check if ball's velocity exceeds the threshold
+            if (abs( (float) ball.vx) > velocityThreshold || abs((float) ball.vy) > velocityThreshold) {
+                return false;
+            }
+            
+    }
+  return true;
+  }
 
   void game_physics() {
     for (int bn = 0; bn < ballContainer.size(); bn++) {
@@ -110,22 +113,25 @@ for (Ball ball : ballContainer) {
 
 void keyPressed()
 {
-  if (keyCode == UP) {
-      System.out.printf("State: Strength \n" + billardCue.shootStrength);
-      billardCue.shootStrength += 5; 
-    } else if (keyCode == DOWN) {      
-      System.out.printf("State: Strength \n" + billardCue.shootStrength);
-      billardCue.shootStrength = max(0, billardCue.shootStrength - 5);
-  } else if (keyCode == LEFT) {
-      System.out.printf("State: angle \n" + billardCue.angle);
-      billardCue.angle += PI / 180;; 
-  } else if (keyCode == RIGHT) {
-      System.out.printf("State: angle \n" + billardCue.angle);
-      billardCue.angle -= PI / 180;        
-    } else if (key == ' ') { 
-      billardCue.isCueVisible = false;
-      hitBall();
+  // if (key == 'w') {
+  //     System.out.printf("State: Strength \n" + billardCue.shootStrength);
+  //     billardCue.shootStrength += 5; 
+  //   } else if (key == 's') {      
+  //     System.out.printf("State: Strength \n" + billardCue.shootStrength);
+  //     billardCue.shootStrength = max(0, billardCue.shootStrength - 5);
+  // }  else if (key == ' ') { 
+  //     billardCue.isCueVisible = false;
+  //     hitBall();
+  //   } 
+    if (key == ' ') {
+        isStrengthIncreasing = true; 
     }
+}
+
+void keyReleased() {
+  billardCue.isCueVisible = false;
+    isStrengthIncreasing = false; 
+    hitBall();
 }
 void hitBall() {
     float cueTipX = billardCue.x + billardCue.thickness / 2; 

@@ -12,24 +12,36 @@ class BillardCue {
   float shootStrength;
   boolean isDragging = false; 
   boolean isCueVisible = true;
+  PImage texture;
+  PShape our_cue;
 
-  BillardCue(float startX, float startY, float cueThickness, float cueLength, float cueOffset) {
-    this.cueOffset = cueOffset;
-    x = startX;
-    y = startY;
-    length = cueLength;
-    thickness = cueThickness;
-    mass = 3.2f;  
-    vx = 0f;  
-    vy = 0;
-  }
-void display() {
-  float cueTipX = x + cos(angle) * length; 
-  float cueTipY = y + sin(angle) * length; 
-  stroke(#D19A6A);
-  strokeWeight(thickness);
-  line(x, y, cueTipX, cueTipY); 
-}
+    BillardCue(float startX, float startY, float cueThickness, float cueLength, float cueOffset, PImage texture) {
+        this.cueOffset = cueOffset;
+        this.x = startX;
+        this.y = startY;
+        this.length = cueLength;
+        this.thickness = cueThickness;
+        this.mass = 3.2f;  
+        this.vx = 0f;  
+        this.vy = 0;
+        our_cue = createShape();
+        our_cue.beginShape(QUADS);
+        our_cue.texture(texture);
+        our_cue.noStroke();
+        our_cue.vertex(0, -thickness / 2, 0, 0);
+        our_cue.vertex(length, -thickness / 2, texture.width, 0);
+        our_cue.vertex(length, thickness / 2, texture.width, texture.height);
+        our_cue.vertex(0, thickness / 2, 0, texture.height);        
+        our_cue.endShape();
+    }
+
+    void display() {
+        pushMatrix(); 
+        translate(x, y); 
+        rotate(angle); 
+        shape(our_cue);
+        popMatrix(); 
+    }
 
   
 

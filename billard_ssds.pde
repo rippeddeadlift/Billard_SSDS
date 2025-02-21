@@ -3,7 +3,7 @@ Ball whiteBall;
 Table table;
 int totalball = 16;           
 BillardCue billardCue;
-
+ShootingBar shootingBar;
 color c_red = color(255,0,0);
 float leftwall_x  = 0;
 float ceiling_y   = 0;
@@ -15,13 +15,14 @@ float camY = 481;
 float camZ = 900;
 float prevMouseX, prevMouseY;
 boolean dragging = false;
-
+PImage texture;
 void setup() 
 {
   size(600, 960, P3D);      
   theBalls = new CBalls(totalball);
   table = new Table(leftwall_x, rightwall_x, floor_y, ceiling_y);  
-  setupCue();
+  setupCue();  
+  shootingBar = new ShootingBar(10, height - 30, 150, 200, 20, billardCue);
   theBalls.setCue(billardCue);
 
   rightwall_x = width;
@@ -33,13 +34,13 @@ void setupCue() {
     whiteBall = theBalls.ballContainer.get(15);
     float ballX = (float) whiteBall.sx;
     float ballY = (float) whiteBall.sy;
-
+    texture = loadImage("billard_textures/cue.jpg");
     float cueLength = 500;  
     float cueOffset = 50;  
     float cueThickness = 10;
     float cueStartX = ballX - cueThickness / 2; 
     float cueStartY = ballY + cueOffset; 
-    billardCue = new BillardCue(cueStartX, cueStartY, cueThickness, cueLength, cueOffset);
+    billardCue = new BillardCue(cueStartX, cueStartY, cueThickness, cueLength, cueOffset,texture);
 }
 
 void updateCue() {
@@ -47,6 +48,12 @@ void updateCue() {
     float ballY = (float) whiteBall.sy; 
     float cueLength = billardCue.length; 
     float cueOffset = billardCue.cueOffset; 
+    if (mouseButton != RIGHT){
+      float dx = mouseX - ballX;
+      float dy = mouseY - ballY;
+      billardCue.angle = atan2(dy, dx);  
+    }
+
     float angle = billardCue.angle; 
     float cueStartX = ballX + cos(angle) * (cueOffset + billardCue.thickness / 2); 
     float cueStartY = ballY + sin(angle) * (cueOffset + billardCue.thickness / 2); 
@@ -64,13 +71,21 @@ void draw() {
   directionalLight(204, 204, 204, 0, +1, -1);
   translate(0, 0, -2);    
   table.draw();  
-  if (theBalls.areAllBallsStationary()) {
-    updateCue();
-    billardCue.display(); 
-  }
+ if (theBalls.areAllBallsStationary()) {
+        updateCue(); 
+        billardCue.display(); 
+        if (theBalls.isStrengthIncreasing) {
+            shootingBar.increaseStrength();
+        } else {
+            shootingBar.decreaseStrength();
+        }
+
+        shootingBar.draw();
+    }
   boxDraw();
   theBalls.draw();
   theBalls.game_physics();
+
 }
 
 
@@ -90,6 +105,11 @@ void keyPressed()
 {
   theBalls.keyPressed();
 }
+
+void keyReleased(){
+  theBalls.keyReleased();
+}
+
 
 void mousePressed() {
   if (mouseButton == RIGHT) {
