@@ -31,12 +31,16 @@ class ShootingBar {
     }
 
     
-    void draw() {
-        
-        fill(200); 
-        rect(x, y, barWidth, barHeight);
-        float strengthRatio = cue.shootStrength / maxStrength; 
-        fill(0, 255, 0);
-        rect(x, y, barWidth * strengthRatio, barHeight); 
-    }
+void draw() {
+    pushMatrix();
+    camera(); 
+    fill(200);
+    rect(x, y, barWidth, barHeight);    
+    float strengthRatio = cue.shootStrength / maxStrength;
+    fill(0, 255, 0);
+    rect(x, y, barWidth * strengthRatio, barHeight);
+    popMatrix();
+}
+
+
 }

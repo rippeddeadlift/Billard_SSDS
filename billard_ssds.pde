@@ -22,7 +22,7 @@ void setup()
   theBalls = new CBalls(totalball);
   table = new Table(leftwall_x, rightwall_x, floor_y, ceiling_y);  
   setupCue();  
-  shootingBar = new ShootingBar(10, height - 30, 150, 200, 20, billardCue);
+  shootingBar = new ShootingBar(width/3.0, height - 30, 150, 200, 20, billardCue);
   theBalls.setCue(billardCue);
 
   rightwall_x = width;
