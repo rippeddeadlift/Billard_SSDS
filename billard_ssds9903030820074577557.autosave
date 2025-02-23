@@ -36,7 +36,7 @@ void setupCue() {
     float ballY = (float) whiteBall.sy;
     texture = loadImage("billard_textures/cue.jpg");
     float cueLength = 500;   
-    float cueOffset = 50;  
+    float cueOffset = 20;  
     float cueThickness = 10;
     float cueStartX = ballX - cueThickness / 2; 
     float cueStartY = ballY ; 

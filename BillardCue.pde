@@ -12,6 +12,9 @@ class BillardCue {
   float shootStrength;
   boolean isDragging = false; 
   boolean isCueVisible = true;
+  boolean cueAnimating = false;
+  float cueAnimationProgress = -HALF_PI;
+  float cueSpeed = 0.05; 
   PImage texture;
   PShape our_cue;
 
@@ -36,16 +39,25 @@ class BillardCue {
     }
 
     void display() {
+        float animatedOffset = 50 * sin(cueAnimationProgress) + 20; 
+        float offsetX = animatedOffset * cos(angle); 
+        float offsetY = animatedOffset * sin(angle); 
         pushMatrix(); 
-        translate(x, y); 
+        translate(x + offsetX, y + offsetY);
         rotate(angle); 
         shape(our_cue);
         popMatrix(); 
     }
+void resetCue() {
+    cueAnimationProgress = -HALF_PI;
+    shootStrength = 0;
+}
 
-  
 
-
-
-
+      void animateHit() {
+        if (!cueAnimating) {
+            cueAnimationProgress = -HALF_PI;
+            cueAnimating = true;
+        }
+    }
 }
