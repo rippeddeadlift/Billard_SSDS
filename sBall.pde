@@ -22,6 +22,7 @@ public class Ball {
   int firstRowYAxis = 200;
   PShape our_sphere;
   PImage texture;
+  boolean isWhiteBall = false;
 
   boolean mousedown = false;
 
@@ -34,13 +35,13 @@ public class Ball {
     our_sphere.setTexture(texture);
   }
 
-  Ball(int count) {
+  Ball() {
     radius = 0.4f * 60;
-        this.bn = count;
     this.vy = 0;
     this.sy = 800;
     this.vx = 0;
     this.sx = width / 2;
+    this.isWhiteBall = true;
     our_sphere = createShape(SPHERE, this.Radius());
     our_sphere.setStroke(false);
     our_sphere.setFill(color(255, 255, 255));
