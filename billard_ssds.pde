@@ -1,7 +1,7 @@
 CBalls theBalls;
 Ball whiteBall;
 Table table;
-int totalball = 16;           
+int totalball = 15;           
 BillardCue billardCue;
 ShootingBar shootingBar;
 color c_red = color(255,0,0);
@@ -16,11 +16,13 @@ float camZ = 900;
 float prevMouseX, prevMouseY;
 boolean dragging = false;
 PImage texture;
+GameState currentGameState = GameState.READY;
+
 void setup() 
 {
   size(600, 960, P3D);      
-  theBalls = new CBalls(totalball);
-  table = new Table(leftwall_x, rightwall_x, floor_y, ceiling_y);  
+  table = new Table(leftwall_x, rightwall_x, floor_y, ceiling_y); 
+  theBalls = new CBalls(totalball,table);
   setupCue();  
   shootingBar = new ShootingBar(width/3.0, height - 30, 150, 200, 20, billardCue);
   theBalls.setCue(billardCue);
@@ -31,8 +33,8 @@ void setup()
 }
 
 void setupCue() {
-    whiteBall = theBalls.ballContainer.get(15);
-    float ballX = (float) whiteBall.sx;
+    this.whiteBall = theBalls.getWhiteBall();
+    float ballX = (float) whiteBall.sx; //<>// //<>//
     float ballY = (float) whiteBall.sy;
     texture = loadImage("billard_textures/cue.jpg");
     float cueLength = 500;   
@@ -44,6 +46,7 @@ void setupCue() {
 }
 
 void updateCue() {
+    this.whiteBall = theBalls.getWhiteBall();
     float ballX = (float) whiteBall.sx; 
     float ballY = (float) whiteBall.sy; 
     float cueOffset = billardCue.cueOffset; 
@@ -99,6 +102,14 @@ void keyPressed()
   theBalls.keyPressed();
 }
 
+void updateGameState(){
+  if(theBalls.areAllBallsStationary()){
+    this.currentGameState = GameState.WAITING;
+  }else{
+    this.currentGameState = GameState.READY;
+  }
+}
+    
 void keyReleased(){
   theBalls.keyReleased();
 }
