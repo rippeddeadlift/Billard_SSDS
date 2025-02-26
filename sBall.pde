@@ -104,7 +104,7 @@ public class Ball {
 
     // Update rotation
     this.angleX -= (this.vy / this.radius) * DT;
-    this.angleY -= (this.vx / this.radius) * DT;
+    this.angleY += (this.vx / this.radius) * DT;
     this.angularVelocityX *= ROT_FRICTION;
     this.angularVelocityY *= ROT_FRICTION;
   }
