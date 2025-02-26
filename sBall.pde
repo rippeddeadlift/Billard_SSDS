@@ -23,6 +23,7 @@ public class Ball {
   PShape our_sphere;
   PImage texture;
   boolean isWhiteBall = false;
+  boolean visible = true;
 
   boolean mousedown = false;
 
@@ -77,12 +78,14 @@ public class Ball {
   }
 
   void draw() {
-    pushMatrix();
-    translate(Sx(), Sy(), 0);
-    rotateX((float) angleX);
-    rotateY((float) angleY);
-    shape(our_sphere);
-    popMatrix();
+    if(visible){
+      pushMatrix();
+      translate(Sx(), Sy(), 0);
+      rotateX((float) angleX);
+      rotateY((float) angleY);
+      shape(our_sphere);
+      popMatrix();
+    }
   }
 
   void game_physics() {
@@ -159,6 +162,11 @@ public class Ball {
   void MouseUp() {
     mousedown = false;
   }
+  
+  void setVisibility(boolean v){
+    this.visible = v;
+  }
+
 
   float Radius() {
     return (float) radius;

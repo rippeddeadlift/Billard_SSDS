@@ -13,7 +13,7 @@ public class CBalls {
   
   ArrayList<Ball> ballContainer = new ArrayList();
   Table table;
-  float velocityThreshold = 0.2; 
+  float velocityThreshold = 0.5; 
   boolean isStrengthIncreasing;
   float decayRate = 0.5; 
 
@@ -25,9 +25,9 @@ public class CBalls {
           texture = loadImage("billard_textures/8.jpg");
           ballContainer.add(new Ball(bn, texture));
         }else{
-          int random = (int)random(billardNumbers.size()); //<>// //<>//
-          int randomFromArray = billardNumbers.get(random); //<>//
-          billardNumbers.remove(Integer.valueOf(randomFromArray)); //<>//
+          int random = (int)random(billardNumbers.size()); //<>//
+          int randomFromArray = billardNumbers.get(random);
+          billardNumbers.remove(Integer.valueOf(randomFromArray));  //<>//
           texture = loadImage("billard_textures/" + randomFromArray +".jpg"); //<>//
           ballContainer.add(new Ball(bn, texture));
         }
@@ -38,29 +38,38 @@ public class CBalls {
   void setCue(BillardCue c) {
       this.billardCue = c;
   }
-  void draw()
+  void draw(GameState gameState)
     {
       // draw the balls
       for (int bn=0; bn < ballContainer.size(); bn++){
         ballContainer.get(bn).draw();
       }
+      if(gameState == GameState.BREAKSHOT){
+        placeWhiteBallForBreakShot();
+      }
+      if(gameState == GameState.FOUL){
+        placeWhiteBallAfterFoul();
+      }
     }
+    
+    
   boolean areAllBallsStationary() {
     for (Ball ball : ballContainer) {
-            if (abs( (float) ball.vx) > velocityThreshold || abs((float) ball.vy) > velocityThreshold) {
-                return false;
-            }
-            
+      if (abs( (float) ball.vx) > velocityThreshold || abs((float) ball.vy) > velocityThreshold) {
+        return false;
+      }
     }
-  return true;
+    return true;
   }
 
-  void game_physics() {
+  void game_physics(boolean enabled) {
     for (int bn = 0; bn < ballContainer.size(); bn++) {
-      ballContainer.get(bn).game_physics();
-    }
+        ballContainer.get(bn).game_physics();
+      }
+    if(enabled){
     detectPocketTouch();
     detectCollisions();  
+    }
   }
 
   void detectCollisions() {
@@ -150,56 +159,67 @@ void detect3DCueCollision(){
   }
   }
   void detectPocketTouch(){
-    
     // this is disgusting, ArrayOutOfIndex exception could be thrown when multiple balls get removed on 1 frame
     for (int i = 0; i < ballContainer.size(); i++) {
       for (int j = 0; j < table.pockets.coordinates.size(); j++) {
-        Ball b1 = ballContainer.get(i);
+        Ball b = ballContainer.get(i);
         PVector b2 = table.pockets.coordinates.get(j);
-        float dx = (float)(b1.sx - b2.x);
-        float dy = (float)(b1.sy - b2.y);
+        float dx = (float)(b.Sx() - b2.x);
+        float dy = (float)(b.Sy() - b2.y);
         float distance = (float)Math.sqrt(dx * dx + dy * dy);  
-
-        if (distance < b1.Radius() + table.pockets.pocketRadius/2) {
-          println("remove");
-          this.ballContainer.remove(b1);
+        if (distance < b.Radius() + table.pockets.pocketRadius/2) {
+          if(b.isWhiteBall) {
+            println("White ball pocketed");
+            println("FOUL");
+            b.setVisibility(false);
+            b.vx = 0;
+            b.vy = 0;
+            currentGameState = GameState.FOUL;
+          }else{
+            ballContainer.remove(b);
+          }
         }
       }
     }
   }
   
   PVector getWhiteBallCoordinates(){
-    for(int i = 0; i < ballContainer.size(); i++){
-      Ball b = ballContainer.get(i);
-      if(b.isWhiteBall){
-        return new PVector(b.Sx(), b.Sy());
-      }
-    }
-    return null;
+    var b = getWhiteBall();
+    return new PVector(b.Sx(), b.Sy());
   }
-
-void keyReleased() {
-  billardCue.isCueVisible = false;
-  billardCue.cueAnimating = false;
-  isStrengthIncreasing = false; 
-  Ball b = getWhiteBall();
-  println(b);
-  hitBall(getWhiteBall());  
-  billardCue.resetCue();
-}
-void hitBall(Ball whiteBall) {
-    float cueTipX = billardCue.x + billardCue.thickness / 2; 
-    float cueTipY = billardCue.y - billardCue.length;
-    float distance = dist(cueTipX, cueTipY, (float) whiteBall.sx, (float) whiteBall.sy);
-    
-    if (distance > 0) { 
-        float velocity = billardCue.shootStrength * (float) (billardCue.mass / whiteBall.MASS);
-        float angleDirX = cos(billardCue.angle);
-        float angleDirY = sin(billardCue.angle);
-        whiteBall.vx += angleDirX * -velocity;
-        whiteBall.vy += angleDirY * -velocity;
-        billardCue.shootStrength = 0;
-    }
+  
+  void placeWhiteBallForBreakShot(){
+      var ball = getWhiteBall();
+      ball.sx = constrain(mouseX,0,width);
+  }
+  void placeWhiteBallAfterFoul(){
+    var ball = getWhiteBall();
+    ball.setVisibility(true);
+    ball.sx = mouseX;
+    ball.sy = mouseY;
+  }
+  
+  void keyReleased() {
+    billardCue.isCueVisible = false;
+    billardCue.cueAnimating = false;
+    isStrengthIncreasing = false; 
+    hitBall(getWhiteBall());  
+    billardCue.resetCue();
+  }
+  
+  void hitBall(Ball whiteBall) {
+      float cueTipX = billardCue.x + billardCue.thickness / 2; 
+      float cueTipY = billardCue.y - billardCue.length;
+      float distance = dist(cueTipX, cueTipY, (float) whiteBall.sx, (float) whiteBall.sy);
+      
+      if (distance > 0) { 
+          float velocity = billardCue.shootStrength * (float) (billardCue.mass / whiteBall.MASS);
+          float angleDirX = cos(billardCue.angle);
+          float angleDirY = sin(billardCue.angle);
+          whiteBall.vx += angleDirX * -velocity;
+          whiteBall.vy += angleDirY * -velocity;
+          billardCue.shootStrength = 0;
+      }
   }
    
   Ball getWhiteBall(){
@@ -207,24 +227,5 @@ void hitBall(Ball whiteBall) {
       if(b.isWhiteBall) return b;
     }
     return null;
-  }
-  /* Clicked mouse */
-  void Mouse ()
-  {
-    if (mouseButton == LEFT) {
-      System.out.printf("State: MOUSE_DOWN\n");
-      }
-    for (int bn=0; bn < ballContainer.size(); bn++) {
-      ballContainer.get(bn).Mouse();
-    }
-  }
-
-  /* Released mouse */
-  void MouseUp ()
-  {
-    System.out.printf("State: MOUSE_RELEASED\n");
-    for (int bn=0; bn < ballContainer.size(); bn++) {
-      ballContainer.get(bn).MouseUp();
-    }
   }
 }
