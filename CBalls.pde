@@ -15,6 +15,8 @@ public class CBalls {
   boolean isStrengthIncreasing;
   float decayRate = 0.5; 
   ArrayList<Ball> pocketedBalls = new ArrayList<>(); 
+  
+  ArrayList<Ball> ballsToRemove = new ArrayList<>();
   boolean manageReady = false;
 GameController gameController;
   CBalls(int totalball, Table table, GameController gameController) {
@@ -108,7 +110,7 @@ GameController gameController;
      float dvx = (float)(b1.vx - b2.vx);
      float dvy = (float)(b1.vy - b2.vy);  
 
-  //dot() for dot product
+
      float skalarprodukt = dvx * nx + dvy * ny;
   
      if (skalarprodukt <= 0){
@@ -146,6 +148,13 @@ void keyPressed()
     }
 }
 void detectPocketTouch() {
+        for (Ball ball : ballsToRemove) {
+              if (ball.scale < 0.01)
+              {
+              ballContainer.remove(ball);       
+              }
+          }
+
         for (int i = 0; i < ballContainer.size(); i++) {
             for (int j = 0; j < table.pockets.coordinates.size(); j++) {
                 Ball b = ballContainer.get(i);
@@ -161,16 +170,18 @@ void detectPocketTouch() {
                         b.vx = 0;
                         b.vy = 0;
                         currentGameState = GameState.FOUL;
-                        pocketedBalls.add(b);
                         break;  
                     } else {
-                        ballContainer.remove(b);
-                        b.pocketed = true;
-                        pocketedBalls.add(b);
-                    }                 
+                        b.pocketed = true; //<>//
+                        b.vx = 0;
+                        b.vy = 0;
+                        ballsToRemove.add(b);
+                    }          
+                    pocketedBalls.add(b);       
                 }
             }
-        }    
+        }
+  
         if(areAllBallsStationary() && manageReady){
         gameController.manage(pocketedBalls);
         pocketedBalls.clear();

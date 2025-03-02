@@ -1,4 +1,4 @@
-import ddf.minim.*;
+ import ddf.minim.*;
 
 public class Ball {
   double DT = 0.06; // time increment
@@ -25,6 +25,7 @@ public class Ball {
   boolean isWhiteBall,isBlackBall = false;
   boolean visible = true;
   boolean pocketed = false; 
+  double scale = 1;
 
   boolean mousedown = false;
 
@@ -95,16 +96,19 @@ public class Ball {
     }
   }
 
-  void draw() {
-    if(visible){
-      pushMatrix();
-      translate(Sx(), Sy(), 0);
-      rotateX((float) angleX);
-      rotateY((float) angleY);
-      shape(our_sphere);
-      popMatrix();
+void draw() {
+        if (visible) {
+            pushMatrix();
+            translate(Sx(), Sy(), 0);
+            rotateX((float) angleX);
+            rotateY((float) angleY);
+            animateRemoval();
+            //scale((float) radius); // Apply shrinking effect
+            shape(our_sphere);
+            popMatrix();
+        }
     }
-  }
+
 
   void game_physics() {
     double dx, dy;
@@ -165,7 +169,12 @@ public class Ball {
 
     confineToBox();
   }
-
+  void animateRemoval(){
+    if (this.pocketed && radius > 0){
+       scale *= 0.95;
+       our_sphere.scale(0.95);      
+    }
+  }
   void confineToBox() {
     if (this.sx < leftwall_x + this.radius) this.sx = leftwall_x + this.radius;
     if (this.sy < ceiling_y + this.radius) this.sy = ceiling_y + this.radius;

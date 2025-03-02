@@ -4,7 +4,8 @@ class Player {
   boolean isTurn;
   BallType ballType = BallType.NONE;  
   int shots;
-    Player winner ;
+  Player winner ;
+    ArrayList<Ball> scoredBalls  = new ArrayList<>();
   
   Player(String name) {
     this.name = name;
@@ -26,11 +27,15 @@ class Player {
   }
   
 void addPoint(Ball b, CBalls cballs, Player currentOpponent) {
+    if (scoredBalls.contains(b)) {
+        return; 
+    }
     if (b.bn == 10) {
         handleBlackBall(cballs, currentOpponent);  
     } else {
         handleRegularBall(b, currentOpponent);  //<>//
     }
+    scoredBalls.add(b);
 }
 
 private void handleBlackBall(CBalls cballs, Player currentOpponent) {
