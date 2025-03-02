@@ -4,34 +4,35 @@
  */
 import java.util.*;
 public class CBalls {
-   
   BillardCue billardCue;
   PImage texture;
   boolean mousedown   = false;
   ArrayList<Integer> billardNumbers = new ArrayList();
   ThreeDimensionalBillardCue threeDimensionalBillardCue;
-  
   ArrayList<Ball> ballContainer = new ArrayList();
   Table table;
   float velocityThreshold = 0.5; 
   boolean isStrengthIncreasing;
   float decayRate = 0.5; 
-
-  CBalls(int totalball, Table table) {
+  ArrayList<Ball> pocketedBalls = new ArrayList<>(); 
+  boolean manageReady = false;
+GameController gameController;
+  CBalls(int totalball, Table table, GameController gameController) {
     this.table = table;
     billardNumbers.addAll(List.of(1,2,3,4,5,6,7,9,10,11,12,13,14,15));
     for (int bn=0; bn < totalball; bn++){
         if(bn == 10){
           texture = loadImage("billard_textures/8.jpg");
-          ballContainer.add(new Ball(bn, texture));
+          ballContainer.add(new Ball(10, texture, 8));
         }else{
-          int random = (int)random(billardNumbers.size()); //<>//
+          int random = (int)random(billardNumbers.size()); 
           int randomFromArray = billardNumbers.get(random);
-          billardNumbers.remove(Integer.valueOf(randomFromArray));  //<>//
-          texture = loadImage("billard_textures/" + randomFromArray +".jpg"); //<>//
-          ballContainer.add(new Ball(bn, texture));
+          billardNumbers.remove(Integer.valueOf(randomFromArray)); 
+          texture = loadImage("billard_textures/" + randomFromArray +".jpg");
+          ballContainer.add(new Ball(bn, texture, randomFromArray));
         }
     }
+    this.gameController = gameController;
     ballContainer.add(new Ball());
   }
 
@@ -121,7 +122,22 @@ public class CBalls {
  
   }
 
-
+boolean solidBallsRemaining() {
+    for (Ball b : ballContainer) {
+        if (b.ballType == BallType.SOLID && !b.isPocketed()) {
+            return true;  
+        }
+    }
+    return false; 
+}
+boolean stripeBallsRemaining() {
+    for (Ball b : ballContainer) {
+        if (b.ballType == BallType.STRIPE && !b.isPocketed()) {
+            return true; 
+        }
+    }
+    return false; 
+}
 void keyPressed()
 {
     if (key == ' ') {
@@ -129,60 +145,41 @@ void keyPressed()
         billardCue.animateHit();
     }
 }
-void detect3DCueCollision(){
-    for (int i = 0; i < ballContainer.size(); i++) {
-      Ball b = ballContainer.get(i);
-      if(b.isWhiteBall){
-        // Calculate distance between cue tip and the ball
-        float distance = dist(threeDimensionalBillardCue.cueTipPosition.x, threeDimensionalBillardCue.cueTipPosition.y, b.Sx(), b.Sy());
-        if (distance < b.Radius()) {
-        // Calculate the direction of the force
-         print("detected");
-         float dx = (float)(threeDimensionalBillardCue.cueTipPosition.x - b.sx);  
-        float dy = (float)(threeDimensionalBillardCue.cueTipPosition.y - b.sy); 
-        float normalizedDist = sqrt(dx * dx + dy * dy); // Calculate the magnitude
-        float nx = dx / normalizedDist;
-        float ny = dy / normalizedDist;
-  
-        // Calculate the cue's momentum (mass * velocity)
-        float cueSpeed = sqrt(threeDimensionalBillardCue.cueVelocity.x * threeDimensionalBillardCue.cueVelocity.x + threeDimensionalBillardCue.cueVelocity.y * threeDimensionalBillardCue.cueVelocity.y);
-        float cueMomentum = 5 * cueSpeed;
-  
-        // Apply momentum transfer from cue to ball
-        float impulse = (float)(cueMomentum / b.MASS); 
-  
-        // Apply a velocity to the ball based on the cue's momentum and mass
-        b.vx += nx * impulse;
-        b.vy += ny * impulse;
-      }
-      }
-  }
-  }
-  void detectPocketTouch(){
-    // this is disgusting, ArrayOutOfIndex exception could be thrown when multiple balls get removed on 1 frame
-    for (int i = 0; i < ballContainer.size(); i++) {
-      for (int j = 0; j < table.pockets.coordinates.size(); j++) {
-        Ball b = ballContainer.get(i);
-        PVector b2 = table.pockets.coordinates.get(j);
-        float dx = (float)(b.Sx() - b2.x);
-        float dy = (float)(b.Sy() - b2.y);
-        float distance = (float)Math.sqrt(dx * dx + dy * dy);  
-        if (distance < b.Radius() + table.pockets.pocketRadius/2) {
-          if(b.isWhiteBall) {
-            println("White ball pocketed");
-            println("FOUL");
-            b.setVisibility(false);
-            b.vx = 0;
-            b.vy = 0;
-            currentGameState = GameState.FOUL;
-          }else{
-            ballContainer.remove(b);
-          }
+void detectPocketTouch() {
+        for (int i = 0; i < ballContainer.size(); i++) {
+            for (int j = 0; j < table.pockets.coordinates.size(); j++) {
+                Ball b = ballContainer.get(i);
+                PVector b2 = table.pockets.coordinates.get(j);
+                float dx = (float)(b.Sx() - b2.x);
+                float dy = (float)(b.Sy() - b2.y);
+                float distance = (float)Math.sqrt(dx * dx + dy * dy);
+                if (distance < b.Radius() + table.pockets.pocketRadius / 2) {
+                    if (b.isWhiteBall) {
+                        println("White ball pocketed");
+                        println("FOUL");
+                        b.setVisibility(false);
+                        b.vx = 0;
+                        b.vy = 0;
+                        currentGameState = GameState.FOUL;
+                        pocketedBalls.add(b);
+                        break;  
+                    } else {
+                        ballContainer.remove(b);
+                        b.pocketed = true;
+                        pocketedBalls.add(b);
+                    }                 
+                }
+            }
+        }    
+        if(areAllBallsStationary() && manageReady){
+        gameController.manage(pocketedBalls);
+        pocketedBalls.clear();
+        manageReady = false;
         }
-      }
-    }
-  }
-  
+}
+
+
+
   PVector getWhiteBallCoordinates(){
     var b = getWhiteBall();
     return new PVector(b.Sx(), b.Sy());
@@ -200,10 +197,12 @@ void detect3DCueCollision(){
   }
   
   void keyReleased() {
+    gameController.playerSwitched = false;
     billardCue.isCueVisible = false;
     billardCue.cueAnimating = false;
-    isStrengthIncreasing = false; 
-    hitBall(getWhiteBall());  
+    isStrengthIncreasing = false;    
+    hitBall(getWhiteBall());     
+    manageReady = true;  
     billardCue.resetCue();
   }
   
@@ -218,13 +217,18 @@ void detect3DCueCollision(){
           float angleDirY = sin(billardCue.angle);
           whiteBall.vx += angleDirX * -velocity;
           whiteBall.vy += angleDirY * -velocity;
-          billardCue.shootStrength = 0;
       }
   }
    
   Ball getWhiteBall(){
     for(Ball b : this.ballContainer){
       if(b.isWhiteBall) return b;
+    }
+    return null;
+  }
+    Ball getBlackBall(){
+    for(Ball b : this.ballContainer){
+      if(b.isBlackBall) return b;
     }
     return null;
   }

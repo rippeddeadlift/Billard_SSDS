@@ -17,25 +17,62 @@ float prevMouseX, prevMouseY;
 boolean dragging = false;
 PImage texture;
 GameState currentGameState = GameState.BREAKSHOT;
-
+Player player1;
+Player player2;
+Player currentPlayer;
+GameController gameController;
 void setup() 
 {
+  // Initialize players
+  player1 = new Player("Player 1");
+  player2 = new Player("Player 2");
+
+
   size(600, 960, P3D);   
   noCursor();
-  table = new Table(leftwall_x, rightwall_x, floor_y, ceiling_y);  //<>//
-  theBalls = new CBalls(totalball,table);
+  table = new Table(leftwall_x, rightwall_x, floor_y, ceiling_y); 
+  gameController = new GameController(player1, player2);
+  theBalls = new CBalls(totalball, table, gameController);
+  gameController.setBalls(theBalls);
   setupCue();  
   shootingBar = new ShootingBar(width/3.0, height - 30, 150, 200, 20, billardCue);
-  theBalls.setCue(billardCue);
-
+  theBalls.setCue(billardCue); 
   rightwall_x = width;
   floor_y     = height;
   mid_x = width/2.0;
+  currentPlayer = player1;
+  currentPlayer.startTurn();
 }
+void draw() {
+  camera(camX, camY, camZ, width / 2, height / 2, 0, 0, 1, 0);
+  background(color(255, 255, 255));
+  lightSpecular(255, 255, 255);
+  directionalLight(204, 204, 204, 0, +1, -1);
+  translate(0, 0, -2);    
+  table.draw();  
+  if (currentGameState == GameState.FINISHED){
+    currentPlayer.draw();
+  }else{
+  if(theBalls.areAllBallsStationary() && currentGameState != GameState.BREAKSHOT && currentGameState != GameState.FOUL) {
+    updateCue(); 
+    billardCue.display(); 
+    shootingBar.updateStrength(); 
+    shootingBar.draw();
+  }
+  theBalls.draw(currentGameState);
+  theBalls.game_physics(currentGameState != GameState.FOUL);
+  // Display Player Info
+  fill(0);
+  textSize(20);
+  text(player1.getStatus(), 20, 30);
+  text(player2.getStatus(), 20, 60);
+  }
 
+  
+}
 void setupCue() {
-    this.whiteBall = theBalls.getWhiteBall(); //<>//
-    float ballX = (float) whiteBall.sx;  //<>//
+    this.whiteBall = theBalls.getWhiteBall();
+    float ballX = (float) whiteBall.sx; 
     float ballY = (float) whiteBall.sy;
     texture = loadImage("billard_textures/cue.jpg");
     float cueLength = 500;   
@@ -66,23 +103,6 @@ void updateCue() {
     if (billardCue.cueAnimating) billardCue.cueAnimationProgress += billardCue.cueSpeed;
 }
 
-
-void draw() {
-  camera(camX, camY, camZ, width / 2, height / 2, 0, 0, 1, 0);
-  background(color(255, 255, 255));
-  lightSpecular(255, 255, 255);
-  directionalLight(204, 204, 204, 0, +1, -1);
-  translate(0, 0, -2);    
-  table.draw();  
-  if(theBalls.areAllBallsStationary() && currentGameState != GameState.BREAKSHOT && currentGameState != GameState.FOUL) {
-    updateCue(); 
-    billardCue.display(); 
-    shootingBar.updateStrength(); 
-    shootingBar.draw();
-  }
-  theBalls.draw(currentGameState);
-  theBalls.game_physics(currentGameState != GameState.FOUL);
-}
 
 
 // draw the sphere-confing box
@@ -130,7 +150,6 @@ void mouseReleased() {
   if(mouseButton == LEFT && (currentGameState == GameState.BREAKSHOT || currentGameState == GameState.FOUL) && theBalls.areAllBallsStationary()){
     currentGameState = GameState.READY;
   }
-   billardCue.isDragging = false; 
 }
 
 void mouseDragged() {

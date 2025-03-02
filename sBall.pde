@@ -5,12 +5,12 @@ public class Ball {
   double MASS = 1.0;
   double FRICTION = 0.99; // friction coefficient
   double ROT_FRICTION = 0.98; // rotational friction coefficient
-
   double times; // time since start
   double sx, sy; // actual position 
   double vx, vy; // actual velocity 
   double ax, ay; // acceleration
   double radius;
+  BallType ballType;
   double angleX = 0; // current rotation angle around x-axis
   double angleY = 0; // current rotation angle around y-axis
   double angularVelocityX = 0; // current angular velocity around x-axis
@@ -22,14 +22,32 @@ public class Ball {
   int firstRowYAxis = 200;
   PShape our_sphere;
   PImage texture;
-  boolean isWhiteBall = false;
+  boolean isWhiteBall,isBlackBall = false;
   boolean visible = true;
+  boolean pocketed = false; 
 
   boolean mousedown = false;
 
-  Ball(int count, PImage texture) {
+  Ball(int count, PImage texture, int randomFromArray) {
     radius = 0.4f * 60;
-    this.bn = count;
+    this.bn = count;    
+    switch (randomFromArray) {
+            case 8: 
+                this.ballType = BallType.BLACK;
+                break;
+            case 1: case 2: case 3: case 4: case 5: case 6: case 7:  
+                this.ballType = BallType.SOLID;
+                break;
+            case 9: case 10: case 11: case 12: case 13: case 14: case 15:
+                this.ballType = BallType.STRIPE;
+                break;
+            default:
+                  this.ballType = BallType.WHITE;
+                break;	
+        }
+    if(bn == 10){
+      this.isBlackBall = true;
+    }
     initializePosition(count);
     our_sphere = createShape(SPHERE, this.Radius());
     our_sphere.setStroke(false);
@@ -119,7 +137,9 @@ public class Ball {
     this.ax = Fx / MASS;
     this.ay = Fy / MASS;
   }
-
+  boolean isPocketed() {
+          return pocketed;
+      }
   void applyBoundaryReflections(double dx, double dy) {
     float refl = 0.9; // percent of reflected velocity (normal to the wall)
 

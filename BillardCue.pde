@@ -10,7 +10,6 @@ class BillardCue {
   float angle = HALF_PI;  
   float cueOffset;
   float shootStrength;
-  boolean isDragging = false; 
   boolean isCueVisible = true;
   boolean cueAnimating = false;
   float cueAnimationProgress = -HALF_PI;
