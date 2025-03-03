@@ -189,11 +189,8 @@ void detectPocketTouch() {
 
 
 
-  PVector getWhiteBallCoordinates(){
-    var b = getWhiteBall();
-    return new PVector(b.Sx(), b.Sy());
-  }
-  
+  PVector getWhiteBallCoordinates() { return new PVector(getWhiteBall().Sx(), getWhiteBall().Sy()); };
+ 
   void placeWhiteBallForBreakShot(){
       var ball = getWhiteBall();
       ball.sx = constrain(mouseX,0,width);
@@ -224,12 +221,12 @@ void placeWhiteBallAfterFoul() {
   }
   
   void hitBall(Ball whiteBall) {
-      float cueTipX = billardCue.x + billardCue.thickness / 2; 
-      float cueTipY = billardCue.y - billardCue.length;
-      float distance = dist(cueTipX, cueTipY, (float) whiteBall.sx, (float) whiteBall.sy);
+      float cueTipX = billardCue.cuePosition.x + billardCue.cueThickness / 2; 
+      float cueTipY = billardCue.cuePosition.y - billardCue.cueLength;
+      float distance = dist(cueTipX, cueTipY, whiteBall.Sx(),whiteBall.Sy());
       
       if (distance > 0) { 
-          float velocity = billardCue.shootStrength * (float) (billardCue.mass / whiteBall.MASS);
+          float velocity = billardCue.shootStrength * (float)(billardCue.cueMass / whiteBall.MASS);
           float angleDirX = cos(billardCue.angle);
           float angleDirY = sin(billardCue.angle);
           whiteBall.vx += angleDirX * -velocity;

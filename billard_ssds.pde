@@ -21,16 +21,18 @@ Player player1;
 Player player2;
 Player currentPlayer;
 GameController gameController;
+VectorDrawer vd;
+
 void setup() 
 {
-  // Initialize players
-  player1 = new Player("Player 1");
-  player2 = new Player("Player 2");
-
-
   size(600, 960, P3D);   
   noCursor();
+  
+  player1 = new Player("Player 1");
+  player2 = new Player("Player 2");
+  
   table = new Table(leftwall_x, rightwall_x, floor_y, ceiling_y); 
+  
   gameController = new GameController(player1, player2);
   theBalls = new CBalls(totalball, table, gameController);
   gameController.setBalls(theBalls);
@@ -42,6 +44,7 @@ void setup()
   mid_x = width/2.0;
   currentPlayer = player1;
   currentPlayer.startTurn();
+  vd = new VectorDrawer();
 }
 void draw() {
   camera(camX, camY, camZ, width / 2, height / 2, 0, 0, 1, 0);
@@ -56,6 +59,7 @@ void draw() {
   if(theBalls.areAllBallsStationary() && currentGameState != GameState.BREAKSHOT && currentGameState != GameState.FOUL) {
     updateCue(); 
     billardCue.display(); 
+    vd.draw(theBalls, theBalls.getWhiteBall(), billardCue);
     shootingBar.updateStrength(); 
     shootingBar.draw();
   }
@@ -71,16 +75,7 @@ void draw() {
   
 }
 void setupCue() {
-    this.whiteBall = theBalls.getWhiteBall();
-    float ballX = (float) whiteBall.sx; 
-    float ballY = (float) whiteBall.sy;
-    texture = loadImage("billard_textures/cue.jpg");
-    float cueLength = 500;   
-    float cueOffset = 50;  
-    float cueThickness = 10;
-    float cueStartX = ballX - cueThickness / 2; 
-    float cueStartY = ballY ; 
-    billardCue = new BillardCue(cueStartX, cueStartY, cueThickness, cueLength, cueOffset,texture);
+    billardCue = new BillardCue(theBalls.getWhiteBall());
 }
 
 void updateCue() {
@@ -96,10 +91,10 @@ void updateCue() {
     }
     
     float angle = billardCue.angle; 
-    float cueStartX = ballX + cos(angle) * (cueOffset + billardCue.thickness / 2); 
-    float cueStartY = ballY + sin(angle) * (cueOffset + billardCue.thickness / 2); 
-    billardCue.x = cueStartX; 
-    billardCue.y = cueStartY; 
+    float cueStartX = ballX + cos(angle) * (cueOffset + billardCue.cueThickness / 2); 
+    float cueStartY = ballY + sin(angle) * (cueOffset + billardCue.cueThickness / 2); 
+    billardCue.cuePosition.x = cueStartX; 
+    billardCue.cuePosition.y = cueStartY; 
     if (billardCue.cueAnimating) billardCue.cueAnimationProgress += billardCue.cueSpeed;
 }
 
