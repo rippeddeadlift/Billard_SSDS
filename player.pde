@@ -27,15 +27,15 @@ class Player {
   }
   
 void addPoint(Ball b, CBalls cballs, Player currentOpponent) {
-    if (scoredBalls.contains(b)) {
-        return; 
+if (!scoredBalls.contains(b)) {
+        if (b.bn == 10) {
+            handleBlackBall(cballs, currentOpponent);  
+        } else {
+            handleRegularBall(b, currentOpponent);
+        }
+        
+        scoredBalls.add(b);
     }
-    if (b.bn == 10) {
-        handleBlackBall(cballs, currentOpponent);  
-    } else {
-        handleRegularBall(b, currentOpponent);  //<>//
-    }
-    scoredBalls.add(b);
 }
 
 private void handleBlackBall(CBalls cballs, Player currentOpponent) {

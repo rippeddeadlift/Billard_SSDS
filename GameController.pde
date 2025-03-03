@@ -2,10 +2,12 @@ class GameController {
     Player player1;
     Player player2;
     Player currentPlayer;  
-  boolean playerSwitched = false;
-  CBalls cBalls;
-  
-  ArrayList<Ball> pocketedBalls ; 
+    boolean playerSwitched = false;
+    CBalls cBalls;
+    boolean foulOccurred = false;
+    boolean shouldSwitchPlayer = false;  
+    ArrayList<Ball> pocketedBalls ;
+
     GameController(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
@@ -26,33 +28,39 @@ class GameController {
             player1.startTurn();
         }
     }
-    void manage(ArrayList<Ball> pocketedBalls) {
-        if (pocketedBalls.isEmpty()) {
-            if (!playerSwitched) {
-                switchPlayer();
-                playerSwitched = true;
-            }
-            return;
+void manage(ArrayList<Ball> pocketedBalls) {
+    if (pocketedBalls.isEmpty()) {
+        if (!playerSwitched) {
+            switchPlayer();
+            playerSwitched = true;
+        }
+        return;
+    }
+    for (Ball b : pocketedBalls) {
+        if (b.isWhiteBall) {
+            currentGameState = GameState.FOUL;
+            foulOccurred = true; 
+            continue;
         }
 
-        for (Ball b : pocketedBalls) {
-            if (b == cBalls.getWhiteBall()) {
-                switchPlayer();
-                return;
-            }
-            assignBallTypeToPlayer(b);            
+        assignBallTypeToPlayer(b);            
 
-            int currentOpponentScore = currentOpponent().score;
-            currentPlayer.addPoint(b, cBalls, currentOpponent());
+        int currentOpponentScore = currentOpponent().score;
+        currentPlayer.addPoint(b, cBalls, currentOpponent());
 
-            if (currentOpponentScore < currentOpponent().score) {
-                switchPlayer();
-                return;
-            }
+        if (currentOpponentScore < currentOpponent().score) {
+            shouldSwitchPlayer = true; 
         }
-
+    }
+    if (foulOccurred || shouldSwitchPlayer) {
+        switchPlayer(); 
+        foulOccurred = false; 
+        shouldSwitchPlayer = false; 
+    }else{        
         playerSwitched = false;
     }
+}
+
 
     void assignBallTypeToPlayer(Ball b){
             if (currentPlayer.ballType == BallType.NONE && (b.ballType == BallType.SOLID || b.ballType == BallType.STRIPE)) {
