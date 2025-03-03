@@ -67,6 +67,7 @@ private void awardPoints(Player p, int points) {
         p.winner = p; 
         p.score += points;               
         currentGameState = GameState.FINISHED; 
+        return;
     }
 }
 
