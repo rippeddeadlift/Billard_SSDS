@@ -50,7 +50,7 @@ GameController gameController;
       if(gameState == GameState.BREAKSHOT){
         placeWhiteBallForBreakShot();
       }
-      if(gameState == GameState.FOUL){
+      if(gameState == GameState.FOUL && areAllBallsStationary()){
         placeWhiteBallAfterFoul();
       }
     }
@@ -148,13 +148,15 @@ void keyPressed()
     }
 }
 void detectPocketTouch() {
-        for (Ball ball : ballsToRemove) {
-              if (ball.scale < 0.01)
-              {
-              ballContainer.remove(ball);       
-              }
-          }
-
+    Iterator<Ball> iterator = ballsToRemove.iterator();
+    while (iterator.hasNext()) {
+        Ball b = iterator.next();
+        if (b.scale < 0.25) {
+            b.setVisibility(false);
+            ballContainer.remove(b);
+            iterator.remove(); 
+        }
+    }
         for (int i = 0; i < ballContainer.size(); i++) {
             for (int j = 0; j < table.pockets.coordinates.size(); j++) {
                 Ball b = ballContainer.get(i);
@@ -163,25 +165,21 @@ void detectPocketTouch() {
                 float dy = (float)(b.Sy() - b2.y);
                 float distance = (float)Math.sqrt(dx * dx + dy * dy);
                 if (distance < b.Radius() + table.pockets.pocketRadius / 2) {
-                    if (b.isWhiteBall) {
-                        println("White ball pocketed");
-                        println("FOUL");
-                        b.setVisibility(false);
+                    if (!b.isWhiteBall) {         
+                        ballsToRemove.add(b);              
                         b.vx = 0;
-                        b.vy = 0;
-                        currentGameState = GameState.FOUL;
-                        break;  
-                    } else {
-                        b.pocketed = true; //<>//
+                        b.vy = 0;       
+                        b.pocketed = true;
+                        pocketedBalls.add(b);  
+                    }else{
                         b.vx = 0;
-                        b.vy = 0;
-                        ballsToRemove.add(b);
-                    }          
-                    pocketedBalls.add(b);       
+                        b.vy = 0;       
+                        b.pocketed = true;
+                        pocketedBalls.add(b);
+                    }
                 }
             }
-        }
-  
+        }  
         if(areAllBallsStationary() && manageReady){
         gameController.manage(pocketedBalls);
         pocketedBalls.clear();
@@ -200,12 +198,20 @@ void detectPocketTouch() {
       var ball = getWhiteBall();
       ball.sx = constrain(mouseX,0,width);
   }
-  void placeWhiteBallAfterFoul(){
-    var ball = getWhiteBall();
-    ball.setVisibility(true);
-    ball.sx = mouseX;
-    ball.sy = mouseY;
-  }
+void placeWhiteBallAfterFoul() {
+    Ball ball = getWhiteBall();  
+        if (ball.scale <= 0.25){          
+          ball.pocketed = false; 
+          ball.our_sphere.scale(4); //<>//
+          ball.scale = 1;
+        } 
+        if ( ball.scale == 1){
+          ball.setVisibility(true);
+          ball.sx = mouseX; //<>//
+          ball.sy = mouseY; 
+        }
+}
+
   
   void keyReleased() {
     gameController.playerSwitched = false;

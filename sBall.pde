@@ -103,7 +103,6 @@ void draw() {
             rotateX((float) angleX);
             rotateY((float) angleY);
             animateRemoval();
-            //scale((float) radius); // Apply shrinking effect
             shape(our_sphere);
             popMatrix();
         }
@@ -170,9 +169,12 @@ void draw() {
     confineToBox();
   }
   void animateRemoval(){
-    if (this.pocketed && radius > 0){
-       scale *= 0.95;
-       our_sphere.scale(0.95);      
+    if (this.pocketed && scale > 0.25){
+       scale *= 0.96;
+       our_sphere.scale(0.96);      
+    }
+    if (this.pocketed && scale <= 0.25){
+       setVisibility(false);     
     }
   }
   void confineToBox() {
