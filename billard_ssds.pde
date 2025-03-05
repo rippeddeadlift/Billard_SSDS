@@ -26,79 +26,88 @@ VectorDrawer vd;
 void setup() 
 {
   size(600, 960, P3D);   
-  noCursor();
-  
-  player1 = new Player("Player 1");
-  player2 = new Player("Player 2");
-  
-  table = new Table(leftwall_x, rightwall_x, floor_y, ceiling_y); 
-  
-  gameController = new GameController(player1, player2);
-  theBalls = new CBalls(totalball, table, gameController);
-  gameController.setBalls(theBalls);
-  setupCue();  
-  shootingBar = new ShootingBar(width/3.0, height - 30, 150, 200, 20, billardCue);
-  theBalls.setCue(billardCue); 
-  rightwall_x = width;
-  floor_y     = height;
-  mid_x = width/2.0;
-  currentPlayer = player1;
-  currentPlayer.startTurn();
-  vd = new VectorDrawer();
+  noCursor();  
+  initializePlayers();
+  initializeTable();
+  initializeGameComponents();
+  initializeUI();
+  startGame();
 }
+
 void draw() {
+  updateCamera();
+  renderScene();
+  updateGameLogic();
+  displayUI();
+}
+
+void updateCamera() {
   camera(camX, camY, camZ, width / 2, height / 2, 0, 0, 1, 0);
-  background(color(255, 255, 255));
+  background(255);
   lightSpecular(255, 255, 255);
-  directionalLight(204, 204, 204, 0, +1, -1);
-  translate(0, 0, -2);    
-  table.draw();  
-  if (currentGameState == GameState.FINISHED){
+  directionalLight(204, 204, 204, 0, 1, -1);
+  translate(0, 0, -2);
+}
+
+void renderScene() {
+  table.draw();
+  theBalls.draw(currentGameState);
+}
+
+void updateGameLogic() {
+  if (currentGameState == GameState.FINISHED) {
     currentPlayer.draw();
-  }else{
-  if(theBalls.areAllBallsStationary() && currentGameState != GameState.BREAKSHOT && currentGameState != GameState.FOUL) {
-    updateCue(); 
-    billardCue.display(); 
+    return;
+  }
+
+  if (theBalls.areAllBallsStationary() && currentGameState != GameState.BREAKSHOT && currentGameState != GameState.FOUL) {
+    billardCue.display();
     vd.draw(theBalls, theBalls.getWhiteBall(), billardCue);
-    shootingBar.updateStrength(); 
     shootingBar.draw();
   }
-  theBalls.draw(currentGameState);
+
   theBalls.game_physics(currentGameState != GameState.FOUL);
-  // Display Player Info
+}
+
+void displayUI() {
   fill(0);
   textSize(20);
   text(player1.getStatus(), 20, 30);
   text(player2.getStatus(), 20, 60);
-  }
+}
 
-  
+void initializePlayers() {
+  player1 = new Player("Player 1");
+  player2 = new Player("Player 2");
+}
+
+void initializeTable() {
+  table = new Table(leftwall_x, rightwall_x, floor_y, ceiling_y);
+}
+
+void initializeGameComponents() {
+  gameController = new GameController(player1, player2);
+  theBalls = new CBalls(totalball, table, gameController);
+  gameController.setBalls(theBalls);
+  setupCue();
+  theBalls.setCue(billardCue);
+}
+
+void initializeUI() {
+  shootingBar = new ShootingBar(width / 3.0, height - 30, 150, 200, 20, billardCue);
+}
+
+void startGame() {
+  rightwall_x = width;
+  floor_y = height;
+  mid_x = width / 2.0;
+  currentPlayer = player1;
+  currentPlayer.startTurn();
+  vd = new VectorDrawer();
 }
 void setupCue() {
     billardCue = new BillardCue(theBalls.getWhiteBall());
 }
-
-void updateCue() {
-    this.whiteBall = theBalls.getWhiteBall();
-    float ballX = (float) whiteBall.sx; 
-    float ballY = (float) whiteBall.sy; 
-    float cueOffset = billardCue.cueOffset; 
-    
-    if (mouseButton != RIGHT){
-      float dx = mouseX - ballX;
-      float dy = mouseY - ballY;
-      billardCue.angle = atan2(dy, dx);  
-    }
-    
-    float angle = billardCue.angle; 
-    float cueStartX = ballX + cos(angle) * (cueOffset + billardCue.cueThickness / 2); 
-    float cueStartY = ballY + sin(angle) * (cueOffset + billardCue.cueThickness / 2); 
-    billardCue.cuePosition.x = cueStartX; 
-    billardCue.cuePosition.y = cueStartY; 
-    if (billardCue.cueAnimating) billardCue.cueAnimationProgress += billardCue.cueSpeed;
-}
-
-
 
 // draw the sphere-confing box
 void boxDraw() {
@@ -112,11 +121,6 @@ void boxDraw() {
     endShape();   
 }
 
-void keyPressed()
-{
-  theBalls.keyPressed();
-}
-
 void updateGameState(){
   if(theBalls.areAllBallsStationary()){
     this.currentGameState = GameState.READY;
@@ -124,13 +128,20 @@ void updateGameState(){
     this.currentGameState = GameState.WAITING;
   }
 }
+
+void keyPressed()
+{
+  theBalls.keyPressed();
+}
     
 void keyReleased(){
   theBalls.keyReleased();
 }
 
-
 void mousePressed() {
+  if(mouseButton == LEFT){
+    theBalls.mousePressed();
+  }
   if (mouseButton == RIGHT) {
     prevMouseX = mouseX;
     prevMouseY = mouseY;
@@ -145,6 +156,9 @@ void mouseReleased() {
   if(mouseButton == LEFT && (currentGameState == GameState.BREAKSHOT || currentGameState == GameState.FOUL) && theBalls.areAllBallsStationary()){
     currentGameState = GameState.READY;
   }
+  if (mouseButton == LEFT){
+    theBalls.mouseReleased();
+  }
 }
 
 void mouseDragged() {
@@ -158,7 +172,6 @@ void mouseDragged() {
     prevMouseX = mouseX;
     prevMouseY = mouseY;
   }
-
 }
 void mouseWheel(MouseEvent event) {
   float e = event.getCount();

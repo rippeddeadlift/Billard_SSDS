@@ -12,31 +12,47 @@ public class CBalls {
   ArrayList<Ball> ballContainer = new ArrayList();
   Table table;
   float velocityThreshold = 0.5; 
-  boolean isStrengthIncreasing;
   float decayRate = 0.5; 
-  ArrayList<Ball> pocketedBalls = new ArrayList<>(); 
-  
+  ArrayList<Ball> pocketedBalls = new ArrayList<>();   
   ArrayList<Ball> ballsToRemove = new ArrayList<>();
   boolean manageReady = false;
-GameController gameController;
-  CBalls(int totalball, Table table, GameController gameController) {
+  GameController gameController;
+
+CBalls(int totalball, Table table, GameController gameController) {
     this.table = table;
-    billardNumbers.addAll(List.of(1,2,3,4,5,6,7,9,10,11,12,13,14,15));
-    for (int bn=0; bn < totalball; bn++){
-        if(bn == 10){
-          texture = loadImage("billard_textures/8.jpg");
-          ballContainer.add(new Ball(10, texture, 8));
-        }else{
-          int random = (int)random(billardNumbers.size()); 
-          int randomFromArray = billardNumbers.get(random);
-          billardNumbers.remove(Integer.valueOf(randomFromArray)); 
-          texture = loadImage("billard_textures/" + randomFromArray +".jpg");
-          ballContainer.add(new Ball(bn, texture, randomFromArray));
+    this.gameController = gameController;    
+    initializeBallNumbers();
+    initializeBalls(totalball);    
+    ballContainer.add(new Ball()); // whiteball
+}
+
+void initializeBallNumbers() {
+    billardNumbers.addAll(List.of(1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15));
+}
+
+void initializeBalls(int totalball) {
+    for (int bn = 0; bn < totalball; bn++) {
+        if (bn == 10) {
+            addBlackBall();
+        } else {
+            addRandomBall(bn);
         }
     }
-    this.gameController = gameController;
-    ballContainer.add(new Ball());
-  }
+}
+
+void addBlackBall() {
+    PImage texture = loadImage("billard_textures/8.jpg");
+    ballContainer.add(new Ball(10, texture, 8));
+}
+
+void addRandomBall(int id) {
+    int randomIndex = (int) random(billardNumbers.size());
+    int randomNumber = billardNumbers.get(randomIndex);
+    billardNumbers.remove(Integer.valueOf(randomNumber));
+    PImage texture = loadImage("billard_textures/" + randomNumber + ".jpg");
+    ballContainer.add(new Ball(id, texture, randomNumber));
+}
+
 
   void setCue(BillardCue c) {
       this.billardCue = c;
@@ -140,13 +156,7 @@ boolean stripeBallsRemaining() {
     }
     return false; 
 }
-void keyPressed()
-{
-    if (key == ' ') {
-        isStrengthIncreasing = true; 
-        billardCue.animateHit();
-    }
-}
+
 void detectPocketTouch() {
     Iterator<Ball> iterator = ballsToRemove.iterator();
     while (iterator.hasNext()) {
@@ -188,13 +198,13 @@ void detectPocketTouch() {
 }
 
 
+PVector getWhiteBallCoordinates() { return new PVector(getWhiteBall().Sx(), getWhiteBall().Sy()); };
 
-  PVector getWhiteBallCoordinates() { return new PVector(getWhiteBall().Sx(), getWhiteBall().Sy()); };
- 
-  void placeWhiteBallForBreakShot(){
-      var ball = getWhiteBall();
-      ball.sx = constrain(mouseX,0,width);
-  }
+void placeWhiteBallForBreakShot(){
+    var ball = getWhiteBall();
+    ball.sx =
+      constrain(mouseX,0,width);
+}
 void placeWhiteBallAfterFoul() {
     Ball ball = getWhiteBall();  
         if (ball.scale <= 0.5){          
@@ -209,16 +219,29 @@ void placeWhiteBallAfterFoul() {
         }
 }
 
-  
-  void keyReleased() {
-    gameController.playerSwitched = false;
-    billardCue.isCueVisible = false;
-    billardCue.cueAnimating = false;
-    isStrengthIncreasing = false;    
-    hitBall(getWhiteBall());     
-    manageReady = true;  
-    billardCue.resetCue();
+void keyPressed()  {
+}
+
+void keyReleased() {
+}
+
+void mousePressed() {
+  if( currentGameState != GameState.BREAKSHOT){
+
+    billardCue.startDrag();
   }
+}
+
+void mouseReleased() {
+  gameController.playerSwitched = false;
+  billardCue.isCueVisible = false;
+  billardCue.cueAnimating = false;
+  billardCue.releaseDrag();
+  hitBall(getWhiteBall()); // Shoot the ball   
+  manageReady = true;  
+  billardCue.resetCue();
+}
+
   
   void hitBall(Ball whiteBall) {
       float cueTipX = billardCue.cuePosition.x + billardCue.cueThickness / 2; 
