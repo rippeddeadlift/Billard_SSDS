@@ -151,7 +151,7 @@ void detectPocketTouch() {
     Iterator<Ball> iterator = ballsToRemove.iterator();
     while (iterator.hasNext()) {
         Ball b = iterator.next();
-        if (b.scale < 0.25) {
+        if (b.scale < 0.5) {
             b.setVisibility(false);
             ballContainer.remove(b);
             iterator.remove(); 
@@ -197,9 +197,9 @@ void detectPocketTouch() {
   }
 void placeWhiteBallAfterFoul() {
     Ball ball = getWhiteBall();  
-        if (ball.scale <= 0.25){          
+        if (ball.scale <= 0.5){          
           ball.pocketed = false; 
-          ball.our_sphere.scale(4); //<>//
+          ball.our_sphere.scale(2); //<>//
           ball.scale = 1;
         } 
         if ( ball.scale == 1){

@@ -173,11 +173,11 @@ void draw() {
     confineToBox();
   }
   void animateRemoval(){
-    if (this.pocketed && scale > 0.25){
-       scale *= 0.96;
-       our_sphere.scale(0.96);      
+    if (this.pocketed && scale > 0.5){
+       scale *= 0.99;
+       our_sphere.scale(0.99);      
     }
-    if (this.pocketed && scale <= 0.25){
+    if (this.pocketed && scale <= 0.5){
        setVisibility(false);     
     }
   }
