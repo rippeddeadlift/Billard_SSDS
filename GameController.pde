@@ -29,7 +29,7 @@ class GameController {
         }
     }
 void manage(ArrayList<Ball> pocketedBalls) {
-    if (pocketedBalls.isEmpty()) {
+    if (pocketedBalls.isEmpty() && currentGameState != GameState.READY) {
         if (!playerSwitched) {
             switchPlayer();
             playerSwitched = true;
@@ -42,12 +42,9 @@ void manage(ArrayList<Ball> pocketedBalls) {
             foulOccurred = true; 
             continue;
         }
-
-        assignBallTypeToPlayer(b);            
-
+        assignBallTypeToPlayer(b);          
         int currentOpponentScore = currentOpponent().score;
         currentPlayer.addPoint(b, cBalls, currentOpponent());
-
         if (currentOpponentScore < currentOpponent().score) {
             shouldSwitchPlayer = true; 
         }
@@ -56,7 +53,8 @@ void manage(ArrayList<Ball> pocketedBalls) {
         switchPlayer(); 
         foulOccurred = false; 
         shouldSwitchPlayer = false; 
-    }else{        
+    }
+    else{        
         playerSwitched = false;
     }
 }
