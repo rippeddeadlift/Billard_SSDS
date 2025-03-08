@@ -7,6 +7,7 @@ class GameController {
     boolean foulOccurred = false;
     boolean shouldSwitchPlayer = false;  
     ArrayList<Ball> pocketedBalls ;
+    boolean firstTurn = true;
 
     GameController(Player player1, Player player2) {
         this.player1 = player1;
@@ -29,7 +30,7 @@ class GameController {
         }
     }
 void manage(ArrayList<Ball> pocketedBalls) {
-    if (pocketedBalls.isEmpty() && currentGameState != GameState.READY) {
+    if (pocketedBalls.isEmpty() && currentGameState == GameState.READY && !firstTurn) {
         if (!playerSwitched) {
             switchPlayer();
             playerSwitched = true;
@@ -57,6 +58,7 @@ void manage(ArrayList<Ball> pocketedBalls) {
     else{        
         playerSwitched = false;
     }
+    firstTurn = false;
 }
 
 
