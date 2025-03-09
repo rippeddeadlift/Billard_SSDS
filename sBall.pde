@@ -26,6 +26,7 @@ public class Ball {
   boolean visible = true;
   boolean pocketed = false; 
   double scale = 1;
+  boolean isFadingOut = false;
 
   boolean mousedown = false;
 
@@ -130,7 +131,10 @@ void draw() {
     this.angleX -= (this.vy / this.radius) * DT;
     this.angleY += (this.vx / this.radius) * DT;
 
-
+    if (cos((float) this.angleX) < 0) {  
+        this.angleY -= (this.vx / this.radius) * DT * 2;  
+    }
+    
     this.angularVelocityX *= ROT_FRICTION;
     this.angularVelocityY *= ROT_FRICTION;
   }
@@ -172,10 +176,12 @@ void draw() {
   }
   void animateRemoval(){
     if (this.pocketed && scale > 0.5){
+
        scale *= 0.99;
        our_sphere.scale(0.99);      
     }
-    if (this.pocketed && scale <= 0.5){
+    if (this.pocketed && scale <= 0.5){        
+      isFadingOut = true;     
        setVisibility(false);     
     }
   }

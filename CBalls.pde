@@ -98,6 +98,10 @@ void addRandomBall(int id) {
     void bruteforce() {
       for (Ball b1 : ballContainer) {
           for (Ball b2 : ballContainer) {
+            if(b1.isFadingOut || b2.isFadingOut)
+            {
+              continue;
+            }
               //bruteForceChecks++;
               //if(!useQuadTree && displayConnections)cd.draw(b1,b2);
               if (b1 != b2) {
@@ -164,38 +168,41 @@ void detectPocketTouch() {
         if (b.scale < 0.5) {
             b.setVisibility(false);
             ballContainer.remove(b);
-            iterator.remove(); 
+            iterator.remove();
         }
     }
-        for (int i = 0; i < ballContainer.size(); i++) {
-            for (int j = 0; j < table.pockets.coordinates.size(); j++) {
-                Ball b = ballContainer.get(i);
-                PVector b2 = table.pockets.coordinates.get(j);
-                float dx = (float)(b.Sx() - b2.x);
-                float dy = (float)(b.Sy() - b2.y);
-                float distance = (float)Math.sqrt(dx * dx + dy * dy);
-                if (distance < b.Radius() + table.pockets.pocketRadius / 2) {
-                    if (!b.isWhiteBall) {         
-                        ballsToRemove.add(b);              
-                        b.vx = 0;
-                        b.vy = 0;       
-                        b.pocketed = true;
-                        pocketedBalls.add(b);  
-                    }else{
-                        b.vx = 0;
-                        b.vy = 0;       
-                        b.pocketed = true;
-                        pocketedBalls.add(b);
-                    }
+
+    for (int i = 0; i < ballContainer.size(); i++) {
+        for (int j = 0; j < table.pockets.coordinates.size(); j++) {
+            Ball b = ballContainer.get(i);
+            PVector b2 = table.pockets.coordinates.get(j);
+            float dx = (float)(b.Sx() - b2.x);
+            float dy = (float)(b.Sy() - b2.y);
+            float distance = (float)Math.sqrt(dx * dx + dy * dy);
+            if (distance < b.Radius() + table.pockets.pocketRadius / 2) {
+                if (!b.isWhiteBall) {         
+                    ballsToRemove.add(b);  // Prepare the ball for fading animation
+                    b.vx = 0;
+                    b.vy = 0;       
+                    b.pocketed = true;
+                    pocketedBalls.add(b);               
+                } else {
+                    b.vx = 0;
+                    b.vy = 0;       
+                    b.pocketed = true;
+                    pocketedBalls.add(b);               
                 }
             }
-        }  
-        if(areAllBallsStationary() && manageReady){
+        }
+    }
+
+    if (areAllBallsStationary() && manageReady) {
         gameController.manage(pocketedBalls);
         pocketedBalls.clear();
         manageReady = false;
-        }
+    }
 }
+
 
 
 PVector getWhiteBallCoordinates() { return new PVector(getWhiteBall().Sx(), getWhiteBall().Sy()); };
@@ -208,7 +215,8 @@ void placeWhiteBallForBreakShot(){
 void placeWhiteBallAfterFoul() {
     Ball ball = getWhiteBall();  
         if (ball.scale <= 0.5){          
-          ball.pocketed = false; 
+          ball.pocketed = false;           
+          ball.isFadingOut = false;
           ball.our_sphere.scale(2); //<>//
           ball.scale = 1;
         } 
