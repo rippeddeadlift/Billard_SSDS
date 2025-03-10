@@ -98,7 +98,7 @@ public class Ball {
   }
 
 void draw() {
-        if (visible) {
+        if (visible && currentGameState != GameState.FINISHED) {
             pushMatrix();
             translate(Sx(), Sy(), 0);
             rotateX((float) angleX);

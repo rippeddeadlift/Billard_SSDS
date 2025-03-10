@@ -76,10 +76,6 @@ void winGame() {
     }
 
 void showGameOverScreen() {
-    fill(0, 0, 0, 150);  
-    rect(0, 0, width, height);  
-    
-    fill(255);
     textSize(50);
     
     text("Game Over!", width / 3, height / 2);

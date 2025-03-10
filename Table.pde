@@ -1,8 +1,10 @@
 public class Table {
 
   float leftwall_x, rightwall_x, floor_y, ceiling_y;
-  PShape shape;
+  PShape shape, poolColor;
   PImage texture = loadImage("billard_textures/holz.jpg");
+  PImage greenPoolTexture = loadImage("billard_textures/GreenPool.jpg");
+
   PVector topLeftCorner,topRightCorner,bottomLeftCorner,bottomRightCorner;
   ArrayList<PVector> pocket_coords = new ArrayList();
   Pockets pockets;
@@ -28,16 +30,23 @@ public class Table {
     pockets.draw();
   }
 
-  void drawTableTop() {
-    pushMatrix();
-    translate((topLeftCorner.x + topRightCorner.x) / 2, (topLeftCorner.y + bottomLeftCorner.y) / 2, - DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX);
-    fill(color(0,128,0)); 
-    noStroke();
-    float[] surfaceSize = {width - leftwall_x, height - ceiling_y, 0};
-    PShape surface = createShape(BOX, surfaceSize);
-    shape(surface);
-    popMatrix();
-  }
+void drawTableTop() {
+  pushMatrix();
+  translate((topLeftCorner.x + topRightCorner.x) / 2, (topLeftCorner.y + bottomLeftCorner.y) / 2, -DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX);
+  noStroke();
+  
+  float[] surfaceSize = {width - leftwall_x, height - ceiling_y, 0};
+  PShape surface = createShape(BOX, surfaceSize);
+  
+  // Setze tint auf voller Helligkeit ohne Transparenz
+  tint(255, 255, 255);  // Weiß für maximale Helligkeit ohne Transparenz
+  
+  surface.setTexture(greenPoolTexture);
+  shape(surface);
+  
+  popMatrix();
+}
+
 
   void drawTableLegs() {
     ArrayList<PVector> positions = new ArrayList();
