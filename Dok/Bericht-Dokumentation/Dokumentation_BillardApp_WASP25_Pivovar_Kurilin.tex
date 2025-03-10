@@ -58,11 +58,11 @@
 	
 	\section{Grundlagen}
 	\subsection{Spielregeln}
-	Das Spiel basiert auf der 8-Ball Variante des Billards. Zwei Spieler treten gegeneinander an. Zu Beginn wird eine der beiden Gruppen von Kugeln zugewiesen: entweder die "vollen" oder die "halben" Kugeln. Ziel des Spiels ist es, alle Kugeln der eigenen Gruppe korrekt in die Taschen zu versenken und zuletzt die schwarze 8-Ball korrekt zu versenken, um zu gewinnen.
+	Das Spiel basiert auf der 8-Ball Variante des Billards. Zwei Spieler treten gegeneinander an. Zu Beginn wird eine der beiden Gruppen von Kugeln zugewiesen: entweder die SOLID oder die STRIPE Kugeln. Ziel des Spiels ist es, alle Kugeln der eigenen Gruppe korrekt in die Taschen zu versenken und zuletzt die schwarze 8-Ball korrekt zu versenken, um zu gewinnen.
 	
 	Der Spieler, der seine Kugeln zuerst versenkt, muss danach die schwarze 8-Ball versenken, um das Spiel zu gewinnen. Versenkt der Spieler die 8-Ball vorzeitig oder auf unkorrekte Weise, verliert er das Spiel.
 	\subsection{Punktesystem}
-	Das Punktesystem basiert auf den versenkten Kugeln. Jeder versenkte Ball der eigenen Gruppe bringt einen Punkt. Die schwarze Kugel bringt zusätzlich 8 Punkte, wenn sie korrekt versenkt wird. Das Spiel endet, wenn ein Spieler alle Kugeln seiner Gruppe versenkt hat und die 8-Ball korrekt eingelocht wird. Der Spieler mit den meisten Punkten gewinnt das Spiel.
+	Das Punktesystem basiert auf den versenkten Kugeln. Jeder versenkte Ball der eigenen Gruppe bringt einen Punkt. Die schwarze Kugel bringt zusätzlich 8 Punkte, wenn sie korrekt versenkt wird. Das Spiel endet, wenn ein Spieler alle Kugeln seiner Gruppe versenkt, und die 8-Ball korrekt eingelocht hat. Der Spieler mit den meisten Punkten gewinnt das Spiel.
 	
 	Die Punkte könnten z.B. bei mehreren Spielen hintereinander verwendet werden, um die Ergebnisse zu summieren und nach mehreren Spielen einen Gesamtsieger zu bestimmen.
 	\subsection{Spielumgebung}
@@ -78,11 +78,11 @@ Die Steuerung des Spiels erfolgt vollständig mit der Maus.
 
 Zu Beginn des Spiels muss zunächst die weiße Kugel platziert werden.
 
-Anschließend hat der Spieler die Möglichkeit, den Queue auf die Bälle zu zielen. Sobald das Ziel ausgerichtet ist, wird mit der linken Maustaste geklickt und die Maus entlang der Y-Achse bewegt, um die Stärke des Schusses zu bestimmen. Die aktuelle Schussstärke wird in der  Shooting Bar-Leiste am unteren Bildschirmrand, angezeigt.
+Anschließend hat der Spieler die Möglichkeit, den Queue auf die Bälle zu zielen. Sobald das Ziel ausgerichtet ist, wird mit der linken Maustaste geklickt und die Maus entlang der Y-Achse bewegt, um die Stärke des Schusses zu bestimmen. Die aktuelle Schussstärke wird in der  Shooting Bar Leiste am unteren Bildschirmrand, angezeigt.
 
-Sobald die gewünschte Stärke erreicht ist, wird die Maustaste losgelassen, und der Schuss wird ausgeführt. Dieser Vorgang wird wiederholt, bis das Spiel gewonnen ist.
+Sobald die gewünschte Stärke erreicht ist, lässt man die Maustaste los, und der Schuss wird ausgeführt. Dieser Vorgang wird wiederholt, bis das Spiel vorbei ist.
 
-Im Falle eines Fouls (wenn die weiße Kugel in eine Tasche fällt) darf der nächste Spieler die Kugel an einer beliebigen Stelle auf dem Tisch platzieren.
+Im Fall eines Fouls (wenn die weiße Kugel in eine Tasche fällt) darf der nächste Spieler die Kugel an einer beliebigen Stelle auf dem Tisch platzieren.
 
 	\begin{figure}[h!]
 	\centering
@@ -94,7 +94,7 @@ Im Falle eines Fouls (wenn die weiße Kugel in eine Tasche fällt) darf der näc
 	\subsection{Physikalische Interaktionen}
 	Die physikalischen Interaktionen im Spiel werden durch eine einfache Physikengine realisiert, die auf Processing basiert. Diese Engine berechnet die Bewegungen und Kollisionen der Kugeln sowie deren Interaktionen mit den Banden und dem Tisch. Processing ist eine Java basierte Entwicklungsumgebung, die es ermöglicht, grafische Elemente und physikalische Berechnungen einfach zu integrieren.
 	
-	Die Kugeln bewegen sich entsprechend ihrer Geschwindigkeit und Richtung, wobei die Engine die Auswirkungen von Kräften wie Beschleunigung, Verzögerung und Reibung berücksichtigt. Kollisionen zwischen Kugeln und zwischen Kugeln und den Banden werden unter Berücksichtigung von Impuls und Energieerhaltung berechnet. Bei einer Kollision ändern die Kugeln ihre Richtung und Geschwindigkeit je nach dem Winkel und der Geschwindigkeit der Kollision.
+	Die Kugeln bewegen sich entsprechend ihrer Geschwindigkeit und Richtung, wobei die Engine die Auswirkungen von Kräften wie Beschleunigung und Reibung berücksichtigt. Kollisionen zwischen Kugeln werden unter Berücksichtigung von Impuls und Energieerhaltung berechnet. Bei einer Kollision ändern die Kugeln ihre Richtung und Geschwindigkeit je nach dem Winkel und der Geschwindigkeit der Kollision.
 	
 	Mit jeder Ausführung der draw() Methode in Processing wird die aktuelle Szene gerendert, wobei die Positionsänderungen und Kollisionen der Kugeln kontinuierlich aktualisiert und dargestellt werden. Diese wiederholte Darstellung sorgt für eine flüssige und dynamische Simulation der physikalischen Interaktionen und ermöglicht eine realistische Darstellung des Spiels.
 	
@@ -116,11 +116,11 @@ Im Falle eines Fouls (wenn die weiße Kugel in eine Tasche fällt) darf der näc
 		\begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.5\textwidth]{../../data/Dokumentation_ScreenShots/KollisionZweiKugeln.png}
-	\caption{Kollision der zwei Kugeln}
+	\caption{Kollision der zwei Kugeln \cite{Serlo}}
 \end{figure}
 	
 
-	
+	Beispiel im Code:
 	\begin{lstlisting}[language=Java, columns=fixed, tabsize=2, xleftmargin=0pt, frame=single]	
 		class CBalls {..
 		void bruteforce() {
@@ -153,7 +153,7 @@ Dabei gilt der Energieerhaltungssatz, der besagt, dass die Gesamtenergie vor und
 	
 	Für die Kollision mit den Banden werden vier Eigenschaften des Tisches benötigt:  
 	`leftwall\_x`, `rightwall\_x`, `floor\_y` und `ceiling\_y`.  
-	Diese Werte werden zu Beginn festgelegt, für die Instanziierung des Tisches verwendet und können global in der Ball Klasse genutzt werden.  
+	Diese Werte werden zu Beginn festgelegt, für die Instanziierung des Tisches verwendet und können global genutzt werden.  
 	
 	Eine Kollision tritt auf, wenn die Ballkoordinaten in Kombination mit der vertikalen Verschiebung $\mathit{dy}$ eine bestimmte Grenze überschreiten.  
 	Hierbei beschreibt $\mathit{dy}$ die Differenz der aktuellen Position zur nächsten berechneten Position in der nächsten Zeiteinheit.  
@@ -162,7 +162,6 @@ Dabei gilt der Energieerhaltungssatz, der besagt, dass die Gesamtenergie vor und
 	und die Bewegungsrichtung reflektiert, indem das Vorzeichen der Geschwindigkeit umgekehrt wird.  
 	
 	Ein Beispiel für eine Kollision mit der unteren Bande (`floor\_y`):  
-	
 	\begin{lstlisting}[language=Java, columns=fixed, tabsize=2, xleftmargin=10pt, frame=single]  
 			class Ball {..
 		if ((this.sy + dy > floor_y - this.radius)) {  
@@ -175,7 +174,79 @@ Dabei gilt der Energieerhaltungssatz, der besagt, dass die Gesamtenergie vor und
 	
 	
 	
-	\subsubsection{Kollision mit Pockets}
+\subsubsection{Kollision mit Pockets}
+
+Die Erkennung einer Kollision mit den Pockets erfolgt nach einem ähnlichen Prinzip wie die Kollision zwischen zwei Kugeln. Der wesentliche Unterschied liegt in der Kollisionsbedingung:  
+
+\[
+\text{distance} < b.\text{Radius()} + \frac{\text{table.pockets.pocketRadius}}{2}
+\]
+
+anstelle von  
+
+\[
+\text{distance} \leq b1.\text{Radius()} + b2.\text{Radius()}
+\]
+
+Ist die berechnete Distanz kleiner als der angegebene Schwellenwert, wird die Kugel als eingelocht betrachtet. Anschließend bestimmt der Algorithmus, abhängig von der Art der eingelochten Kugel, welche Auswirkungen dies auf den Spielstand hat. Dies umfasst unter anderem die Vergabe von Punkten, den möglichen Wechsel des Spielers sowie die Bewertung eines möglichen Foulspiels.
+
+\subsubsection{Kugelanimation beim Einlochen}
+
+Dieser Schritt existiert in der realen Welt nicht, stellt jedoch in unserer Simulation einen wichtigen Bestandteil des Spielerlebnisses dar.  
+
+Um das Einlochen visuell ansprechender zu gestalten, wurde eine Animation implementiert, die den Vorgang realistischer erscheinen lässt. Dabei wird eine eingelochte Kugel schrittweise verkleinert, bis ihr Skalierungsfaktor einen Schwellenwert von 0,5 erreicht hat. Sobald dieser Wert unterschritten wird, wird die Kugel nicht mehr angezeigt.  
+
+	\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6\textwidth]{../../data/Dokumentation_ScreenShots/Eingelocht.png}
+	\caption{Schussrichtung}
+\end{figure}
+
+Zusätzlich wird durch die Variable \texttt{isFadingOut} sichergestellt, dass für diese Kugel keine Kollisionen mehr überprüft werden. In der darauffolgenden Iteration wird die Kugel endgültig aus der Liste der aktiven Bälle entfernt.  
+
+\newpage
+Die Animation erfolgt über die folgende Methode:  
+
+\begin{lstlisting}[language=Java, frame=single]
+	class Ball {	
+	void animateRemoval() {
+		if (this.pocketed && scale > 0.5) {
+			scale *= 0.99;
+			our_sphere.scale(0.99);      
+		}
+		if (this.pocketed && scale <= 0.5) {        
+			isFadingOut = true;     
+			setVisibility(false);     
+		}
+	}
+..}
+\end{lstlisting}
+
+Im Fall einer weißen Kugel, muss sie nach Abschluss der Animation erneut auf dem Tisch platziert werden. Dies erfolgt in mehreren Schritten:
+
+\begin{lstlisting}[language=Java, frame=single]
+class CBalls {..
+void placeWhiteBallAfterFoul() {
+	Ball ball = getWhiteBall();  
+	if (ball.scale <= 0.5){          
+		ball.pocketed = false;           
+		ball.isFadingOut = false;
+		ball.our_sphere.scale(2); 
+		ball.scale = 1;
+	} 
+	if ( ball.scale == 1){
+		ball.setVisibility(true);
+		ball.sx = mouseX; 
+		ball.sy = mouseY; 
+	}
+}
+..}
+\end{lstlisting}
+
+
+Durch diese Vorgehensweise wird das Einlochen optisch ansprechend gestaltet, ohne dabei die Spielmechanik zu beeinflussen.
+
+	
 	
 \subsubsection{Rotation}
 Die Rotation eines Objekts in einem Raum kann durch das Kreuzprodukt zwischen der Richtung des Objekts (Vektor \((V_x, V_y, V_z)\)) und einer proportionalen Richtung (Vektor \((-V_y, V_x, V_z)\)) beschrieben werden.
@@ -203,7 +274,7 @@ Falls das Bild vollständig umgedreht ist, kann dies abgefangen werden, indem de
 	
 \subsubsection{Reibung}
 Um ein nahezu realistisches Verhalten zu simulieren, wird der Ball durch eine Reibungskraft (\texttt{FRICTION}) verlangsamt. Diese Reibung reduziert die Geschwindigkeit des Balls bei jedem Frame leicht, während er rollt.
-\newpage
+
 
 \begin{lstlisting}[language=Java, columns=fixed, tabsize=2, xleftmargin=10pt, frame=single]  
 	class Ball {..
@@ -222,8 +293,7 @@ Um ein nahezu realistisches Verhalten zu simulieren, wird der Ball durch eine Re
 	
 	Die Ball Klasse wird durch die PShape Klasse repräsentiert. Dies hat den Vorteil, dass wir eine Sphere erstellen können und mithilfe der Methode setTexture(PImage) eine Textur auf den Ball projizieren können.
 	
-	Die Ball Klasse ist für die Initialisierung der Kugelposition verantwortlich. Sie setzt die Startpositionen der Kugeln, die in einem Dreieck angeordnet sind, was die typische Startposition im Billardspiel darstellt. Diese Anordnung erfolgt durch die Methode initializePosition.
-	
+	Die Ball Klasse ist für die Initialisierung der Kugelposition verantwortlich. Sie setzt die Startpositionen der Kugeln, die in einem Dreieck angeordnet sind, was die typische Startposition im Billardspiel darstellt. Diese Anordnung erfolgt durch die Methode \texttt{initializePosition()}. 
 	
 	Darüber hinaus verwaltet die Klasse die physikalischen Eigenschaften des Balls. Sie berechnet die Rotation, die Bewegung im Raum sowie die Kollisionen mit den Banden. Die Klasse verteilt außerdem die Reibung auf die Geschwindigkeit des Balls, um realistische Bewegungen zu gewährleisten. Wenn der Ball in eine Tasche fällt, wird er mithilfe einer Animationsmethode animiert, die seine Bewegung und das Verschwinden des Balls aus dem Spiel simuliert.
 	
@@ -251,7 +321,7 @@ Um ein nahezu realistisches Verhalten zu simulieren, wird der Ball durch eine Re
 
 Die Datei Billard\_ssds stellt den Einstiegspunkt des Spiels dar und übernimmt die zentrale Steuerung. In der Setup Methode wird zu Beginn des Spiels die grundlegende Spielumgebung vorbereitet. Dies umfasst das Festlegen der Fenstergröße, das Aktivieren der 3D Darstellung sowie das Ausblenden des Mauszeigers, um eine klarere Benutzeroberfläche zu ermöglichen. Anschließend werden die Spieler  eingerichtet, der Billardtisch initialisiert und alle relevanten Spielkomponenten wie Bälle und Queue hinzugefügt. Auch die Benutzeroberfläche wird hier vorbereitet, bevor das Spiel startet.
 
-Die Methode draw wird in jedem Frame aufgerufen und sorgt dafür, dass das Spielgeschehen kontinuierlich aktualisiert wird. Sie aktualisiert die Kameraperspektive, rendert die Spielszene und berechnet die Spiel Logik, einschließlich der Bewegungen und Kollisionen der Bälle, mit updateGameLogic. Abschließend wird die Benutzeroberfläche dargestellt, um den aktuellen Spielstatus wie Punktestand und weitere wichtige Informationen anzuzeigen.
+Die Methode \texttt{draw()} wird in jedem Frame aufgerufen und sorgt dafür, dass das Spielgeschehen kontinuierlich aktualisiert wird. Sie aktualisiert die Kameraperspektive, rendert die Spielszene und berechnet die Spiel Logik, einschließlich der Bewegungen und Kollisionen der Bälle, mit \texttt{updateGameLogic()}. Abschließend wird die Benutzeroberfläche dargestellt, um den aktuellen Spielstatus wie Punktestand und weitere wichtige Informationen anzuzeigen.
 
 Zusätzlich übernimmt die Datei auch die Steuerung des Spiels. Über Mausklicks wird die Ausrichtung des Queues gesteuert und der Schuss ausgelöst, was eine direkte und intuitive Interaktion mit dem Spiel ermöglicht.
 
@@ -268,13 +338,9 @@ Die Datei Billard\_ssds sorgt somit für die Interaktion aller Spielkomponenten 
 	Es werden Methoden definiert, die es ermöglichen, die Schlagstärke durch Mausinteraktion zu steuern und den Queue nach jedem Schuss zurückzusetzen. Außerdem wird der Winkel des Queues aktualisiert, sodass er stets korrekt auf den Ball ausgerichtet bleibt, aber auch frei mit der Maus geändert werden kann.
 	
 	
-	\subsubsection{GameController}
-	
-	Die Klasse GameController übernimmt die Verwaltung des Spielflusses. Sie sorgt dafür, dass Spieler wechseln, wenn es notwendig ist, und überwacht die Ereignisse während des Spiels. Zu Beginn wird der erste Spieler festgelegt. Die Klasse verwaltet auch die Züge, indem sie festlegt, welcher Spieler gerade am Zug ist, und wechselt den Spieler, wenn ein Foul oder ein versenkter Ball erkannt wird.
-	
-	GameController ordnet den Spielern Ballarten zu, basierend auf den Regeln, und stellt sicher, dass der Punktestand korrekt aktualisiert wird. Wenn ein Foul auftritt oder der Punktestand eines Spielers sich verändert, wechselt der Controller den Spieler. Zudem wird überprüft, ob das Spiel auf den ersten Zug reagiert und diesen korrekt abwickelt.
-	
-	Die Klasse sorgt für einen flüssigen Spielablauf, indem sie den Wechsel der Spieler steuert und den Punktestand im Auge behält.
+\subsubsection{GameController}
+
+Die Klasse GameController steuert den Spielfluss, indem sie den Spielerwechsel koordiniert und Ereignisse während des Spiels überwacht. Sie bestimmt den ersten Spieler und ordnet ihm die Ballart zu. Während des Spiels verwaltet sie die Züge, erkennt Fouls und initiiert den Spielerwechsel. Zudem stellt sie die korrekte Aktualisierung des Punktestands sicher. 
 	
 	
 	
@@ -285,7 +351,7 @@ Die Datei Billard\_ssds sorgt somit für die Interaktion aller Spielkomponenten 
 		\item BREAKSHOT: Der Zustand, in dem das Spiel mit dem ersten Schlag startet.
 		\item PLACE\_WHITE\_BALL: Ein Zustand, in dem der Spieler die weiße Kugel nach einem Foul auf dem Tisch platzieren muss.
 		\item READY: Der Zustand, in dem der Spieler bereit ist, seinen nächsten Schlag auszuführen.
-		\item WAITING: Ein Zustand, in dem das Spiel auf eine bestimmte Aktion wartet, etwa eine Entscheidung des Spielers oder das Ende einer Animation.
+		\item WAITING: Ein Zustand, in dem das Spiel auf eine Entscheidung nach der Animation wartet.
 		\item FOUL: Der Zustand, der ausgelöst wird, wenn ein Foul begangen wird, zum Beispiel das Versenken der weißen Kugel.
 		\item FINISHED: Der Zustand, in dem das Spiel abgeschlossen ist und der Gewinner ermittelt wurde.
 	\end{itemize}
@@ -296,45 +362,49 @@ Die Datei Billard\_ssds sorgt somit für die Interaktion aller Spielkomponenten 
 	
 	
 	\subsubsection{Player}
-	Die Player Klasse repräsentiert einen Spieler im Billardspiel und enthält alle relevanten Informationen und Methoden zur Verwaltung des Spielverlaufs für diesen Spieler. Jeder Spieler hat einen Namen, eine Punktzahl, einen Balltyp und eine Liste der Bälle, die er bereits versenkt hat. Außerdem wird festgehalten, ob es der Spieler ist, der gerade am Zug ist.
 	
-	Die Klasse ermöglicht es, die Punkte des Spielers zu erhöhen, je nachdem, welchen Ball er versenkt. Bei der regulären Ballzuweisung wird zwischen den Balltypen unterschieden: Solide oder gestreifte Bälle. Im Falle der Schwarzen Kugel gibt es spezielle Regeln, die ebenfalls in der Methode handleBlackBall behandelt werden. Hier wird geprüft, ob der Spieler seine richtige Ballart (solide oder gestreifte) noch im Spiel hat und ob er die schwarze Kugel versenkt hat, um Punkte zu erhalten.
+	Die Klasse Player repräsentiert einen Spieler im Billardspiel und verwaltet alle relevanten Informationen sowie Methoden zur Steuerung des Spielverlaufs. Jeder Spieler hat einen Namen, eine Punktzahl, einen Balltyp und eine Liste der versenkten Bälle. Zudem wird festgehalten, ob der Spieler gerade am Zug ist.
 	
-	Zusätzlich wird die Gewinnerlogik in der Methode awardPoints behandelt, die den aktuellen Spieler als Gewinner festlegt, sobald dieser alle Bälle richtig versenkt hat. Sobald das Spiel beendet ist, wird der winGame Zustand ausgelöst, der den Spielbildschirm anzeigt und den Gewinner bekannt gibt.
+	Die Klasse ermöglicht es, die Punktzahl basierend auf versenkten Bällen zu erhöhen. Bei der Ballzuweisung wird zwischen soliden und gestreiften Bällen unterschieden. Bei der Schwarzen Kugel werden spezielle Regeln in der Methode \texttt{handleBlackBall()} geprüft, darunter, ob der Spieler die richtige Ballart noch im Spiel hat und ob er die schwarze Kugel korrekt versenkt hat.
 	
-	Ein weiterer wichtiger Bestandteil ist das Verwalten des Spielerwechsels. Der Player Objekt hat Methoden wie startTurn und endTurn, die steuern, wann ein Spieler an der Reihe ist und wann der nächste Spieler übernehmen darf. Der Balltyp des Spielers wird mit der Methode assignBallType zugewiesen, wodurch auch der gegnerische Spieler automatisch den anderen Balltyp erhält.
+	Die Gewinnerlogik wird in der Methode \texttt{awardPoints()} behandelt, die den Spieler zum Gewinner erklärt, sobald er alle Bälle richtig versenkt hat. Nach Beendigung des Spiels wird der Zustand \texttt{winGame} ausgelöst, der den Spielbildschirm anzeigt und den Gewinner verkündet.
 	
-	Die Methode getStatus gibt eine kurze Übersicht über den aktuellen Status des Spielers, wie den Punktestand und ob er gerade am Zug ist oder nicht.
+	Zusätzlich verwaltet die Klasse den Spielerwechsel mit den Methoden \texttt{startTurn()} und \texttt{endTurn()}, die festlegen, wann ein Spieler an der Reihe ist und wann der nächste Spieler übernimmt. Der Balltyp des Spielers wird über die Methode \texttt{assignBallType()} zugewiesen, wobei der gegnerische Spieler automatisch den anderen Balltyp erhält.
+	
+	Die Methode \texttt{getStatus()} gibt eine kurze Übersicht über den aktuellen Status des Spielers, einschließlich Punktestand und ob er am Zug ist.
 	
 	
-	\subsubsection{Pockets}
-	Die Klasse Pockets stellt die Taschen des Billardtisches dar, in denen die Bälle versenkt werden können. Jede Tasche wird durch eine Sphere repräsentiert. Die Tasche besteht aus mehreren Punkten, darunter die Ecken und mittleren Positionen der linken und rechten Seiten.
 	
-	In der Konstruktor Methode werden die Koordinaten für jede Tasche anhand der übergebenen Eingabewerte festgelegt. Zusätzliche Anpassungen an den Positionen der Ecken werden vorgenommen, um sie an den Billardtisch anzupassen. Die Koordinaten der Taschen werden dann in einer Liste gespeichert, um sie später effizient verwalten und verwenden zu können.
-	
-	Die Methode draw rendert jede Tasche auf dem Bildschirm. Sie durchläuft alle gespeicherten Koordinaten und verwendet die PShape Klasse, um jede Tasche als sphärische Form mit einer Textur darzustellen. Dabei wird jede Tasche leicht verschoben, sodass sie die richtige Position auf dem Tisch erhält. Die Textur, die auf die Tasche angewendet wird, ist in der Variable blackTexture gespeichert und wird aus einer externen Datei geladen.
-	
-	Die Taschen sind für das Spiel entscheidend, da sie die Orte darstellen, an denen die Bälle versenkt werden. Indem die Taschen auf dem Bildschirm angezeigt werden, wird dem Spieler eine visuelle Rückmeldung über den Zustand des Spiels gegeben.
+\subsubsection{Pockets}
+
+Die Klasse Pockets repräsentiert die Taschen des Billardtisches, in denen die Bälle versenkt werden. Insgesamt gibt es sechs Taschen: vier an den Ecken und jeweils eine an der mittleren Position der linken und rechten Seiten.
+
+Im Konstruktor werden die Koordinaten der Taschen basierend auf den übergebenen Eingabewerten festgelegt. Zusätzliche Anpassungen an den Positionen der Ecken erfolgen, um die Taschen an den Billardtisch anzupassen. Die Koordinaten werden in einer Liste gespeichert, um eine effiziente Verwaltung und Verwendung zu ermöglichen.
+
+Die Methode \texttt{draw()} rendert jede Tasche auf dem Bildschirm. Sie durchläuft alle gespeicherten Koordinaten und verwendet die PShape Klasse, um jede Tasche als sphärische Form mit einer Textur darzustellen. Die Taschen werden leicht verschoben, um ihre korrekte Position auf dem Tisch zu erhalten. Die Textur, die auf jede Tasche angewendet wird, ist in der Variablen \texttt{blackTexture} gespeichert und wird aus einer externen Datei geladen.
+
+Die Taschen sind entscheidend für das Spiel, da sie die Orte darstellen, an denen die Bälle versenkt werden. Ihre Darstellung auf dem Bildschirm bietet dem Spieler eine visuelle Rückmeldung über den Zustand des Spiels.
+
 	
 	\subsubsection{ShootingBar}
 	Die Klasse ShootingBar stellt die Anzeige und Steuerung der Schussstärke im Billardspiel dar. Sie visualisiert eine horizontale Leiste, die den aktuellen Wert der Schusskraft anzeigt und es dem Spieler ermöglicht, die Stärke seines Schusses dynamisch zu steuern. Diese Leiste spielt eine zentrale Rolle im Spiel, da sie den Spieler direkt in den Prozess der Schussvorbereitung einbindet.
 	
-	In der Konstruktor Methode werden die grundlegenden Parameter wie die Position auf dem Bildschirm, die maximale Stärke des Schusses sowie die Abmessungen der Leiste festgelegt. Der BillardCue, also der Queue des Spielers, wird ebenfalls übergeben, um eine Verbindung zwischen der Leiste und der aktuellen Schussstärke herzustellen. Zu Beginn ist die Schussstärke auf Null gesetzt, was bedeutet, dass der Spieler mit keiner Stärke schießt, bis er seine Maus bewegt
+	In der Konstruktor Methode werden die grundlegenden Parameter wie die Position auf dem Bildschirm, die maximale Stärke des Schusses sowie die Abmessungen der Leiste festgelegt. Der BillardCue, also der Queue des Spielers, wird ebenfalls übergeben, um eine Verbindung zwischen der Leiste und der aktuellen Schussstärke herzustellen. Zu Beginn ist die Schussstärke auf Null gesetzt, was bedeutet, dass der Spieler mit keiner Stärke schießt, bis er seine Maus bewegt.
 	
-	Die Methode updateStrength aktualisiert die Schussstärke basierend auf dem Fortschritt der Queue Animation. Durch die Anwendung der mathematischen Funktion sin wird der Fortschritt der Leiste von -1 bis 1 gemappt, um so eine sanfte, nicht lineare Änderung der Schussstärke zu ermöglichen. Dies gibt dem Spieler ein Gefühl der Kontrolle und Präzision, da er durch das Halten der Maustaste die Stärke des Schusses feinjustieren kann.
+	Die Methode \texttt{updateStrength()} aktualisiert die Schussstärke basierend auf dem Fortschritt der Queue Animation. Durch die Anwendung der mathematischen Funktion \texttt{sin} wird der Fortschritt der Leiste von -1 bis 1 gemappt, um so eine sanfte Änderung der Schussstärke zu ermöglichen. Dies gibt dem Spieler ein Gefühl der Kontrolle und Präzision, da er durch das Halten der Maustaste die Stärke des Schusses feinjustieren kann.
 	
 	Durch die visuelle und dynamische Darstellung der Schussstärke wird dem Spieler eine klare Rückmeldung über die Stärke seines Schusses gegeben, was zu einer interaktiveren und ansprechenderen Spielerfahrung führt.
 	
 	
 	\subsubsection{Table}
 	
-	Die Klasse Table modelliert einen Billardtisch, einschließlich seiner Wände, des Bodens, der Decke und der Ecken. Sie berechnet die Positionen der Ecken und der Taschen basierend auf den übergebenen Koordinaten der Wände und fügt diese in einer Liste zusammen. Eine Instanz der Pockets Klasse wird verwendet, um die Taschen des Tisches zu verwalten. Die draw() Methode ist verantwortlich für das Rendern des gesamten Tisches. Sie besteht aus den Unterfunktionen drawTableTop(), drawTableLegs() und drawBorders(), die jeweils die Tischoberfläche, die Beine und die Randbereiche zeichnen. Die Geometrie wird unter Berücksichtigung eines festen Abstands zu den Grenzen des Tisches berechnet, wobei Texturen zur Veranschaulichung verwendet werden.
+	Die Klasse Table modelliert einen Billardtisch, einschließlich seiner Wände, der unteren, oberen, rechten und linken Kante. Sie berechnet die Positionen der Ecken und der Taschen basierend auf den übergebenen Koordinaten der Wände und fügt diese in einer Liste zusammen. Eine Instanz der Pockets Klasse wird verwendet, um die Taschen des Tisches zu verwalten. Die \texttt{draw()} Methode ist verantwortlich für das Rendern des gesamten Tisches. Sie besteht aus den Unterfunktionen \texttt{drawTableTop()}, \texttt{drawTableLegs()} und \texttt{drawBorders()}, die jeweils die Tischoberfläche, die Beine und die Randbereiche zeichnen. Die Geometrie wird unter Berücksichtigung eines festen Abstands zu den Grenzen des Tisches berechnet, wobei Texturen zur Veranschaulichung verwendet werden.
 	
 
-
+	\newpage
 	\subsubsection{VectorDrawer}
 	
-	Die Klasse VectorDrawer visualisiert die Schussrichtung des Queues und gibt eine provisorische Ansicht des Schusses in Rot, die zeigt, wo der Ball nach der Kollision hinrollen wird. Die Methode draw() berechnet den Kollisionspfad eines Balls, indem sie die Richtung des Queue verfolgt und eine Linie in diese Richtung zieht. Sobald der Queue einen Ball trifft, wird der prognostizierte Pfad des getroffenen Balls in Rot dargestellt, um die Schussrichtung des Balls nach der Kollision anzuzeigen. Die Methode drawPredictedPath() berechnet die zukünftige Position des Balls nach der Kollision, basierend auf der Impulsübertragung und der Geschwindigkeit des Balls. Diese Darstellung hilft, die Ballbewegung visuell vorauszuberechnen und die Schussplanung zu unterstützen.
+	Die Klasse VectorDrawer visualisiert die Schussrichtung des Queues und gibt eine provisorische Ansicht des Schusses in Rot, die zeigt, wo der Ball nach der Kollision hinrollen wird. Die Methode \texttt{draw()} berechnet den Kollisionspfad eines Balls, indem sie die Richtung des Queue verfolgt und eine Linie in diese Richtung zieht. Sobald der Queue einen Ball trifft, wird der prognostizierte Pfad des getroffenen Balls in Rot dargestellt, um die Schussrichtung des Balls nach der Kollision anzuzeigen. Die Methode \texttt{drawPredictedPath()} berechnet die zukünftige Position des Balls nach der Kollision, basierend auf der Impulsübertragung und der Geschwindigkeit des Balls. Diese Darstellung hilft, die Ballbewegung visuell vorauszuberechnen und die Schussplanung zu unterstützen.
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=1\textwidth]{../../data/Dokumentation_ScreenShots/VDBeispiel.png}
@@ -348,9 +418,12 @@ Die Datei Billard\_ssds sorgt somit für die Interaktion aller Spielkomponenten 
 	
 	\newpage
 \section{Texturierung}
-Die Texturierung ist ein relativ einfacher, jedoch sehr wichtiger Vorgang, der den visuellen Eindruck und somit den Spielfaktor erheblich steigern kann. In unserer Implementierung haben wir verschiedene Objekte texturiert, um ein realistisches Erscheinungsbild zu gewährleisten.
 
-Im Folgenden sind die verwendeten Texturen dargestellt:
+Die Texturierung ist ein wesentlicher Bestandteil der grafischen Gestaltung, der die visuelle Qualität und Authentizität des Spiels erhöht. In unserer Implementierung werden verschiedene Texturen auf die Objekte angewendet, um deren Erscheinungsbild zu verfeinern und eine realistische Spielumgebung zu schaffen.
+
+Texturen werden auf 3D-Modelle projiziert, um Oberflächen mit Details zu versehen. Für jedes Objekt wurde eine passende Textur ausgewählt, wobei auf eine korrekte Skalierung und Ausrichtung geachtet wurde, um Verzerrungen zu vermeiden. Die Texturen werden aus externen Bilddateien geladen und optimiert, um die Performance nicht zu beeinträchtigen.
+
+Die folgenden Texturen wurden verwendet:
 
 \begin{figure}[h!]
 	\centering
@@ -389,11 +462,19 @@ Im Folgenden sind die verwendeten Texturen dargestellt:
 
 
 
+
+
 \section{Artefakte}
 
 Wie in jeder Implementierung, ist es Artefakten nicht auszuweichen. Was wir tun können ist diese analysieren,  Betrachten und somit verfeinern oder ganz entfernen.
 
 Hier zeigen wir, was wir festgestellt haben, wie unser Programm funktioniert, was noch verbesserungpotenzial hat und wo noch lücken zu sehen sind.
+
+\subsection{3D-Effekt}
+
+Obwohl das Projekt ursprünglich in 3D konzipiert wurde und die Kameraperspektive den Tisch aus verschiedenen Winkeln betrachtet, ist der vollständige 3D-Effekt im aktuellen Spielstand noch nicht realisiert. Eine präzisere Modellierung ist erforderlich, um diesen Effekt zu erreichen. Dazu gehört unter anderem die exakte Darstellung der Tischkanten sowie die vollständige dreidimensionale Modellierung der Taschen, des Queues und eine passende Kameraperspektive.
+
+
 
 \subsection{Pockets}
 
@@ -445,6 +526,12 @@ In diesem Projekt haben wir erfolgreich ein Billardspiel simuliert, das grundleg
 		
 	\bibitem{LEIFIphysik} 
 	LEIFIphysik: März, 2025. Quelle: \textit{https://www.leifiphysik.de/mechanik/impulserhaltung-und-stoesse/grundwissen/zentraler-elastischer-stoss}
+	\bibitem{Serlo} 
+	Serlo: o.D. . Quelle: \textit{https://de.serlo.org/mathe/227927/gegenseitige-lage-von-zwei-kugeln}
+	
+	
+	
+	
 		
 	\end{thebibliography}
 	

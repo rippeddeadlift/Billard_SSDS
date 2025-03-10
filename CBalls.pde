@@ -181,7 +181,7 @@ void detectPocketTouch() {
             float distance = (float)Math.sqrt(dx * dx + dy * dy);
             if (distance < b.Radius() + table.pockets.pocketRadius / 2) {
                 if (!b.isWhiteBall) {         
-                    ballsToRemove.add(b);  // Prepare the ball for fading animation
+                    ballsToRemove.add(b);  
                     b.vx = 0;
                     b.vy = 0;       
                     b.pocketed = true;
@@ -217,12 +217,12 @@ void placeWhiteBallAfterFoul() {
         if (ball.scale <= 0.5){          
           ball.pocketed = false;           
           ball.isFadingOut = false;
-          ball.our_sphere.scale(2); //<>//
+          ball.our_sphere.scale(2); 
           ball.scale = 1;
         } 
         if ( ball.scale == 1){
           ball.setVisibility(true);
-          ball.sx = mouseX; //<>//
+          ball.sx = mouseX; 
           ball.sy = mouseY; 
         }
 }
