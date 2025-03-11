@@ -8,7 +8,6 @@ public class CBalls {
   PImage texture;
   boolean mousedown   = false;
   ArrayList<Integer> billardNumbers = new ArrayList();
-  ThreeDimensionalBillardCue threeDimensionalBillardCue;
   ArrayList<Ball> ballContainer = new ArrayList();
   Table table;
   float velocityThreshold = 0.5; 
