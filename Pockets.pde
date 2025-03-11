@@ -2,7 +2,7 @@ class Pockets{
   PVector topLeftCorner,topRightCorner,bottomLeftCorner,bottomRightCorner, middleLeft, middleRight;
   PImage blackTexture = loadImage("data/billard_textures/pocket_texture.jpg");
   ArrayList<PVector> coordinates;
-  int pocketRadius = 50;
+  int pocketRadius = 40;
   
   Pockets(ArrayList<PVector> coords){
     topLeftCorner = new PVector(coords.get(0).x + 30, coords.get(0).y + 30);

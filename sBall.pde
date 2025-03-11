@@ -3,8 +3,8 @@
 public class Ball {
   double DT = 0.06; // time increment
   double MASS = 1.0;
-  double FRICTION = 0.99; // friction coefficient
-  double ROT_FRICTION = 0.98; // rotational friction coefficient
+  double FRICTION = 0.985; // friction coefficient
+  double ROT_FRICTION = 0.8; // rotational friction coefficient
   double times; // time since start
   double sx, sy; // actual position 
   double vx, vy; // actual velocity 
@@ -18,20 +18,21 @@ public class Ball {
   int bn; // ball number
   //TODO: Refactoren sodass es exakt in der mitte des Tisches ist (plazierungslogik ändern damit man von dem ersten ball ausgeht und danach die bälle von "unten" aufbaut)
   // width/2 für den ball in der spitze
-  int firstRowXAxis = 200;
-  int firstRowYAxis = 200;
+  int firstRowXAxis = 250;
+  int firstRowYAxis = 150;
   PShape our_sphere;
-  PImage texture;
+  PImage ballIcon;
   boolean isWhiteBall,isBlackBall = false;
   boolean visible = true;
   boolean pocketed = false; 
   double scale = 1;
   boolean isFadingOut = false;
+  int ballId;
 
   boolean mousedown = false;
 
   Ball(int count, PImage texture, int randomFromArray) {
-    radius = 0.4f * 60;
+    radius = 0.4f * 35;
     this.bn = count;    
     switch (randomFromArray) {
             case 8: 
@@ -51,13 +52,15 @@ public class Ball {
       this.isBlackBall = true;
     }
     initializePosition(count);
+    this.ballId = randomFromArray;
+    this.ballIcon = loadImage("billard_icons/" + randomFromArray + ".png");
     our_sphere = createShape(SPHERE, this.Radius());
     our_sphere.setStroke(false);
     our_sphere.setTexture(texture);
   }
 
   Ball() {
-    radius = 0.4f * 60;
+    radius = 0.4f * 35;
     this.vy = 0;
     this.sy = 800;
     this.vx = 0;
@@ -203,6 +206,10 @@ void draw() {
   
   void setVisibility(boolean v){
     this.visible = v;
+  }
+  
+  PImage getIcon(){
+    return this.ballIcon;
   }
 
 
