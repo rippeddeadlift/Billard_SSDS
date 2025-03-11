@@ -72,4 +72,7 @@ void manage(ArrayList<Ball> pocketedBalls) {
      Player currentOpponent() {
         return (currentPlayer == player1) ? player2 : player1;
     }
+    Player getCurrentPlayer(){
+      return this.currentPlayer;
+    }
 }
