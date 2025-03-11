@@ -1,3 +1,7 @@
+import peasy.*;
+import com.krab.lazy.*;
+import controlP5.*;
+
 CBalls theBalls;
 Ball whiteBall;
 Table table;
@@ -22,6 +26,9 @@ Player player2;
 Player currentPlayer;
 GameController gameController;
 VectorDrawer vd;
+UserInterface userInterface;
+
+
 
 void setup() 
 {
@@ -30,7 +37,8 @@ void setup()
   initializePlayers();
   initializeTable();
   initializeGameComponents();
-  initializeUI();
+  userInterface = new UserInterface(this, gameController);
+  initializeUI(); //<>//
   startGame();
 }
 
@@ -38,7 +46,7 @@ void draw() {
   updateCamera();
   renderScene();
   updateGameLogic();
-  displayUI();
+  userInterface.draw();
 }
 
 void updateCamera() {
@@ -69,12 +77,6 @@ void updateGameLogic() {
   theBalls.game_physics(currentGameState != GameState.FOUL);
 }
 
-void displayUI() {
-  fill(0);
-  textSize(20);
-  text(player1.getStatus(), 20, 30);
-  text(player2.getStatus(), 20, 60);
-}
 
 void initializePlayers() {
   player1 = new Player("Player 1");
