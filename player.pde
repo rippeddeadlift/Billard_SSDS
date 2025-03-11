@@ -33,8 +33,6 @@ if (!scoredBalls.contains(b)) {
         } else {
             handleRegularBall(b, currentOpponent);
         }
-        
-        scoredBalls.add(b);
     }
 }
 
@@ -45,7 +43,7 @@ private void handleBlackBall(CBalls cballs, Player currentOpponent) {
     if (ballType == BallType.SOLID && cballs.solidBallsRemaining()) {
         awardPoints(currentOpponent, 8); 
     } else if (ballType == BallType.STRIPE && cballs.stripeBallsRemaining()) {
-        awardPoints(currentOpponent, 8);   //<>//
+        awardPoints(currentOpponent, 8);   //<>// //<>// //<>//
     } else if (ballType == BallType.SOLID && !cballs.solidBallsRemaining()) {
         awardPoints(this, 8); 
     } else if (ballType == BallType.STRIPE && !cballs.stripeBallsRemaining()) {
@@ -55,9 +53,13 @@ private void handleBlackBall(CBalls cballs, Player currentOpponent) {
 
 private void handleRegularBall(Ball b, Player currentOpponent) {
     if (ballType == b.ballType) {
+        scoredBalls.add(b);
         score++;  
     } else {
-        currentOpponent.score++;  
+        if (!currentOpponent.scoredBalls.contains(b)) {
+          currentOpponent.scoredBalls.add(b);  //<>//
+          currentOpponent.score++;
+} 
     }
 }
 
@@ -71,8 +73,8 @@ private void awardPoints(Player p, int points) {
     }
 }
 
-void winGame() {
-    showGameOverScreen(); //<>//
+void winGame() {  //<>//
+    showGameOverScreen(); 
     }
 
 void showGameOverScreen() {
@@ -83,12 +85,12 @@ void showGameOverScreen() {
     text(this.winner.name + " won the game!", width / 8, height / 2 + 100);  
     text("Score: "+ this.winner.score , width / 3, height / 2 + 200);
 }
-
+ //<>// //<>//
  //<>//
 
-void assignBallType(BallType bType, Player currentOpponent) {
-        ballType = bType; //<>//
-        if (bType == BallType.SOLID) { //<>//
+void assignBallType(BallType bType, Player currentOpponent) { //<>//
+        ballType = bType;  //<>//
+        if (bType == BallType.SOLID) { 
             currentOpponent.ballType = BallType.STRIPE;
         } else if (bType == BallType.STRIPE) {
             currentOpponent.ballType = BallType.SOLID;
@@ -101,6 +103,10 @@ void assignBallType(BallType bType, Player currentOpponent) {
 
 String getStatus() {
     return name + " | Score: " + score + " | " + (isTurn ? "Your turn" : "Waiting") + " | " + "BallType: " + ballType;
+}
+
+ArrayList<Ball> getScoredBalls(){
+  return scoredBalls;
 }
 
 }
