@@ -1,5 +1,4 @@
 import peasy.*;
-import com.krab.lazy.*;
 import controlP5.*;
 
 CBalls theBalls;
@@ -32,15 +31,14 @@ UserInterface userInterface;
 
 void setup() 
 {
-  size(600, 960, P3D);   
-  noCursor();  
+  size(600, 960, P3D);  
   initializePlayers();
   initializeTable();
   initializeGameComponents();
   userInterface = new UserInterface(this, gameController);
-  initializeUI(); //<>//
-  startGame();
-}
+  initializeUI();
+  startGame(); //<>//
+} //<>//
 
 void draw() {
   updateCamera();
@@ -50,7 +48,7 @@ void draw() {
 }
 
 void updateCamera() {
-  camera(camX, camY, camZ, width / 2, height / 2, 0, 0, 1, 0);
+  camera(camX, camY, camZ, width/2, height/2, 0, 0, 1, 0);
   background(255);
   lightSpecular(255, 255, 255);
   directionalLight(204, 204, 204, 0, 1, -1);
@@ -71,7 +69,6 @@ void updateGameLogic() {
   if (theBalls.areAllBallsStationary() && currentGameState != GameState.BREAKSHOT && currentGameState != GameState.FOUL) {
     billardCue.display();
     vd.draw(theBalls, theBalls.getWhiteBall(), billardCue);
-    shootingBar.draw();
   }
 
   theBalls.game_physics(currentGameState != GameState.FOUL);
@@ -79,8 +76,8 @@ void updateGameLogic() {
 
 
 void initializePlayers() {
-  player1 = new Player("Player 1");
-  player2 = new Player("Player 2");
+  player1 = new Player("PLAYER 1");
+  player2 = new Player("PLAYER 2");
 }
 
 void initializeTable() {
@@ -141,25 +138,29 @@ void keyReleased(){
 }
 
 void mousePressed() {
-  if(mouseButton == LEFT){
+  if(!userInterface.isMouseOver()){
+    if(mouseButton == LEFT){
     theBalls.mousePressed();
   }
-  if (mouseButton == RIGHT) {
-    prevMouseX = mouseX;
-    prevMouseY = mouseY;
-    dragging = true;
-  }  
+    if (mouseButton == RIGHT) {
+      prevMouseX = mouseX;
+      prevMouseY = mouseY;
+      dragging = true;
+    } 
+  }
 }
 
 void mouseReleased() {
-  if (mouseButton == RIGHT) {
+  if(!userInterface.isMouseOver()){
+    if (mouseButton == RIGHT) {
     dragging = false;
   }
-  if(mouseButton == LEFT && (currentGameState == GameState.BREAKSHOT || currentGameState == GameState.FOUL) && theBalls.areAllBallsStationary()){
-    currentGameState = GameState.READY;
-  }
-  if (mouseButton == LEFT){
-    theBalls.mouseReleased();
+    if(mouseButton == LEFT && (currentGameState == GameState.BREAKSHOT || currentGameState == GameState.FOUL) && theBalls.areAllBallsStationary()){
+      currentGameState = GameState.READY;
+    }
+    if (mouseButton == LEFT){
+      theBalls.mouseReleased();
+    }
   }
 }
 
