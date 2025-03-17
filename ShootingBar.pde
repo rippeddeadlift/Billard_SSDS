@@ -21,12 +21,27 @@ class ShootingBar {
 
     void draw() {
         pushMatrix();
-        camera(); 
-        fill(200);
-        rect(x, y, barWidth, barHeight);    
-        float strengthRatio = cue.shootStrength / maxStrength; 
-        fill(0, 255, 0);
-        rect(x, y, barWidth * strengthRatio, barHeight); 
-        popMatrix();
+        color bgColor = get((int)x, (int)y);
+        noFill();
+        if(bgColor == -1){
+          stroke(0,0,0);
+        }else{
+          stroke(255,255,255);
+        }
+        rect(x, y, barWidth, barHeight);
+        
+        if(bgColor == -1){
+          fill(0,0,0);
+        }else{
+          fill(255,255,255);
+        }
+    textSize(16);
+    textAlign(LEFT);
+    text("POWER", x + barWidth / 2 - 30, y + barHeight / 2 + 5);
+    float strengthRatio = cue.shootStrength / maxStrength;
+    fill(255,255 - (255*strengthRatio),0);
+    rect(x, y, barWidth * strengthRatio, barHeight); 
+
+    popMatrix();
     }
 }
