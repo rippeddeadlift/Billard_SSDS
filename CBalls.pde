@@ -249,6 +249,22 @@ void mouseReleased() {
   billardCue.resetCue();
 }
 
+void updateRadius(float newValue){
+  for(Ball b : ballContainer){
+    b.setRadius(newValue);
+  }
+}
+void updateFriction(float newValue){
+  for(Ball b : ballContainer){
+    b.setFriction(newValue);
+  }
+}
+void updateMass(float newValue){
+  for(Ball b : ballContainer){
+    b.setMass(newValue);
+  }
+}
+
   
   void hitBall(Ball whiteBall) {
       float cueTipX = billardCue.cuePosition.x + billardCue.cueThickness / 2; 

@@ -9,7 +9,7 @@ public class Ball {
   double sx, sy; // actual position 
   double vx, vy; // actual velocity 
   double ax, ay; // acceleration
-  double radius;
+  double radius = 0.4f * 35;
   BallType ballType;
   double angleX = 0; // current rotation angle around x-axis
   double angleY = 0; // current rotation angle around y-axis
@@ -28,12 +28,13 @@ public class Ball {
   double scale = 1;
   boolean isFadingOut = false;
   int ballId;
+  PImage texture;
 
   boolean mousedown = false;
 
   Ball(int count, PImage texture, int randomFromArray) {
-    radius = 0.4f * 35;
-    this.bn = count;    
+    this.bn = count;   
+    this.texture = texture;
     switch (randomFromArray) {
             case 8: 
                 this.ballType = BallType.BLACK;
@@ -56,11 +57,10 @@ public class Ball {
     this.ballIcon = loadImage("billard_icons/" + randomFromArray + ".png");
     our_sphere = createShape(SPHERE, this.Radius());
     our_sphere.setStroke(false);
-    our_sphere.setTexture(texture);
+    our_sphere.setTexture(this.texture);
   }
 
   Ball() {
-    radius = 0.4f * 35;
     this.vy = 0;
     this.sy = 800;
     this.vx = 0;
@@ -73,29 +73,19 @@ public class Ball {
 
   void initializePosition(int count) {
     if (bn < 5) {
-      this.vy = 0;
       this.sy = firstRowYAxis;
-      this.vx = 0;
       this.sx = firstRowXAxis + count * this.Radius() * 2;
     } else if (bn < 9) {
-      this.vy = 0;
       this.sy = firstRowYAxis + this.Radius() * 2;
-      this.vx = 0;
       this.sx = (firstRowXAxis + this.Radius()) + (count - 5) * this.Radius() * 2;
     } else if (bn < 12) {
-      this.vy = 0;
       this.sy = firstRowYAxis + this.Radius() * 4;
-      this.vx = 0;
       this.sx = (firstRowXAxis + this.Radius() * 2) + (count - 9) * this.Radius() * 2;
     } else if (bn < 14) {
-      this.vy = 0;
       this.sy = firstRowYAxis + this.Radius() * 6;
-      this.vx = 0;
       this.sx = (firstRowXAxis + this.Radius() * 3) + (count - 12) * this.Radius() * 2;
     } else {
-      this.vy = 0;
       this.sy = firstRowYAxis + this.Radius() * 8;
-      this.vx = 0;
       this.sx = (firstRowXAxis + this.Radius() * 4) + (count - 14) * this.Radius() * 2;
     }
   }
@@ -211,7 +201,21 @@ void draw() {
   PImage getIcon(){
     return this.ballIcon;
   }
-
+  
+  public void setRadius(float newValue){
+    this.radius = newValue;
+    our_sphere = createShape(SPHERE, this.Radius());
+    our_sphere.setStroke(false);
+    our_sphere.setTexture(this.texture);
+  }
+  
+  public void setFriction(float newValue){
+    this.FRICTION = newValue;
+  }
+  public void setMass(float newValue){
+    this.MASS = newValue;
+  }
+  
 
   float Radius() {
     return (float) radius;
