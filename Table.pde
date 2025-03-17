@@ -34,15 +34,13 @@ void drawTableTop() {
   pushMatrix();
   translate((topLeftCorner.x + topRightCorner.x) / 2, (topLeftCorner.y + bottomLeftCorner.y) / 2, -DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX);
   noStroke();
-  
+  fill(255,255,0);
   float[] surfaceSize = {width - leftwall_x, height - ceiling_y, 0};
   PShape surface = createShape(BOX, surfaceSize);
   
-  // Setze tint auf voller Helligkeit ohne Transparenz
-  tint(255, 255, 255);  // Weiß für maximale Helligkeit ohne Transparenz
-  
   surface.setTexture(greenPoolTexture);
   shape(surface);
+
   
   popMatrix();
 }
