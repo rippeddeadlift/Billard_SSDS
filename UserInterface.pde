@@ -23,7 +23,7 @@ class UserInterface{
                      
   cp5.addSlider("FRICTION")
      .setPosition(10,20)
-     .setSize(80,20)
+     .setSize(140,20)
      .setRange(0.9,0.999)
      .setValue(0.98)
      .setGroup(g1)
@@ -35,7 +35,7 @@ class UserInterface{
           
   cp5.addSlider("BALLRADIUS")
      .setPosition(10,60)
-     .setSize(80,20)
+     .setSize(140,20)
      .setRange(0.5,50)
      .setValue(0.4f * 35)
      .setGroup(g1)
@@ -47,7 +47,7 @@ class UserInterface{
      
   cp5.addSlider("BALLMASS")
      .setPosition(10,100)
-     .setSize(80,20)
+     .setSize(140,20)
      .setRange(0.5,5)
      .setValue(1)
      .setGroup(g1)
