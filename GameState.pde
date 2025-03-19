@@ -1,5 +1,6 @@
 public enum GameState{
   BREAKSHOT,
+  MENU,
   PLACE_WHITE_BALL,
   READY,
   WAITING,

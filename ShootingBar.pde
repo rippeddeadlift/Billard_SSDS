@@ -3,7 +3,9 @@ class ShootingBar {
     float maxStrength;      
     float barWidth;         
     float barHeight;        
-    float x, y;         
+    float x, y;      
+    
+  PFont font = createFont("Arial",16);
 
     ShootingBar(float x, float y, float maxStrength, float barWidth, float barHeight, BillardCue billardCue) {
         cue = billardCue;
@@ -35,7 +37,7 @@ class ShootingBar {
         }else{
           fill(255,255,255);
         }
-    textSize(16);
+        textFont(font);
     textAlign(LEFT);
     text("POWER", x + barWidth / 2 - 30, y + barHeight / 2 + 5);
     float strengthRatio = cue.shootStrength / maxStrength;

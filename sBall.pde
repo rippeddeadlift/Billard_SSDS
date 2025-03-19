@@ -1,25 +1,19 @@
- import ddf.minim.*;
-
 public class Ball {
   double DT = 0.06; // time increment
   double MASS = 1.0;
   double FRICTION = 0.985; // friction coefficient
   double ROT_FRICTION = 0.8; // rotational friction coefficient
   double times; // time since start
-  double sx, sy; // actual position 
+  double sx,sy; //position
   double vx, vy; // actual velocity 
   double ax, ay; // acceleration
-  double radius = 0.4f * 35;
+  double radius;
   BallType ballType;
   double angleX = 0; // current rotation angle around x-axis
   double angleY = 0; // current rotation angle around y-axis
   double angularVelocityX = 0; // current angular velocity around x-axis
   double angularVelocityY = 0; // current angular velocity around y-axis
   int bn; // ball number
-  //TODO: Refactoren sodass es exakt in der mitte des Tisches ist (plazierungslogik ändern damit man von dem ersten ball ausgeht und danach die bälle von "unten" aufbaut)
-  // width/2 für den ball in der spitze
-  int firstRowXAxis = 250;
-  int firstRowYAxis = 150;
   PShape our_sphere;
   PImage ballIcon;
   boolean isWhiteBall,isBlackBall = false;
@@ -32,10 +26,10 @@ public class Ball {
 
   boolean mousedown = false;
 
-  Ball(int count, PImage texture, int randomFromArray) {
+  Ball(int count, PImage texture, int ballId, PVector position, double radius) {
     this.bn = count;   
     this.texture = texture;
-    switch (randomFromArray) {
+    switch (ballId) {
             case 8: 
                 this.ballType = BallType.BLACK;
                 break;
@@ -52,44 +46,28 @@ public class Ball {
     if(bn == 10){
       this.isBlackBall = true;
     }
-    initializePosition(count);
-    this.ballId = randomFromArray;
-    this.ballIcon = loadImage("billard_icons/" + randomFromArray + ".png");
+    this.sx = position.x;
+    this.sy = position.y;
+    this.ballId = ballId;
+    this.radius = radius;
+    this.ballIcon = loadImage("billard_icons/" + ballId + ".png");
     our_sphere = createShape(SPHERE, this.Radius());
     our_sphere.setStroke(false);
     our_sphere.setTexture(this.texture);
   }
 
-  Ball() {
-    this.vy = 0;
+  Ball(double radius) {
+    this.sx = width/2;
     this.sy = 800;
     this.vx = 0;
-    this.sx = width / 2;
+    this.vy = 0;
+    this.radius = radius;
     this.isWhiteBall = true;
     our_sphere = createShape(SPHERE, this.Radius());
     our_sphere.setStroke(false);
     our_sphere.setFill(color(255, 255, 255));
   }
-
-  void initializePosition(int count) {
-    if (bn < 5) {
-      this.sy = firstRowYAxis;
-      this.sx = firstRowXAxis + count * this.Radius() * 2;
-    } else if (bn < 9) {
-      this.sy = firstRowYAxis + this.Radius() * 2;
-      this.sx = (firstRowXAxis + this.Radius()) + (count - 5) * this.Radius() * 2;
-    } else if (bn < 12) {
-      this.sy = firstRowYAxis + this.Radius() * 4;
-      this.sx = (firstRowXAxis + this.Radius() * 2) + (count - 9) * this.Radius() * 2;
-    } else if (bn < 14) {
-      this.sy = firstRowYAxis + this.Radius() * 6;
-      this.sx = (firstRowXAxis + this.Radius() * 3) + (count - 12) * this.Radius() * 2;
-    } else {
-      this.sy = firstRowYAxis + this.Radius() * 8;
-      this.sx = (firstRowXAxis + this.Radius() * 4) + (count - 14) * this.Radius() * 2;
-    }
-  }
-
+ //<>//
 void draw() {
         if (visible && currentGameState != GameState.FINISHED) {
             pushMatrix();
@@ -222,10 +200,10 @@ void draw() {
   }
 
   float Sx() {
-    return (float) sx;
+    return (float) this.sx;
   }
 
   float Sy() {
-    return (float) sy;
+    return (float) this.sy;
   }
 }

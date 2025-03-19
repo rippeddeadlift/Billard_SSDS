@@ -19,7 +19,7 @@ float camZ = 900;
 float prevMouseX, prevMouseY;
 boolean dragging = false;
 PImage texture;
-GameState currentGameState = GameState.BREAKSHOT;
+GameState currentGameState = GameState.MENU;
 Player player1;
 Player player2;
 Player currentPlayer;
@@ -27,24 +27,23 @@ GameController gameController;
 VectorDrawer vd;
 UserInterface userInterface;
 
-
-
 void setup() 
 {
   size(600, 960, P3D);  
   initializePlayers();
   initializeTable();
   initializeGameComponents();
-  userInterface = new UserInterface(this, gameController);
+  userInterface = new UserInterface(this, gameController, currentGameState, totalball);
   initializeUI();
-  startGame(); //<>//
-} //<>//
+}
 
-void draw() {
-  updateCamera();
-  renderScene();
-  updateGameLogic();
-  userInterface.draw();
+void draw() { //<>//
+  if(currentGameState != GameState.MENU){ //<>//
+    updateCamera();
+    renderScene();
+    updateGameLogic();
+  }
+  userInterface.draw(currentGameState);
 }
 
 void updateCamera() {
@@ -86,7 +85,7 @@ void initializeTable() {
 
 void initializeGameComponents() {
   gameController = new GameController(player1, player2);
-  theBalls = new CBalls(totalball, table, gameController);
+  theBalls = new CBalls(table, gameController);
   gameController.setBalls(theBalls);
   setupCue();
   theBalls.setCue(billardCue);
@@ -97,6 +96,7 @@ void initializeUI() {
 }
 
 void startGame() {
+  currentGameState = GameState.BREAKSHOT;
   rightwall_x = width;
   floor_y = height;
   mid_x = width / 2.0;
@@ -108,18 +108,6 @@ void setupCue() {
     billardCue = new BillardCue(theBalls.getWhiteBall());
 }
 
-// draw the sphere-confing box
-void boxDraw() {
-  stroke(c_red);
-  noFill();
-    beginShape(QUADS);
-           vertex(leftwall_x ,  floor_y);
-           vertex(leftwall_x ,ceiling_y);
-           vertex(rightwall_x,ceiling_y);
-           vertex(rightwall_x,  floor_y);
-    endShape();   
-}
-
 void updateGameState(){
   if(theBalls.areAllBallsStationary()){
     this.currentGameState = GameState.READY;
@@ -128,13 +116,8 @@ void updateGameState(){
   }
 }
 
-void keyPressed()
-{
-  theBalls.keyPressed();
-}
-    
-void keyReleased(){
-  theBalls.keyReleased();
+void setCurrentGameState(GameState gameState){
+  this.currentGameState = gameState;
 }
 
 void mousePressed() {

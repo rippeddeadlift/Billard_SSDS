@@ -1,89 +1,176 @@
 
-class UserInterface{
+class UserInterface {
   ControlP5 cp5;
   PeasyCam pc;
   MyCanvas cc;
-  UserInterface(PApplet app, GameController gc){
+  GameState currentGameState;
+  boolean gameStarted = false;
+  int ballCount;
+
+  UserInterface(PApplet app, GameController gc, GameState gameState, int ballCount) {
+    currentGameState = gameState;
+    this.ballCount = ballCount;
     cp5 = new ControlP5(app);
-    cc = new MyCanvas(gc);
+    cc = new MyCanvas(gc); //<>//
     cc.post();
     cp5.addCanvas(cc);
+    addMainMenu();
+    addMenuButton();
     addSettings();
     cp5.setAutoDraw(false);
     pc = new PeasyCam(app, 0);
-  } //<>//
-  
-  void addSettings(){
-  Group g1 = cp5.addGroup("EINSTELLUNGEN")
-                .setPosition(0,40)
-                .setWidth(200)
-                .setBackgroundHeight(140)
-                .setOpen(false)
-                .setBackgroundColor(color(255,50));
-                     
-  cp5.addSlider("FRICTION")
-     .setPosition(10,20)
-     .setSize(140,20)
-     .setRange(0.9,0.999)
-     .setValue(0.98)
-     .setGroup(g1)
-     .onChange(new CallbackListener(){
-       public void controlEvent(CallbackEvent ev) {
-         float newValue = ev.getController().getValue();
-         theBalls.updateFriction(newValue);}
-     });
-          
-  cp5.addSlider("BALLRADIUS")
-     .setPosition(10,60)
-     .setSize(140,20)
-     .setRange(0.5,50)
-     .setValue(0.4f * 35)
-     .setGroup(g1)
-     .onChange(new CallbackListener(){
-       public void controlEvent(CallbackEvent ev) {
-         float newValue = ev.getController().getValue();
-         theBalls.updateRadius(newValue);}
-     });
-     
-  cp5.addSlider("BALLMASS")
-     .setPosition(10,100)
-     .setSize(140,20)
-     .setRange(0.5,5)
-     .setValue(1)
-     .setGroup(g1)
-     .onChange(new CallbackListener(){
-       public void controlEvent(CallbackEvent ev) {
-         float newValue = ev.getController().getValue();
-         theBalls.updateMass(newValue);}
-     });
-     
   }
   
-  boolean isMouseOver(){
+  void addMenuButton(){
+    cp5.addButton("mainMenu")
+    .setLabel("Menu")
+    .setPosition(0, 40)
+    .onClick(new CallbackListener() {
+         public void controlEvent(CallbackEvent event) {
+           setCurrentGameState(GameState.MENU);
+         }
+       });
+  }
+
+  void addSettings() {
+
+    cp5.addSlider("FRICTION")
+       .setPosition(width/2-100, height/2-55)
+       .setSize(200, 50)
+       .setRange(0.9, 0.999)
+       .setValue(0.98)
+       .onChange(new CallbackListener() {
+         public void controlEvent(CallbackEvent ev) {
+           float newValue = ev.getController().getValue();
+           theBalls.updateFriction(newValue);
+         }
+       });
+
+    cp5.addSlider("BALLRADIUS")
+       .setPosition(width/2-100, height/2)
+       .setSize(200, 50)
+       .setRange(0.5, 50)
+       .setValue(0.4f * 35)
+       .onChange(new CallbackListener() {
+         public void controlEvent(CallbackEvent ev) {
+           float newValue = ev.getController().getValue();
+           theBalls.updateRadius(newValue);
+         }
+       });
+
+    cp5.addSlider("BALLMASS")
+       .setPosition(width/2-100, height/2+55)
+       .setSize(200, 50)
+       .setRange(0.5, 5)
+       .setValue(1)
+       .onChange(new CallbackListener() {
+         public void controlEvent(CallbackEvent ev) {
+           float newValue = ev.getController().getValue();
+           theBalls.updateMass(newValue);
+         }
+       });
+  }
+
+  void addMainMenu() {
+    cp5.addButton("startButton")
+       .setLabel("Start")
+       .setPosition(width/2-100, height/3)
+       .setSize(200, 50)
+       .onClick(new CallbackListener() {
+         public void controlEvent(CallbackEvent event) {
+           gameStarted = true;
+           theBalls.initializeBalls(ballCount);
+           startGame();
+         }
+       });
+       cp5.addButton("resumeButton")
+       .setLabel("Fortsetzen")
+       .setPosition(width/2-100, height/3)
+       .setSize(200, 50)
+       .onClick(new CallbackListener() {
+         public void controlEvent(CallbackEvent event) {
+           setCurrentGameState(GameState.READY);
+         }
+       });
+       
+
+    cp5.addButton("exitButton")
+       .setLabel("Beenden")
+       .setPosition(width/2-100, height/1.5)
+       .setSize(200, 50)
+       .onClick(new CallbackListener() {
+         public void controlEvent(CallbackEvent event) {
+           exit();
+         }
+       });
+  }
+
+  void showMainMenu() {
+    if(gameStarted){
+      cp5.getController("startButton").hide();
+      cp5.getController("resumeButton").show();
+    }else{
+      cp5.getController("startButton").show();
+      cp5.getController("resumeButton").hide();
+    }
+    cp5.getController("exitButton").show();
+    cp5.getController("BALLMASS").show();
+    cp5.getController("BALLRADIUS").show();
+    cp5.getController("FRICTION").show();
+    cp5.getController("mainMenu").hide();
+    cc.setVisibility(false);
+  }
+
+  void hideMainMenu() {
+    cp5.getController("startButton").hide();
+    cp5.getController("resumeButton").hide();
+    cp5.getController("exitButton").hide();
+    cp5.getController("BALLMASS").hide();
+    cp5.getController("BALLRADIUS").hide();
+    cp5.getController("FRICTION").hide();
+    cp5.getController("mainMenu").show();
+    cc.setVisibility(true);
+  }
+
+  boolean isMouseOver() {
     return cp5.isMouseOver();
   }
- 
- void draw(){
-   pc.beginHUD();
-   cp5.draw();
-   shootingBar.draw();
-   pc.endHUD();
- }
+
+  void draw(GameState currentGameState) {
+    pc.beginHUD();
+    cp5.draw();
+
+    if (currentGameState == GameState.MENU) {
+      showMainMenu();
+    } else {
+      hideMainMenu();
+     
+    shootingBar.draw();
+    }
+ pc.endHUD();
+  }
 }
 
 class MyCanvas extends Canvas {
   GameController gc;
+  boolean visible = false;
+  PFont font = createFont("Arial",24);
   MyCanvas(GameController gc){
     this.gc = gc;
   }
+  
+  public void setVisibility(boolean visibility){
+    this.visible = visibility;
+  }
 
   public void draw(PGraphics pg) {
-    color bgColor = get(0, 0);
+    if(visible){
+      color bgColor = get(0, 0);
       pg.fill(255);
       if(bgColor == -1){
          pg.fill(0,0,0);
       }
-      pg.textFont(createFont("Arial",24));
+      pg.textFont(font);
       pg.textAlign(TOP,TOP);
     Player currentPlayer = gc.getCurrentPlayer();
     if(currentPlayer.ballType == BallType.NONE){
@@ -92,6 +179,7 @@ class MyCanvas extends Canvas {
       pg.text(currentPlayer.name + "(" + currentPlayer.ballType + ")", 0,10);
       pg.fill(255);
       drawPocketedBallsForPlayer(currentPlayer);
+    }
     }
   }
   

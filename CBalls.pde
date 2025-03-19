@@ -1,11 +1,9 @@
-
-/**
- * Container class for a number (totalball) of Ball objects
- */
 import java.util.*;
+
 public class CBalls {
   BillardCue billardCue;
   PImage texture;
+  float ballRadius = 0.4f * 35;
   boolean mousedown   = false;
   ArrayList<Integer> billardNumbers = new ArrayList();
   ArrayList<Ball> ballContainer = new ArrayList();
@@ -17,12 +15,11 @@ public class CBalls {
   boolean manageReady = false;
   GameController gameController;
 
-CBalls(int totalball, Table table, GameController gameController) {
+CBalls (Table table, GameController gameController) {
     this.table = table;
     this.gameController = gameController;    
-    initializeBallNumbers();
-    initializeBalls(totalball);    
-    ballContainer.add(new Ball()); // whiteball
+    initializeBallNumbers();    
+    ballContainer.add(new Ball(ballRadius)); // whiteball
 }
 
 void initializeBallNumbers() {
@@ -31,28 +28,39 @@ void initializeBallNumbers() {
 
 void initializeBalls(int totalball) {
     for (int bn = 0; bn < totalball; bn++) {
-        if (bn == 10) {
-            addBlackBall();
-        } else {
-            addRandomBall(bn);
-        }
+        addBall(bn);
     }
 }
 
-void addBlackBall() {
-    PImage texture = loadImage("billard_textures/8.jpg");
-    ballContainer.add(new Ball(10, texture, 8));
+ArrayList<PVector> getInitialPositionsOfBalls() {
+  ArrayList<PVector> positionList = new ArrayList();
+  int rows = (int) sqrt(2 * 15);
+  for (int i = 0; i < rows; i++) {
+    int ballsInRow = rows - i;
+    float y = height/6 + i * sqrt(3) * ballRadius;
+    for (int j = 0; j < ballsInRow; j++) {
+      float x = width/2 - (ballsInRow - 1) * ballRadius + 2 * j * ballRadius;
+      positionList.add(new PVector(x,y));
+    }
+  }
+  return positionList;
 }
 
-void addRandomBall(int id) {
-    int randomIndex = (int) random(billardNumbers.size());
-    int randomNumber = billardNumbers.get(randomIndex);
-    billardNumbers.remove(Integer.valueOf(randomNumber));
-    PImage texture = loadImage("billard_textures/" + randomNumber + ".jpg");
-    ballContainer.add(new Ball(id, texture, randomNumber));
+
+void addBall(int count) {
+    List<PVector> position = getInitialPositionsOfBalls();
+    if(count == 10){
+      PImage texture = loadImage("billard_textures/8.jpg");
+      ballContainer.add(new Ball(count, texture, 8, position.get(count), ballRadius));
+    }else{
+      int randomIndex = (int) random(billardNumbers.size());
+      int randomNumber = billardNumbers.get(randomIndex);
+      billardNumbers.remove(Integer.valueOf(randomNumber));
+      PImage texture = loadImage("billard_textures/" + randomNumber + ".jpg");
+      ballContainer.add(new Ball(count, texture, randomNumber, position.get(count), ballRadius));
+    }
 }
-
-
+    
   void setCue(BillardCue c) {
       this.billardCue = c;
   }
@@ -226,11 +234,6 @@ void placeWhiteBallAfterFoul() {
         }
 }
 
-void keyPressed()  {
-}
-
-void keyReleased() {
-}
 
 void mousePressed() {
   if( currentGameState != GameState.BREAKSHOT){
@@ -250,6 +253,7 @@ void mouseReleased() {
 }
 
 void updateRadius(float newValue){
+  this.ballRadius = newValue;
   for(Ball b : ballContainer){
     b.setRadius(newValue);
   }
