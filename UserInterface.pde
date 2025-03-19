@@ -11,7 +11,7 @@ class UserInterface {
     currentGameState = gameState;
     this.ballCount = ballCount;
     cp5 = new ControlP5(app);
-    cc = new MyCanvas(gc); //<>//
+    cc = new MyCanvas(gc); //<>// //<>//
     cc.post();
     cp5.addCanvas(cc);
     addMainMenu();
@@ -25,6 +25,7 @@ class UserInterface {
     cp5.addButton("mainMenu")
     .setLabel("Menu")
     .setPosition(0, 40)
+    .setVisible(false)
     .onClick(new CallbackListener() {
          public void controlEvent(CallbackEvent event) {
            setCurrentGameState(GameState.MENU);
@@ -33,6 +34,17 @@ class UserInterface {
   }
 
   void addSettings() {
+    
+    cp5.addButton("resetCamera")
+    .setLabel("Kamera zuruecksetzen")
+    .setPosition(0, height-25)
+    .setSize(150,20)
+    .setVisible(false)
+    .onClick(new CallbackListener() {
+         public void controlEvent(CallbackEvent event) {
+           resetCamera();
+         }
+       });
 
     cp5.addSlider("FRICTION")
        .setPosition(width/2-100, height/2-55)
@@ -106,6 +118,9 @@ class UserInterface {
   }
 
   void showMainMenu() {
+    
+    cp5.getController("mainMenu").hide();
+    cp5.getController("resetCamera").hide();
     if(gameStarted){
       cp5.getController("startButton").hide();
       cp5.getController("resumeButton").show();
@@ -117,7 +132,6 @@ class UserInterface {
     cp5.getController("BALLMASS").show();
     cp5.getController("BALLRADIUS").show();
     cp5.getController("FRICTION").show();
-    cp5.getController("mainMenu").hide();
     cc.setVisibility(false);
   }
 
@@ -129,6 +143,7 @@ class UserInterface {
     cp5.getController("BALLRADIUS").hide();
     cp5.getController("FRICTION").hide();
     cp5.getController("mainMenu").show();
+    cp5.getController("resetCamera").show();
     cc.setVisibility(true);
   }
 

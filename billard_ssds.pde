@@ -4,7 +4,7 @@ import controlP5.*;
 CBalls theBalls;
 Ball whiteBall;
 Table table;
-int totalball = 15;           
+int totalball = 3;           
 BillardCue billardCue;
 ShootingBar shootingBar;
 color c_red = color(255,0,0);
@@ -52,6 +52,12 @@ void updateCamera() {
   lightSpecular(255, 255, 255);
   directionalLight(204, 204, 204, 0, 1, -1);
   translate(0, 0, -2);
+}
+
+void resetCamera(){
+  this.camX = 295;
+  this.camY = 480;
+  this.camZ = 900;
 }
 
 void renderScene() {
