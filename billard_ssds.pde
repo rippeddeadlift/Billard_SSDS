@@ -4,7 +4,7 @@ import controlP5.*;
 CBalls theBalls;
 Ball whiteBall;
 Table table;
-int totalball = 3;           
+int totalball = 15;           
 BillardCue billardCue;
 ShootingBar shootingBar;
 color c_red = color(255,0,0);
