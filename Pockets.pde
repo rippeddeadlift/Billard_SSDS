@@ -2,7 +2,8 @@ class Pockets{
   PVector topLeftCorner,topRightCorner,bottomLeftCorner,bottomRightCorner, middleLeft, middleRight;
   PImage blackTexture = loadImage("data/billard_textures/pocket_texture.jpg");
   ArrayList<PVector> coordinates;
-  int pocketRadius = 40;
+  float pocketRadius = 40;
+  PShape pocketShape;
   
   Pockets(ArrayList<PVector> coords){
     topLeftCorner = new PVector(coords.get(0).x + 30, coords.get(0).y + 30);
@@ -12,14 +13,18 @@ class Pockets{
     middleLeft = new PVector(0, height/2);
     middleRight = new PVector(width, height/2);
     this.coordinates = new ArrayList(List.of(topLeftCorner, topRightCorner,bottomLeftCorner,bottomRightCorner, middleLeft, middleRight));
+    
+  }
+  void setPocketRadius(float newValue){
+    pocketRadius = newValue;
   }
   
   void draw(){
     for (PVector position : coordinates) {
       pushMatrix();
-      PShape pocketShape = createShape(SPHERE, pocketRadius);
+      pocketShape = createShape(SPHERE, pocketRadius);
       pocketShape.setTexture(blackTexture);
-      translate(position.x, position.y, -50);
+      translate(position.x, position.y, -pocketRadius/2);
       fill(255, 255, 255);
       shape(pocketShape);
       popMatrix();

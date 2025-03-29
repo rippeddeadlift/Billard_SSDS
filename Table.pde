@@ -37,11 +37,8 @@ void drawTableTop() {
   fill(255,255,0);
   float[] surfaceSize = {width - leftwall_x, height - ceiling_y, 0};
   PShape surface = createShape(BOX, surfaceSize);
-  
   surface.setTexture(greenPoolTexture);
   shape(surface);
-
-  
   popMatrix();
 }
 
@@ -62,15 +59,13 @@ void drawTableTop() {
     }
   }
   
-  
-
   void drawBorders() {
     pushMatrix();
-    translate(width/2, ceiling_y - DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX);
+    translate(width/2, ceiling_y - DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX, -75);
     rotateX(PI/2);
     fill(150, 50, 0);
     noStroke();
-    float[] p_y = {(float)width, (float)50, (float)50};
+    float[] p_y = {(float)width, (float)200, (float)50};
     shape = createShape(BOX, p_y);
     shape.setTexture(texture);
     shape(shape);
@@ -78,7 +73,7 @@ void drawTableTop() {
 
     // Bottom border
     pushMatrix();
-    translate(width/2, height + DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX);
+    translate(width/2, height + DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX, -75);
     rotateX(PI/2);
     fill(150, 50, 0);
     noStroke();
@@ -89,11 +84,11 @@ void drawTableTop() {
 
     // Left border
     pushMatrix();
-    translate(leftwall_x - DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX, height/2);
+    translate(leftwall_x - DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX, height/2, -75);
     rotateX(PI/2);
     fill(150, 50, 0);
     noStroke();
-    float[] p_x = {(float)50, (float)50, (float)height};
+    float[] p_x = {(float)50, (float)200, (float)height};
     shape = createShape(BOX, p_x);
     shape.setTexture(texture);
     shape(shape);
@@ -101,7 +96,7 @@ void drawTableTop() {
 
     // Right border
     pushMatrix();
-    translate(width + DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX, height/2);
+    translate(width + DISTANCE_OF_OBJECTS_TO_BOUNDINGBOX, height/2, -75);
     rotateX(PI/2);
     fill(150, 50, 0);
     noStroke();
