@@ -3,9 +3,8 @@ class ShootingBar {
     float maxStrength;      
     float barWidth;         
     float barHeight;        
-    float x, y;      
-    
-  PFont font = createFont("Arial",16);
+    float x, y; 
+    PFont font = createFont("Calibri",16);
 
     ShootingBar(float x, float y, float maxStrength, float barWidth, float barHeight, BillardCue billardCue) {
         cue = billardCue;

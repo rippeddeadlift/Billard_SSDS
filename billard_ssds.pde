@@ -38,7 +38,7 @@ void setup()
 }
 
 void draw() { //<>//
-  if(currentGameState != GameState.MENU){ //<>//
+  if(currentGameState != GameState.MENU){  //<>//
     updateCamera();
     renderScene();
     updateGameLogic();
@@ -98,7 +98,7 @@ void initializeGameComponents() {
 }
 
 void initializeUI() {
-  shootingBar = new ShootingBar(width / 3.0, height - 30, 150, 200, 20, billardCue);
+  shootingBar = new ShootingBar(width - 250, height - 25, 150, 200, 20, billardCue);
 }
 
 void startGame() {

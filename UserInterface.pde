@@ -6,12 +6,14 @@ class UserInterface {
   GameState currentGameState;
   boolean gameStarted = false;
   int ballCount;
+  PFont font = createFont("Calibri",16);
 
   UserInterface(PApplet app, GameController gc, GameState gameState, int ballCount) {
     currentGameState = gameState;
     this.ballCount = ballCount;
-    cp5 = new ControlP5(app);
-    cc = new MyCanvas(gc); //<>// //<>//
+    cp5 = new ControlP5(app); //<>//
+    cp5.setFont(font);
+    cc = new MyCanvas(gc);
     cc.post();
     cp5.addCanvas(cc);
     addMainMenu();
@@ -38,7 +40,7 @@ class UserInterface {
     cp5.addButton("resetCamera")
     .setLabel("Kamera zuruecksetzen")
     .setPosition(0, height-25)
-    .setSize(150,20)
+    .setSize(250,20)
     .setVisible(false)
     .onClick(new CallbackListener() {
          public void controlEvent(CallbackEvent event) {
@@ -61,7 +63,7 @@ class UserInterface {
     cp5.addSlider("BALLRADIUS")
        .setPosition(width/2-100, height/2)
        .setSize(200, 50)
-       .setRange(0.5, 50)
+       .setRange(10, 25)
        .setValue(0.4f * 35)
        .onChange(new CallbackListener() {
          public void controlEvent(CallbackEvent ev) {
@@ -169,7 +171,7 @@ class UserInterface {
 class MyCanvas extends Canvas {
   GameController gc;
   boolean visible = false;
-  PFont font = createFont("Arial",24);
+  PFont font = createFont("Calibri",24);
   MyCanvas(GameController gc){
     this.gc = gc;
   }
