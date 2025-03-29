@@ -4,7 +4,7 @@ public class Ball {
   double FRICTION = 0.985; // friction coefficient
   double ROT_FRICTION = 0.8; // rotational friction coefficient
   double times; // time since start
-  double sx,sy; //position
+  double sx,sy,sz; //position
   double vx, vy; // actual velocity 
   double ax, ay; // acceleration
   double radius;
@@ -23,6 +23,7 @@ public class Ball {
   boolean isFadingOut = false;
   int ballId;
   PImage texture;
+  PVector pocketedCoordinates;
 
   boolean mousedown = false;
 
@@ -67,11 +68,11 @@ public class Ball {
     our_sphere.setStroke(false);
     our_sphere.setFill(color(255, 255, 255));
   }
- //<>//
+  
 void draw() {
         if (visible && currentGameState != GameState.FINISHED) {
             pushMatrix();
-            translate(Sx(), Sy(), 0);
+            translate(Sx(), Sy(), Sz());
             rotateX((float) angleX);
             rotateY((float) angleY);
             animateRemoval();
@@ -142,17 +143,23 @@ void draw() {
 
     this.sx += dx;
     this.sy += dy;
-
-    confineToBox();
-  }
+      if(pocketed){
+        confineToPocket();
+      }
+       confineToBox();
+      
+}
+  
   void animateRemoval(){
-    if (this.pocketed && scale > 0.5){
-       scale *= 0.99;
-       our_sphere.scale(0.99);      
-    }
-    if (this.pocketed && scale <= 0.5){        
-      isFadingOut = true;     
-      setVisibility(false);     
+    //scale it down slowly, make it only move around in constraints of pocket
+    if (this.pocketed){
+       this.sx += (pocketedCoordinates.x - this.sx - this.radius) * 0.15;
+       this.sy += (pocketedCoordinates.y - this.sy + this.radius) * 0.15;
+       if(this.sz >= -45) this.sz -= 0.5;
+       if( scale > 0.5){
+         scale *= 0.95;
+         our_sphere.scale(0.95);   
+       }  
     }
   }
   void confineToBox() {
@@ -161,8 +168,14 @@ void draw() {
     if (this.sx > rightwall_x - this.radius) this.sx = rightwall_x - this.radius;
     if (this.sy > floor_y - this.radius) this.sy = floor_y - this.radius;
   }
+  void confineToPocket() {
+    if (this.sx < pocketedCoordinates.x + 40) this.vx *= 0.7; this.vy *= 0.7;
+    if (this.sy < pocketedCoordinates.y + 40) this.vx *= 0.7; this.vy *= 0.7;
+    if (this.sx > pocketedCoordinates.x - 40) this.vx *= 0.7; this.vy *= 0.7;
+    if (this.sy > pocketedCoordinates.y - 40) this.vx *= 0.7; this.vy *= 0.7;
+  }
 
-  void Mouse() {
+  void Mouse() { //<>//
     if (mouseButton == LEFT) {
       mousedown = true;
     }
@@ -205,5 +218,9 @@ void draw() {
 
   float Sy() {
     return (float) this.sy;
+  }
+  
+  float Sz() {
+    return (float) sz;
   }
 }

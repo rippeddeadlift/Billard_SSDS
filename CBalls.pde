@@ -188,14 +188,14 @@ void detectPocketTouch() {
             float distance = (float)Math.sqrt(dx * dx + dy * dy);
             if (distance < b.Radius() + table.pockets.pocketRadius / 2) {
                 if (!b.isWhiteBall) {         
-                    ballsToRemove.add(b);  
-                    b.vx = 0;
-                    b.vy = 0;       
+                    ballsToRemove.add(b);
+                    b.pocketedCoordinates = b2;
                     b.pocketed = true;
                     pocketedBalls.add(b);               
                 } else {
                     b.vx = 0;
-                    b.vy = 0;       
+                    b.vy = 0;   
+                    b.pocketedCoordinates = b2;
                     b.pocketed = true;
                     pocketedBalls.add(b);               
                 }
@@ -221,10 +221,11 @@ void placeWhiteBallForBreakShot(){
 }
 void placeWhiteBallAfterFoul() {
     Ball ball = getWhiteBall();  
-        if (ball.scale <= 0.5){          
+    ball.sz = 0;
+        if (ball.scale <= 0.5){ 
           ball.pocketed = false;           
           ball.isFadingOut = false;
-          ball.our_sphere.scale(2); 
+          ball.our_sphere.scale((float)(1/ball.scale)); 
           ball.scale = 1;
         } 
         if ( ball.scale == 1){
@@ -257,6 +258,7 @@ void updateRadius(float newValue){
   for(Ball b : ballContainer){
     b.setRadius(newValue);
   }
+  table.pockets.setPocketRadius(newValue*2);
 }
 void updateFriction(float newValue){
   for(Ball b : ballContainer){
