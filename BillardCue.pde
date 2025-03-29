@@ -49,24 +49,30 @@ void updateDrag(float mouseY) {
     }
 }
 
-  void updateCue() {
-      float ballX = (float) whiteBall.sx;
-      float ballY = (float) whiteBall.sy;
-      float cueOffset = this.cueOffset;
-
-      if (mouseButton != RIGHT) {
-          float dx = mouseX - ballX;
-          float dy = mouseY - ballY;
-          angle = atan2(dy, dx);
-      }
+void updateCue() {
+    float ballX = (float) whiteBall.sx;
+    float ballY = (float) whiteBall.sy;
+    float cueOffset = this.cueOffset;
+    
+    if (mouseButton != RIGHT) {
+      float dx = mouseX - ballX;
+      float dy = mouseY - ballY;
+      float length = sqrt(dx * dx + dy * dy);
+      float normalizedDx = dx / length;
+      float normalizedDy = dy / length;
+      float mirroredDx = -normalizedDx;
+      float mirroredDy = -normalizedDy;
+      angle = atan2(mirroredDy, mirroredDx);
+    }
       float cueStartX = ballX + cos(angle) * (cueOffset + cueThickness / 2);
       float cueStartY = ballY + sin(angle) * (cueOffset + cueThickness / 2);
       cuePosition.x = cueStartX;
       cuePosition.y = cueStartY;
-      if (cueAnimating) {
-          cueAnimationProgress += cueSpeed;
-      }
-  }
+
+    if (cueAnimating) {
+        cueAnimationProgress += cueSpeed;
+    }
+}
 
   void resetCue() {
     cueAnimationProgress = -HALF_PI;
@@ -114,9 +120,9 @@ fill(0, 255, 0);
     float angle = TWO_PI / sides * i;
     float x = cos(angle) * radius;
     float y = sin(angle) * radius;
-    float u = map(i, 0, sides, 0, texture.width); // Map texture coordinates along the circumference
+    float u = map(i, 0, sides, 0, texture.width); 
     vertex(x, y, 0, u, 0);
-    vertex(x, y, cueLength, u, texture.height); // Stretch texture along the length
+    vertex(x, y, cueLength, u, texture.height);
   }
   endShape();
 
