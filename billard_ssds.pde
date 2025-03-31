@@ -26,6 +26,7 @@ Player currentPlayer;
 GameController gameController;
 VectorDrawer vd;
 UserInterface userInterface;
+SoundController soundController;
 
 void setup() 
 {
@@ -44,6 +45,7 @@ void draw() { //<>//
     updateGameLogic();
   }
   userInterface.draw(currentGameState);
+  soundController.audioRewind();
 }
 
 void updateCamera() {
@@ -91,7 +93,8 @@ void initializeTable() {
 
 void initializeGameComponents() {
   gameController = new GameController(player1, player2);
-  theBalls = new CBalls(table, gameController);
+  soundController = new SoundController(this);
+  theBalls = new CBalls(table, gameController, soundController);
   gameController.setBalls(theBalls);
   setupCue();
   theBalls.setCue(billardCue);

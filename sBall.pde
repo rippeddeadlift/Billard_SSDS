@@ -24,12 +24,15 @@ public class Ball {
   int ballId;
   PImage texture;
   PVector pocketedCoordinates;
+  SoundController sc;
+  
 
   boolean mousedown = false;
 
-  Ball(int count, PImage texture, int ballId, PVector position, double radius) {
+  Ball(int count, PImage texture, int ballId, PVector position, double radius, SoundController sc) {
     this.bn = count;   
     this.texture = texture;
+    this.sc = sc;
     switch (ballId) {
             case 8: 
                 this.ballType = BallType.BLACK;
@@ -57,13 +60,14 @@ public class Ball {
     our_sphere.setTexture(this.texture);
   }
 
-  Ball(double radius) {
+  Ball(double radius, SoundController sc) {
     this.sx = width/2;
     this.sy = 800;
     this.vx = 0;
     this.vy = 0;
     this.radius = radius;
     this.isWhiteBall = true;
+    this.sc = sc;
     our_sphere = createShape(SPHERE, this.Radius());
     our_sphere.setStroke(false);
     our_sphere.setFill(color(255, 255, 255));
@@ -126,17 +130,20 @@ void draw() {
 
     // Reflections at floor, ceiling, left and right wall:
     if ((this.sy + dy > floor_y - this.radius)) {
+      sc.playWoodCollisionSound();
       dy = floor_y - this.radius - this.sy;
       this.vy = -refl * this.vy;
     } else if (this.sy + dy < ceiling_y + this.radius) {
+      sc.playWoodCollisionSound();
       dy = ceiling_y + this.radius - this.sy;
       this.vy = -refl * this.vy;
     }
-
     if (this.sx + dx > rightwall_x - this.radius) {
+      sc.playWoodCollisionSound();
       dx = rightwall_x - this.radius - this.sx;
       this.vx = -refl * this.vx;
     } else if (this.sx + dx < leftwall_x + this.radius) {
+      sc.playWoodCollisionSound();
       dx = leftwall_x + this.radius - this.sx;
       this.vx = -refl * this.vx;
     }

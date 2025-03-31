@@ -14,12 +14,14 @@ public class CBalls {
   ArrayList<Ball> ballsToRemove = new ArrayList<>();
   boolean manageReady = false;
   GameController gameController;
-
-CBalls (Table table, GameController gameController) {
+  SoundController sc;
+  
+CBalls (Table table, GameController gameController, SoundController soundController) {
     this.table = table;
     this.gameController = gameController;    
+    this.sc = soundController;
     initializeBallNumbers();    
-    ballContainer.add(new Ball(ballRadius)); // whiteball
+    ballContainer.add(new Ball(ballRadius, sc)); // whiteball
 }
 
 void initializeBallNumbers() {
@@ -51,13 +53,13 @@ void addBall(int count) {
     List<PVector> position = getInitialPositionsOfBalls();
     if(count == 10){
       PImage texture = loadImage("billard_textures/8.jpg");
-      ballContainer.add(new Ball(count, texture, 8, position.get(count), ballRadius));
+      ballContainer.add(new Ball(count, texture, 8, position.get(count), ballRadius, sc));
     }else{
       int randomIndex = (int) random(billardNumbers.size());
       int randomNumber = billardNumbers.get(randomIndex);
       billardNumbers.remove(Integer.valueOf(randomNumber));
       PImage texture = loadImage("billard_textures/" + randomNumber + ".jpg");
-      ballContainer.add(new Ball(count, texture, randomNumber, position.get(count), ballRadius));
+      ballContainer.add(new Ball(count, texture, randomNumber, position.get(count), ballRadius,sc));
     }
 }
     
@@ -99,7 +101,6 @@ void addBall(int count) {
   }
 
   void detectCollisions() {
-      //log(n^2) Algorithmus (BF)
       bruteforce();
     }
     void bruteforce() {
@@ -109,14 +110,16 @@ void addBall(int count) {
             {
               continue;
             }
-              //bruteForceChecks++;
-              //if(!useQuadTree && displayConnections)cd.draw(b1,b2);
               if (b1 != b2) {
                   // Formel um Distanz zu berechnen: sqrt((b2.sx-b1.sx)^2 + (b2.sy-b1.sy)^2)
                   float dx = (float)(b1.sx - b2.sx);
                   float dy = (float)(b1.sy - b2.sy);
                   float distance = (float)Math.sqrt(dx * dx + dy * dy);
                   if (distance <= b1.Radius() + b2.Radius() ) {
+                    //Since we detect collisions on the starting position and we dont need no sound there
+                    if((b1.vy > 0 || b1.vx > 0) || (b2.vy > 0 || b2.vx > 0)){
+                      sc.playBallCollisionSound();
+                    }
                       collisionanswer(distance, b1, b2, dx, dy);
                   }
               }
@@ -187,7 +190,8 @@ void detectPocketTouch() {
             float dy = (float)(b.Sy() - b2.y);
             float distance = (float)Math.sqrt(dx * dx + dy * dy);
             if (distance < b.Radius() + table.pockets.pocketRadius / 2) {
-                if (!b.isWhiteBall) {         
+                sc.playPutCollisionSound();
+                if (!b.isWhiteBall) {   
                     ballsToRemove.add(b);
                     b.pocketedCoordinates = b2;
                     b.pocketed = true;
@@ -248,9 +252,11 @@ void mouseReleased() {
   billardCue.isCueVisible = false;
   billardCue.cueAnimating = false;
   billardCue.releaseDrag();
-  hitBall(getWhiteBall()); // Shoot the ball   
-  manageReady = true;  
-  billardCue.resetCue();
+  if(billardCue.shootStrength > 0){
+    hitBall(getWhiteBall()); // Shoot the ball   
+    manageReady = true; 
+    billardCue.resetCue();
+  }
 }
 
 void updateRadius(float newValue){
@@ -273,6 +279,7 @@ void updateMass(float newValue){
 
   
   void hitBall(Ball whiteBall) {
+      sc.playHitCollisionSound();
       float cueTipX = billardCue.cuePosition.x + billardCue.cueThickness / 2; 
       float cueTipY = billardCue.cuePosition.y - billardCue.cueLength;
       float distance = dist(cueTipX, cueTipY, whiteBall.Sx(),whiteBall.Sy());
