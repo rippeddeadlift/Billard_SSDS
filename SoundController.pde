@@ -8,9 +8,9 @@ public class SoundController{
   AudioPlayer pocketedSound;
   
   public SoundController(PApplet pApp){
-    println("foo");
     minim = new Minim(pApp);
     ballOnBallSound = minim.loadFile("billard_sounds/sound_ball_on_ball.wav");
+    ballOnBallSound.setGain(-15);
     ballOnWallSound = minim.loadFile("billard_sounds/sound_ball_on_wall.wav");
     cueOnBallSound = minim.loadFile("billard_sounds/sound_cue_on_ball.wav");
     pocketedSound = minim.loadFile("billard_sounds/sound_pocketing.wav");
