@@ -53,13 +53,19 @@ void updateCue() {
     float ballX = (float) whiteBall.sx;
     float ballY = (float) whiteBall.sy;
     float cueOffset = this.cueOffset;
+    float normalizedDx, normalizedDy;
     
     if (mouseButton != RIGHT) {
       float dx = mouseX - ballX;
       float dy = mouseY - ballY;
       float length = sqrt(dx * dx + dy * dy);
-      float normalizedDx = dx / length;
-      float normalizedDy = dy / length;
+      if(length != 0){
+        normalizedDx = dx / length;
+        normalizedDy = dy / length;
+      }else{
+        normalizedDx = 0;
+        normalizedDy = 0;
+      }
       float mirroredDx = -normalizedDx;
       float mirroredDy = -normalizedDy;
       angle = atan2(mirroredDy, mirroredDx);
