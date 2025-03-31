@@ -56,7 +56,7 @@
 	
 	Diese Dokumentation bietet einen Überblick darüber, wie das Programm funktioniert, wie wir das System evaluiert haben, sowie eine Beschreibung der auftretenden Artefakte und Herausforderungen.
 	
-	\section{Grundlagen}
+	\section{Basis}
 	\subsection{Spielregeln}
 	Das Spiel basiert auf der 8-Ball Variante des Billards. Zwei Spieler treten gegeneinander an. Zu Beginn wird eine der beiden Gruppen von Kugeln zugewiesen: entweder die SOLID oder die STRIPE Kugeln. Ziel des Spiels ist es, alle Kugeln der eigenen Gruppe korrekt in die Taschen zu versenken und zuletzt die schwarze 8-Ball korrekt zu versenken, um zu gewinnen.
 	
@@ -72,6 +72,34 @@
 	
 	Die Kugeln bewegen sich auf der Oberfläche des Tisches und interagieren mit den Banden sowie mit anderen Kugeln. Die Physikengine berechnet die Kollisionen und die Bewegungen der Kugeln, um eine realistische Darstellung des Spiels zu gewährleisten.
 	
+\subsection{Menü}  
+
+Beim Spielstart, bevor die eigentliche Billardrunde beginnt, wird ein Menü angezeigt, das verschiedene physikalische Parameter anpassen lässt. Dazu gehören die Reibung (Friction), der Kugelradius (Ball Radius) und die Kugelmasse (Ball Masse).  
+
+Die Reibung bestimmt den Widerstand der Bälle auf der Spielfläche und beeinflusst ihr Abbremsverhalten. Ein höherer Reibungswert führt dazu, dass die Bälle schneller zum Stillstand kommen, wodurch das natürliche Verhalten der Kugeln realistisch nachgebildet wird.  
+
+Die Einstellung des Kugelradius beeinflusst sowohl die Größe der Bälle als auch die Dimensionen der Taschen, sodass die Skalierung einheitlich bleibt. Dadurch bleibt der Schwierigkeitsgrad beim Versenken der Kugeln konstant.  
+
+Die Kugelmasse verändert das Verhalten beim Stoß. Eine höhere Masse führt zu einer geringeren Endgeschwindigkeit der Kugel nach dem Stoß, was die Dynamik des Spiels beeinflusst.  
+
+Das Menü kann jederzeit auch während des Spiels aufgerufen werden (oben links). Es dient somit auch als Pausenfunktion oder ermöglicht das Beenden des Spiels.  
+
+\begin{figure}[h!]  
+	\centering  
+	\begin{minipage}{0.48\textwidth}  
+		\centering  
+		\includegraphics[width=\textwidth]{../../data/Dokumentation_ScreenShots/Menu.png}  
+		\caption{Menü}  
+	\end{minipage}  
+	\hfill  
+	\begin{minipage}{0.48\textwidth}  
+		\centering  
+		\includegraphics[width=\textwidth]{../../data/Dokumentation_ScreenShots/Menü2.png}  
+		\caption{Menü während des Spiels}  
+	\end{minipage}  
+\end{figure}  
+
+	
 \subsection{Spielsteuerung}
 
 Die Steuerung des Spiels erfolgt vollständig mit der Maus.
@@ -84,11 +112,22 @@ Sobald die gewünschte Stärke erreicht ist, lässt man die Maustaste los, und d
 
 Im Fall eines Fouls (wenn die weiße Kugel in eine Tasche fällt) darf der nächste Spieler die Kugel an einer beliebigen Stelle auf dem Tisch platzieren.
 
-	\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.5\textwidth]{../../data/Dokumentation_ScreenShots/GameAufstellung.png}
-	\caption{Spielstart}
-\end{figure}
+
+
+\begin{figure}[h!]  
+	\centering  
+	\begin{minipage}{0.48\textwidth}  
+		\centering  
+		\includegraphics[width=\textwidth]{../../data/Dokumentation_ScreenShots/GameAufstellung.png}  
+		\caption{Spielstart (old)}  
+	\end{minipage}  
+	\hfill  
+	\begin{minipage}{0.48\textwidth}  
+		\centering  
+		\includegraphics[width=\textwidth]{../../data/Dokumentation_ScreenShots/GameAufstellungNew.png}  
+		\caption{Spielstart (new)}  
+	\end{minipage}  
+\end{figure}  
 
 	
 	\subsection{Physikalische Interaktionen}
@@ -112,7 +151,6 @@ Im Fall eines Fouls (wenn die weiße Kugel in eine Tasche fällt) darf der näch
 	
 		Eine Kollision tritt auf, wenn der Abstand zwischen den Mittelpunkten der beiden Kugeln kleiner oder gleich der Summe ihrer Radien ist.
 	
-\newpage
 		\begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.5\textwidth]{../../data/Dokumentation_ScreenShots/KollisionZweiKugeln.png}
@@ -196,11 +234,21 @@ Dieser Schritt existiert in der realen Welt nicht, stellt jedoch in unserer Simu
 
 Um das Einlochen visuell ansprechender zu gestalten, wurde eine Animation implementiert, die den Vorgang realistischer erscheinen lässt. Dabei wird eine eingelochte Kugel schrittweise verkleinert, bis ihr Skalierungsfaktor einen Schwellenwert von 0,5 erreicht hat. Sobald dieser Wert unterschritten wird, wird die Kugel nicht mehr angezeigt.  
 
-	\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.6\textwidth]{../../data/Dokumentation_ScreenShots/Eingelocht.png}
-	\caption{Schussrichtung}
-\end{figure}
+
+\begin{figure}[h!]  
+	\centering  
+	\begin{minipage}{0.48\textwidth}  
+		\centering  
+		\includegraphics[width=\textwidth]{../../data/Dokumentation_ScreenShots/Eingelocht.png}  
+		\caption{Kugelanimation (old)}  
+	\end{minipage}  
+	\hfill  
+	\begin{minipage}{0.48\textwidth}  
+		\centering  
+		\includegraphics[width=\textwidth]{../../data/Dokumentation_ScreenShots/EingelochtNew.png}  
+		\caption{Kugelanimation (new)}  
+	\end{minipage}  
+\end{figure}  
 
 Zusätzlich wird durch die Variable \texttt{isFadingOut} sichergestellt, dass für diese Kugel keine Kollisionen mehr überprüft werden. In der darauffolgenden Iteration wird die Kugel endgültig aus der Liste der aktiven Bälle entfernt.  
 
@@ -223,6 +271,8 @@ Die Animation erfolgt über die folgende Methode:
 \end{lstlisting}
 
 Im Fall einer weißen Kugel, muss sie nach Abschluss der Animation erneut auf dem Tisch platziert werden. Dies erfolgt in mehreren Schritten:
+
+\newpage
 
 \begin{lstlisting}[language=Java, frame=single]
 class CBalls {..
@@ -288,6 +338,26 @@ Um ein nahezu realistisches Verhalten zu simulieren, wird der Ball durch eine Re
 	
 	
 	\subsection{Klassen}
+	\subsubsection{UserInterface}
+	
+	Die Klasse UserInterface (Abk. UI) ist für die Darstellung der gesamten Benutzeroberfläche verantwortlich. Dazu gehören das Hauptmenü, MyCanvas sowie die Möglichkeit, die Kamera zurückzusetzen. 
+	
+	Für eine verbesserte Interaktion werden die Menüpunkte hervorgehoben, sobald der Mauszeiger darüberfährt. Dies dient als visuelles Feedback, um anzuzeigen, dass der Punkt anklickbar ist.  
+	 
+	
+	
+	
+	\subsubsection{MyCanvas}
+	MyCanvas zeigt Informationen über den Kugeltyp sowie die Anzahl der bereits eingelochten Kugeln des aktuell spielenden Spielers an.  
+	Zusätzlich visualisiert es die versenkten Kugeln, was die Übersichtlichkeit verbessert und zur benutzerfreundlichen Erfassung des Spielverlaufs beiträgt. 
+			\begin{figure}[h!]
+		\centering
+		\includegraphics[width=1\textwidth]{../../data/Dokumentation_ScreenShots/MyCanvas.png}
+		\caption{MyCanvas}
+	\end{figure}
+	
+	
+	
 	
 	\subsubsection{Ball}
 	
@@ -393,7 +463,7 @@ Die Taschen sind entscheidend für das Spiel, da sie die Orte darstellen, an den
 	
 	Die Methode \texttt{updateStrength()} aktualisiert die Schussstärke basierend auf dem Fortschritt der Queue Animation. Durch die Anwendung der mathematischen Funktion \texttt{sin} wird der Fortschritt der Leiste von -1 bis 1 gemappt, um so eine sanfte Änderung der Schussstärke zu ermöglichen. Dies gibt dem Spieler ein Gefühl der Kontrolle und Präzision, da er durch das Halten der Maustaste die Stärke des Schusses feinjustieren kann.
 	
-	Durch die visuelle und dynamische Darstellung der Schussstärke wird dem Spieler eine klare Rückmeldung über die Stärke seines Schusses gegeben, was zu einer interaktiveren und ansprechenderen Spielerfahrung führt.
+	Durch die visuelle, farbliche und dynamische Darstellung der Schussstärke wird dem Spieler eine klare Rückmeldung über die Stärke seines Schusses gegeben, was zu einer interaktiveren und ansprechenderen Spielerfahrung führt.
 	
 	
 	\subsubsection{Table}
@@ -401,7 +471,6 @@ Die Taschen sind entscheidend für das Spiel, da sie die Orte darstellen, an den
 	Die Klasse Table modelliert einen Billardtisch, einschließlich seiner Wände, der unteren, oberen, rechten und linken Kante. Sie berechnet die Positionen der Ecken und der Taschen basierend auf den übergebenen Koordinaten der Wände und fügt diese in einer Liste zusammen. Eine Instanz der Pockets Klasse wird verwendet, um die Taschen des Tisches zu verwalten. Die \texttt{draw()} Methode ist verantwortlich für das Rendern des gesamten Tisches. Sie besteht aus den Unterfunktionen \texttt{drawTableTop()}, \texttt{drawTableLegs()} und \texttt{drawBorders()}, die jeweils die Tischoberfläche, die Beine und die Randbereiche zeichnen. Die Geometrie wird unter Berücksichtigung eines festen Abstands zu den Grenzen des Tisches berechnet, wobei Texturen zur Veranschaulichung verwendet werden.
 	
 
-	\newpage
 	\subsubsection{VectorDrawer}
 	
 	Die Klasse VectorDrawer visualisiert die Schussrichtung des Queues und gibt eine provisorische Ansicht des Schusses in Rot, die zeigt, wo der Ball nach der Kollision hinrollen wird. Die Methode \texttt{draw()} berechnet den Kollisionspfad eines Balls, indem sie die Richtung des Queue verfolgt und eine Linie in diese Richtung zieht. Sobald der Queue einen Ball trifft, wird der prognostizierte Pfad des getroffenen Balls in Rot dargestellt, um die Schussrichtung des Balls nach der Kollision anzuzeigen. Die Methode \texttt{drawPredictedPath()} berechnet die zukünftige Position des Balls nach der Kollision, basierend auf der Impulsübertragung und der Geschwindigkeit des Balls. Diese Darstellung hilft, die Ballbewegung visuell vorauszuberechnen und die Schussplanung zu unterstützen.
@@ -410,7 +479,21 @@ Die Taschen sind entscheidend für das Spiel, da sie die Orte darstellen, an den
 		\includegraphics[width=1\textwidth]{../../data/Dokumentation_ScreenShots/VDBeispiel.png}
 		\caption{Schussrichtung}
 	\end{figure}
-	
+	\newpage
+\subsubsection{SoundController}  
+
+Die Klasse SoundController spielt – entsprechend ihres Namens – die passenden Töne ab, sobald eine bestimmte Aktion ausgelöst wird.  
+Zu diesen Aktionen gehören:  
+
+\begin{itemize}
+	\item Kollision zwischen zwei Kugeln,
+	\item Kollision zwischen einer Kugel und der Bande,
+	\item Kollision zwischen dem Queue und der weißen Kugel,
+	\item Versenken einer Kugel.
+\end{itemize}
+
+Der Sound trägt maßgeblich zur Spielatmosphäre bei, indem die Interaktion nicht nur visuell, sondern auch akustisch unterstützt. Dadurch wird das Spielerlebnis immersiver und der Spielspaß erhöht.  
+
 
 	
 
@@ -461,9 +544,6 @@ Die folgenden Texturen wurden verwendet:
 \end{figure}
 
 
-
-
-
 \section{Artefakte}
 
 Wie in jeder Implementierung, ist es Artefakten nicht auszuweichen. Was wir tun können ist diese analysieren,  Betrachten und somit verfeinern oder ganz entfernen.
@@ -509,7 +589,43 @@ Dieses Problem tritt auf, wenn das obere oder untere Drittel der Textur zentral 
 	
 \end{figure}
 
-  
+\subsection{Vektoranzeige}  
+
+
+Gelegentlich kann es vorkommen, dass beim äußerst knappen Kontakt der weißen Kugel mit einer anderen Kugel ein Vektor in Schussrichtung mit einem roten Pfeil visualisiert wird. Dieser kann irreführende Vorhersagen liefern, indem er den Eindruck erweckt, dass die Kugel getroffen wird, obwohl sie in Wirklichkeit knapp daran vorbeiläuft.  
+
+\section{Vergleich mit anderen Arbeiten}
+\subsection{Studienarbeit aus Koblenz}
+
+Ein Vergleichspunkt ist die Studienarbeit von Andreas Herschbach aus dem Jahr 2007. \cite{Studienarbeit} Diese überzeugt sowohl durch eine detaillierte quantitative als auch qualitative Dokumentation, die die Spiel-Features umfassend beschreibt. Durch eine präzise Modellierung der Animationen in Maya 6.0 sowie die Erstellung von Texturen in Adobe Photoshop 7.0 und Wood Workshop konnte er, basierend auf seinen Screenshots, eine realistische 3D-Darstellung des Billardtisches, Queues und der Schatteneffekte umsetzen. Da uns lediglich die Dokumentation vorliegt, können wir das tatsächliche Spiel jedoch nicht direkt beurteilen.  
+
+Die wesentlichen Unterschiede zu unserem Projekt sind:  
+
+\begin{itemize}
+	\item \textbf{Modellierung und Texturierung:} Die Modelle in der Studienarbeit sind äußerst detailliert und realitätsnah gestaltet, was eine hohe visuelle Qualität ermöglicht.
+	\item \textbf{Effet:} Die Spin-Mechanik wurde implementiert. Zitat von Andreas: „... wurde ein physikalisch nicht korrekter, aber spielerisch dennoch ansprechender Ansatz gewählt.“ \cite{Studienarbeit}
+	\item \textbf{Spielmodi:} Das Spiel bietet die Möglichkeit, zwischen den Varianten 8-Ball und 9-Ball zu wählen.
+\end{itemize}
+
+Zusammenfassend ist die Dokumentation dieser Arbeit sehr überzeugend. Es ist jedoch zu beachten, dass verschiedene Softwarelösungen verwendet wurden. Zudem wird nicht explizit erwähnt, in welcher Game-Engine das Projekt realisiert wurde. Aufgrund der verwendeten Tools ist es jedoch unwahrscheinlich, dass Processing zum Einsatz kam.  
+
+Im Gegensatz dazu basiert unser Projekt vollständig auf Processing und konzentriert sich auf eine reine Implementierung, ohne eine detaillierte Modellierung der Architektur vorzunehmen. 
+\subsection{Online Billardspiele}
+
+Ein weiterer Vergleichspunkt sind verschiedene Online Implementierungen von Billardspielen im Browser. Als Beispiel betrachten wir das Spiel \textit{The Best Russian Billiards} \cite{The Best Russian Billiards} aus dem Katalog der Online-Spieleplattform \textit{CrazyGames}.  
+
+Im direkten Vergleich fallen einige deutliche Unterschiede auf, die in unserem Projekt nicht umgesetzt wurden:  
+
+\begin{itemize}
+	\item \textbf{Implementierung in Unity:} Das Spiel basiert auf der Unity-Engine, was eine flüssige Darstellung mit einer weichen und realistischen Oberfläche ermöglicht.
+	\item \textbf{Atmosphärische Umgebung:} Durch verbesserte 3D-Grafik, passende Soundeffekte und Musik wird eine ansprechendere Spielatmosphäre geschaffen.
+	\item \textbf{Online- und Multiplayer-Funktionalität:} Das Spiel bietet die Möglichkeit, direkt online gegen andere Spieler anzutreten.
+	\item \textbf{Ranglistensystem:} Spieler werden mit ungefähr gleichstarken Gegnern zusammengebracht, was faire und spannende Matches ermöglicht.
+	\item \textbf{In-Game-Shop:} Im Spiel gibt es einen Shop, in dem bessere Queues mit erspieltem Geld erworben werden können. Dies dient als Motivation, mehr Zeit im Spiel zu verbringen.
+\end{itemize}
+
+Natürlich erfordert eine solche Umsetzung erheblich mehr Entwicklungszeit und muss in diesem Fall durch Werbung auf der Webseite finanziert werden.  
+
 
 
 
@@ -524,16 +640,26 @@ In diesem Projekt haben wir erfolgreich ein Billardspiel simuliert, das grundleg
 	\newpage
 	\begin{thebibliography}{9}
 		
-	\bibitem{LEIFIphysik} 
-	LEIFIphysik: März, 2025. Quelle: \textit{https://www.leifiphysik.de/mechanik/impulserhaltung-und-stoesse/grundwissen/zentraler-elastischer-stoss}
-	\bibitem{Serlo} 
-	Serlo: o.D. . Quelle: \textit{https://de.serlo.org/mathe/227927/gegenseitige-lage-von-zwei-kugeln}
-	
-	
-	
-	
+		\bibitem{LEIFIphysik} 
+		
+		LEIFIphysik: März, 2025. Quelle: \url{https://www.leifiphysik.de/mechanik/impulserhaltung-und-stoesse/grundwissen/zentraler-elastischer-stoss}
+		
+		\bibitem{Serlo} 
+		
+		Serlo: o.D. Quelle: \url{https://de.serlo.org/mathe/227927/gegenseitige-lage-von-zwei-kugeln}
+		
+		\bibitem{Studienarbeit}  
+		
+		Andreas Herschbach, Entwicklung eines virtuellen Billardspiels, Mai 2007.  
+		Quelle: \url{https://kola.opus.hbz-nrw.de/frontdoor/deliver/index/docId/128/file/Ausarbeitung.pdf}  
+		
+		\bibitem{The Best Russian Billiards}  
+		
+		Browser Billard Spiel, The Best Russian Billiards.  
+		Quelle: \url{https://de.crazygames.com/spiele/the-best-russian-billiards} 
 		
 	\end{thebibliography}
+	
 	
 	
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.22)  10 MAR 2025 22:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.22)  31 MAR 2025 16:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -456,7 +456,7 @@ Package hyperref Info: Link coloring OFF on input line 10.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<../../data/Dokumentation_ScreenShots/logo.png, id=136, 115.43124pt x 62.2325pt
+<../../data/Dokumentation_ScreenShots/logo.png, id=168, 115.43124pt x 62.2325pt
 >
 File: ../../data/Dokumentation_ScreenShots/logo.png Graphic file (type png)
 <use ../../data/Dokumentation_ScreenShots/logo.png>
@@ -478,162 +478,215 @@ been already used, duplicate ignored
                    \relax 
 l.51 	\newpage
                [1] [1]
-<../../data/Dokumentation_ScreenShots/GameAufstellung.png, id=189, 361.95226pt 
+<../../data/Dokumentation_ScreenShots/Menu.png, id=229, 360.74776pt x 578.16pt>
+
+File: ../../data/Dokumentation_ScreenShots/Menu.png Graphic file (type png)
+<use ../../data/Dokumentation_ScreenShots/Menu.png>
+Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/Menu.png  used on
+ input line 91.
+(pdftex.def)             Requested size: 218.51521pt x 350.21574pt.
+<../../data/Dokumentation_ScreenShots/Menü2.png, id=230, 362.5545pt x 580.569p
+t>
+File: ../../data/Dokumentation_ScreenShots/Menü2.png Graphic file (type png)
+<use ../../data/Dokumentation_ScreenShots/Menü2.png>
+Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/Menü2.png  used 
+on input line 97.
+(pdftex.def)             Requested size: 218.51521pt x 349.92094pt.
+ [2 <../../data/Dokumentation_ScreenShots/Menu.png (PNG copy)> <../../data/Doku
+mentation_ScreenShots/Menü2.png (PNG copy)>]
+<../../data/Dokumentation_ScreenShots/GameAufstellung.png, id=237, 361.95226pt 
 x 575.751pt>
 File: ../../data/Dokumentation_ScreenShots/GameAufstellung.png Graphic file (ty
 pe png)
 <use ../../data/Dokumentation_ScreenShots/GameAufstellung.png>
 Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/GameAufstellung.p
-ng  used on input line 89.
-(pdftex.def)             Requested size: 227.62206pt x 362.08372pt.
- [2 <../../data/Dokumentation_ScreenShots/GameAufstellung.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 110--112
+ng  used on input line 121.
+(pdftex.def)             Requested size: 218.51521pt x 347.59686pt.
+<../../data/Dokumentation_ScreenShots/GameAufstellungNew.png, id=238, 361.95226
+pt x 581.17125pt>
+File: ../../data/Dokumentation_ScreenShots/GameAufstellungNew.png Graphic file 
+(type png)
+<use ../../data/Dokumentation_ScreenShots/GameAufstellungNew.png>
+Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/GameAufstellungNe
+w.png  used on input line 127.
+(pdftex.def)             Requested size: 218.51521pt x 350.86922pt.
+ [3 <../../data/Dokumentation_ScreenShots/GameAufstellung.png (PNG copy)> <../.
+./data/Dokumentation_ScreenShots/GameAufstellungNew.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 149--151
 
  []
 
-[3]
-<../../data/Dokumentation_ScreenShots/KollisionZweiKugeln.png, id=199, 175.857p
+<../../data/Dokumentation_ScreenShots/KollisionZweiKugeln.png, id=245, 175.857p
 t x 151.16475pt>
 File: ../../data/Dokumentation_ScreenShots/KollisionZweiKugeln.png Graphic file
  (type png)
 <use ../../data/Dokumentation_ScreenShots/KollisionZweiKugeln.png>
 Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/KollisionZweiKuge
-ln.png  used on input line 118.
+ln.png  used on input line 156.
 (pdftex.def)             Requested size: 227.62206pt x 195.67453pt.
- (c:/texlive/2023/texmf-dist/tex/latex/listings/lstlang1.sty
+(c:/texlive/2023/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 1
-25.
+63.
 
 (c:/texlive/2023/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 125.
-
-Overfull \hbox (3.0051pt too wide) in paragraph at lines 132--133
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 163.
+ [4 <../../data/Dokumentation_ScreenShots/KollisionZweiKugeln.png (PNG copy)>]
+Overfull \hbox (3.0051pt too wide) in paragraph at lines 170--171
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 LaTeX Font Info:    Trying to load font information for OML+cmr on input line 1
-33.
+71.
 (c:/texlive/2023/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 133.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 171.
 
-Overfull \hbox (1.49692pt too wide) in paragraph at lines 144--145
+Overfull \hbox (1.49692pt too wide) in paragraph at lines 182--183
 \OT1/cmr/m/n/12 neue Ein-heits-vek-tor be-rech-net wird, der die Be-we-gungs-ri
 ch-tung ent-lang der zur[]uckgelegten
  []
 
-[4{c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <../..
-/data/Dokumentation_ScreenShots/KollisionZweiKugeln.png (PNG copy)>]
-<../../data/Dokumentation_ScreenShots/Eingelocht.png, id=231, 360.1455pt x 572.
+[5{c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+<../../data/Dokumentation_ScreenShots/Eingelocht.png, id=290, 360.1455pt x 572.
 1375pt>
 File: ../../data/Dokumentation_ScreenShots/Eingelocht.png Graphic file (type pn
 g)
 <use ../../data/Dokumentation_ScreenShots/Eingelocht.png>
 Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/Eingelocht.png  u
-sed on input line 201.
-(pdftex.def)             Requested size: 273.14923pt x 433.956pt.
+sed on input line 242.
+(pdftex.def)             Requested size: 218.51521pt x 347.13512pt.
+<../../data/Dokumentation_ScreenShots/EingelochtNew.png, id=291, 361.35pt x 578
+.76225pt>
+File: ../../data/Dokumentation_ScreenShots/EingelochtNew.png Graphic file (type
+ png)
+<use ../../data/Dokumentation_ScreenShots/EingelochtNew.png>
+Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/EingelochtNew.png
+  used on input line 248.
+(pdftex.def)             Requested size: 218.51521pt x 349.98886pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[5] [6 <../../data/Dokumentation_ScreenShots/Eingelocht.png (PNG copy)>]
-[7] [8] [9] [10] [11]
-<../../data/Dokumentation_ScreenShots/VDBeispiel.png, id=320, 363.15675pt x 157
+[6] [7 <../../data/Dokumentation_ScreenShots/Eingelocht.png (PNG copy)> <../../
+data/Dokumentation_ScreenShots/EingelochtNew.png (PNG copy)>] [8]
+<../../data/Dokumentation_ScreenShots/MyCanvas.png, id=350, 360.1455pt x 40.350
+75pt>
+File: ../../data/Dokumentation_ScreenShots/MyCanvas.png Graphic file (type png)
+
+<use ../../data/Dokumentation_ScreenShots/MyCanvas.png>
+Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/MyCanvas.png  use
+d on input line 355.
+(pdftex.def)             Requested size: 455.24411pt x 51.00783pt.
+ [9 <../../data/Dokumentation_ScreenShots/MyCanvas.png (PNG copy)>] [10] [11] [
+12]
+<../../data/Dokumentation_ScreenShots/VDBeispiel.png, id=374, 363.15675pt x 157
 .18726pt>
 File: ../../data/Dokumentation_ScreenShots/VDBeispiel.png Graphic file (type pn
 g)
 <use ../../data/Dokumentation_ScreenShots/VDBeispiel.png>
 Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/VDBeispiel.png  u
-sed on input line 410.
+sed on input line 479.
 (pdftex.def)             Requested size: 455.24411pt x 197.0616pt.
- [12 <../../data/Dokumentation_ScreenShots/VDBeispiel.png (PNG copy)>]
-<../../data/billard_textures/1.jpg, id=326, 600.0819pt x 299.6796pt>
+ [13 <../../data/Dokumentation_ScreenShots/VDBeispiel.png (PNG copy)>] [14]
+<../../data/billard_textures/1.jpg, id=384, 600.0819pt x 299.6796pt>
 File: ../../data/billard_textures/1.jpg Graphic file (type jpg)
 <use ../../data/billard_textures/1.jpg>
 Package pdftex.def Info: ../../data/billard_textures/1.jpg  used on input line 
-432.
+515.
 (pdftex.def)             Requested size: 184.37135pt x 92.07204pt.
-<../../data/billard_textures/10.jpg, id=327, 598.8774pt x 299.6796pt>
+<../../data/billard_textures/10.jpg, id=385, 598.8774pt x 299.6796pt>
 File: ../../data/billard_textures/10.jpg Graphic file (type jpg)
 <use ../../data/billard_textures/10.jpg>
 Package pdftex.def Info: ../../data/billard_textures/10.jpg  used on input line
- 437.
+ 520.
 (pdftex.def)             Requested size: 184.37135pt x 92.25952pt.
-<../../data/billard_textures/cue.jpg, id=328, 486.618pt x 231.264pt>
+<../../data/billard_textures/cue.jpg, id=386, 486.618pt x 231.264pt>
 File: ../../data/billard_textures/cue.jpg Graphic file (type jpg)
 <use ../../data/billard_textures/cue.jpg>
 Package pdftex.def Info: ../../data/billard_textures/cue.jpg  used on input lin
-e 445.
+e 528.
 (pdftex.def)             Requested size: 184.37135pt x 87.62009pt.
-<../../data/billard_textures/holz.jpg, id=329, 1927.2pt x 1284.8pt>
+<../../data/billard_textures/holz.jpg, id=387, 1927.2pt x 1284.8pt>
 File: ../../data/billard_textures/holz.jpg Graphic file (type jpg)
 <use ../../data/billard_textures/holz.jpg>
 Package pdftex.def Info: ../../data/billard_textures/holz.jpg  used on input li
-ne 450.
+ne 533.
 (pdftex.def)             Requested size: 184.37135pt x 122.90025pt.
-<../../data/billard_textures/GreenPool.jpg, id=330, 1548.64285pt x 1548.64285pt
+<../../data/billard_textures/GreenPool.jpg, id=388, 1548.64285pt x 1548.64285pt
 >
 File: ../../data/billard_textures/GreenPool.jpg Graphic file (type jpg)
 <use ../../data/billard_textures/GreenPool.jpg>
 Package pdftex.def Info: ../../data/billard_textures/GreenPool.jpg  used on inp
-ut line 458.
+ut line 541.
 (pdftex.def)             Requested size: 184.37135pt x 184.36404pt.
- [13 <../../data/billard_textures/1.jpg> <../../data/billard_textures/10.jpg> <
+ [15 <../../data/billard_textures/1.jpg> <../../data/billard_textures/10.jpg> <
 ../../data/billard_textures/cue.jpg> <../../data/billard_textures/holz.jpg> <..
 /../data/billard_textures/GreenPool.jpg>]
-<../../data/Dokumentation_ScreenShots/Artefakt 1.png, id=341, 346.896pt x 86.72
+<../../data/Dokumentation_ScreenShots/Artefakt 1.png, id=399, 346.896pt x 86.72
 4pt>
 File: ../../data/Dokumentation_ScreenShots/Artefakt 1.png Graphic file (type pn
 g)
 <use ../../data/Dokumentation_ScreenShots/Artefakt 1.png>
 Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/Artefakt 1.png  u
-sed on input line 501.
+sed on input line 581.
 (pdftex.def)             Requested size: 184.37135pt x 46.09317pt.
-<../../data/Dokumentation_ScreenShots/Artefakt 2.png, id=342, 356.532pt x 74.07
+<../../data/Dokumentation_ScreenShots/Artefakt 2.png, id=400, 356.532pt x 74.07
 675pt>
 File: ../../data/Dokumentation_ScreenShots/Artefakt 2.png Graphic file (type pn
 g)
 <use ../../data/Dokumentation_ScreenShots/Artefakt 2.png>
 Package pdftex.def Info: ../../data/Dokumentation_ScreenShots/Artefakt 2.png  u
-sed on input line 506.
+sed on input line 586.
 (pdftex.def)             Requested size: 184.37135pt x 38.30762pt.
+ [16 <../../data/Dokumentation_ScreenShots/Artefakt 1.png (PNG copy)> <../../da
+ta/Dokumentation_ScreenShots/Artefakt 2.png (PNG copy)>]
+Overfull \hbox (5.67464pt too wide) in paragraph at lines 606--607
+\OT1/cmr/m/n/12 phy-si-ka-lisch nicht kor-rek-ter, aber spie-le-risch den-noch 
+an-spre-chen-der An-satz gew[]ahlt.\
+ []
 
-Overfull \hbox (13.36902pt too wide) in paragraph at lines 521--522
+[17]
+Overfull \hbox (13.36902pt too wide) in paragraph at lines 637--638
 \OT1/cmr/m/n/12 sik-be-rech-nun-gen f[]ur die Kol-li-sio-nen der Ku-geln, die R
 o-ta-ti-on so-wie das Ein-lo-chen durchf[]uhrt.
  []
 
-[14 <../../data/Dokumentation_ScreenShots/Artefakt 1.png (PNG copy)> <../../dat
-a/Dokumentation_ScreenShots/Artefakt 2.png (PNG copy)>] [15]
-Overfull \hbox (10.37816pt too wide) in paragraph at lines 528--529
-[]\OT1/cmr/m/n/12 LEIFIphysik: M[]arz, 2025. Quel-le: \OT1/cmr/m/it/12 https://
-www.leifiphysik.de/mechanik/impulserhaltung-
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 645--646
+[]\OT1/cmr/m/n/12 LEIFIphysik: M[]arz, 2025. Quel-le: []$\OT1/cmtt/m/n/12 https
+ : / / www . leifiphysik . de / mechanik /
  []
 
-[16] (./Dokumentation_BillardApp_WASP25_Pivovar_Kurilin.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 649--650
+[]\OT1/cmr/m/n/12 Serlo: o.D. Quel-le: []$\OT1/cmtt/m/n/12 https : / / de . ser
+lo . org / mathe / 227927 /
+ []
+
+[19] (./Dokumentation_BillardApp_WASP25_Pivovar_Kurilin.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-10-10>
  ***********
 Package rerunfilecheck Info: File `Dokumentation_BillardApp_WASP25_Pivovar_Kuri
 lin.out' has not changed.
-(rerunfilecheck)             Checksum: B7B904F6EDC4D7E96F02341E20026F22;4099.
+(rerunfilecheck)             Checksum: 1EAFEE6796E074B116E05C4F36073F61;5218.
  ) 
 Here is how much of TeX's memory you used:
- 13337 strings out of 474504
- 207348 string characters out of 5756725
+ 13400 strings out of 474504
+ 209799 string characters out of 5756725
  1960043 words of memory out of 5000000
- 35013 multiletter control sequences out of 15000+600000
+ 35058 multiletter control sequences out of 15000+600000
  564551 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,8n,79p,880b,1392s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,8n,79p,880b,2024s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
 live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2023
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2023/texmf-dis
@@ -643,11 +696,11 @@ pe1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public
 m/cmsy10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.
 pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/t
 exlive/2023/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on Dokumentation_BillardApp_WASP25_Pivovar_Kurilin.pdf (18 pages
-, 3966063 bytes).
+Output written on Dokumentation_BillardApp_WASP25_Pivovar_Kurilin.pdf (21 pages
+, 6480937 bytes).
 PDF statistics:
- 433 PDF objects out of 1000 (max. 8388607)
- 375 compressed objects within 4 object streams
- 137 named destinations out of 1000 (max. 500000)
- 325 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 514 PDF objects out of 1000 (max. 8388607)
+ 447 compressed objects within 5 object streams
+ 155 named destinations out of 1000 (max. 500000)
+ 414 words of extra memory for PDF output out of 10000 (max. 10000000)
 
