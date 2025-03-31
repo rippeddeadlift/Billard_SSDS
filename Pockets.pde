@@ -24,7 +24,7 @@ class Pockets{
       pushMatrix();
       pocketShape = createShape(SPHERE, pocketRadius);
       pocketShape.setTexture(blackTexture);
-      translate(position.x, position.y, -pocketRadius/2);
+      translate(position.x, position.y, -pocketRadius);
       fill(255, 255, 255);
       shape(pocketShape);
       popMatrix();
